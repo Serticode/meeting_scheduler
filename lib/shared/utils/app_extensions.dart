@@ -3,7 +3,6 @@ import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_animate/flutter_animate.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:intl/intl.dart";
 import "package:meeting_scheduler/shared/app_elements/app_colours.dart";
 import "package:meeting_scheduler/shared/utils/type_def.dart";
@@ -41,7 +40,7 @@ extension WidgetAnnotatedRegion on Widget {
 extension AppHapticFeedback on Widget {
   Widget withHapticFeedback({
     required VoidCallback? onTap,
-    required AppHapticFeedbackType feedbackType,
+    required AppHapticFeedbackType? feedbackType,
   }) =>
       InkWell(
         splashColor: Colors.transparent,
@@ -58,6 +57,7 @@ extension AppHapticFeedback on Widget {
             AppHapticFeedbackType.selectionClick =>
               await HapticFeedback.selectionClick(),
             AppHapticFeedbackType.vibrate => await HapticFeedback.vibrate(),
+            _ => null
           }
         },
         child: this,
@@ -72,19 +72,58 @@ extension HapticFeedbackForApp on bool {
 }
 
 //!
+//! EXTENSIONS ON TRANSFORM
+extension TransformExtension on Widget {
+  Widget transformToScale({
+    required scale,
+  }) =>
+      Transform.scale(
+        scale: scale,
+        child: this,
+      );
+}
+
+//!
 //! EXTENSIONS ON NUMBER
-extension WidgetExtensions on num {
-  Widget get sbH => SizedBox(
-        height: h,
+extension WidgetExtensions on double {
+  Widget get sizedBoxHeight => SizedBox(
+        height: this,
       );
 
-  Widget get sbW => SizedBox(
-        width: w,
+  Widget get sizedBoxWidth => SizedBox(
+        width: this,
       );
 
-  EdgeInsetsGeometry get padV => EdgeInsets.symmetric(vertical: h);
+  EdgeInsetsGeometry get verticalPadding =>
+      EdgeInsets.symmetric(vertical: this);
 
-  EdgeInsetsGeometry get padH => EdgeInsets.symmetric(horizontal: w);
+  EdgeInsetsGeometry get horizontalPadding =>
+      EdgeInsets.symmetric(horizontal: this);
+
+  EdgeInsetsGeometry get symmetricPadding =>
+      EdgeInsets.symmetric(vertical: this, horizontal: this);
+}
+
+//!
+//! PADDING EXTENSION ON WIDGET
+extension PaddingExtension on Widget {
+  Widget get generalHorizontalPadding => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: this,
+      );
+
+  Widget get generalVerticalPadding => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 21.0),
+        child: this,
+      );
+
+  Widget get generalPadding => Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 12.0,
+          horizontal: 21.0,
+        ),
+        child: this,
+      );
 }
 
 //!
@@ -192,7 +231,7 @@ extension WidgetAnimation on Widget {
 //!
 //! STYLED TEXT EXTENSION ON STRING
 extension StyledTextExtension on String {
-  Text txt14({
+  Text onboardingHeaderText({
     Color? color,
     FontWeight? fontWeight,
     String? fontFamily,
@@ -210,9 +249,37 @@ extension StyledTextExtension on String {
       maxLines: maxLines,
       style: TextStyle(
         height: height,
-        fontSize: 14.sp,
-        color: color ?? AppColors.greyBlack,
-        fontWeight: fontWeight,
+        fontSize: 30,
+        color: color ?? AppColours.greyBlack,
+        fontWeight: fontWeight ?? FontWeight.w700,
+        fontFamily: fontFamily,
+        fontStyle: fontStyle,
+        decoration: decoration,
+      ),
+    );
+  }
+
+  Text onboardingRiderText({
+    Color? color,
+    FontWeight? fontWeight,
+    String? fontFamily,
+    FontStyle? fontStyle,
+    TextOverflow? overflow,
+    TextDecoration? decoration,
+    TextAlign? textAlign,
+    int? maxLines,
+    double? height,
+  }) {
+    return Text(
+      this,
+      overflow: overflow,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      style: TextStyle(
+        height: height,
+        fontSize: 14,
+        color: color ?? AppColours.greyBlack,
+        fontWeight: fontWeight ?? FontWeight.w400,
         fontFamily: fontFamily,
         fontStyle: fontStyle,
         decoration: decoration,
@@ -237,9 +304,37 @@ extension StyledTextExtension on String {
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
-        fontSize: 12.sp,
+        fontSize: 12,
         height: height,
-        color: color ?? AppColors.greyBlack,
+        color: color ?? AppColours.greyBlack,
+        fontWeight: fontWeight,
+        fontFamily: fontFamily,
+        fontStyle: fontStyle,
+        decoration: decoration,
+      ),
+    );
+  }
+
+  Text txt14({
+    Color? color,
+    FontWeight? fontWeight,
+    String? fontFamily,
+    FontStyle? fontStyle,
+    TextOverflow? overflow,
+    TextDecoration? decoration,
+    TextAlign? textAlign,
+    int? maxLines,
+    double? height,
+  }) {
+    return Text(
+      this,
+      overflow: overflow,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      style: TextStyle(
+        height: height,
+        fontSize: 14,
+        color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
         fontFamily: fontFamily,
         fontStyle: fontStyle,
@@ -265,8 +360,8 @@ extension StyledTextExtension on String {
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
-        fontSize: 16.sp,
-        color: color ?? AppColors.greyBlack,
+        fontSize: 16,
+        color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
         fontFamily: fontFamily,
         fontStyle: fontStyle,
@@ -292,8 +387,8 @@ extension StyledTextExtension on String {
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
-        fontSize: 24.sp,
-        color: color ?? AppColors.greyBlack,
+        fontSize: 24,
+        color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
         fontFamily: fontFamily,
         fontStyle: fontStyle,
@@ -318,7 +413,7 @@ extension InkWellExtension on Widget {
       onTap: onTap,
       onDoubleTap: onDoubleTap,
       onLongPress: onLongPress,
-      borderRadius: borderRadius ?? BorderRadius.circular(12.r),
+      borderRadius: borderRadius ?? BorderRadius.circular(12),
       splashColor: splashColor,
       highlightColor: highlightColor,
       child: this,
