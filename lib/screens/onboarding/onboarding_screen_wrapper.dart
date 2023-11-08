@@ -111,10 +111,6 @@ class OnboardingScreenWrapper extends ConsumerWidget {
             CircleButton(
               onTap: () {
                 "Circle Button Tapped".log();
-                /* _controller.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                ); */
               },
             ).alignCenter(),
 
