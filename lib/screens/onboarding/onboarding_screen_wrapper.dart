@@ -46,9 +46,15 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                 const Spacer(),
 
                 //! SKIP
-                AppTexts.skip.txt16(
+                AppTexts.skip
+                    .txt16(
                   fontWeight: FontWeight.w600,
                   color: AppColours.black50,
+                )
+                    .onTap(
+                  onTap: () {
+                    "Skip pressed".log();
+                  },
                 )
               ],
             ),
@@ -105,10 +111,10 @@ class OnboardingScreenWrapper extends ConsumerWidget {
             CircleButton(
               onTap: () {
                 "Circle Button Tapped".log();
-                _controller.nextPage(
+                /* _controller.nextPage(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
-                );
+                ); */
               },
             ).alignCenter(),
 
