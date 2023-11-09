@@ -33,7 +33,7 @@ class MeetingScheduler extends ConsumerWidget {
       title: AppTexts.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appThemeLight,
-      home: OnboardingScreenWrapper(),
+      home: const OnboardingScreenWrapper(),
     );
   }
 }

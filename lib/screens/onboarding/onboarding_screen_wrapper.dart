@@ -9,12 +9,12 @@ import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreenWrapper extends ConsumerWidget {
-  OnboardingScreenWrapper({super.key});
-  final PageController _controller = PageController();
+  const OnboardingScreenWrapper({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final int? pageNumber = ref.watch(onboardingScreenControllerProvider).value;
+
     return Scaffold(
       //! BODY
       body: SafeArea(
@@ -22,7 +22,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //! SPACER
-            32.0.sizedBoxHeight,
+            28.0.sizedBoxHeight,
 
             //! SKIP AND OTHERS
             Row(
@@ -63,41 +63,83 @@ class OnboardingScreenWrapper extends ConsumerWidget {
             32.0.sizedBoxHeight,
 
             //! WELCOME TEXT
-            pageNumber == 0
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppTexts.welcome.onboardingHeaderText(),
+            AnimatedContainer(
+              height: pageNumber == 0 ? 65.0 : 0.0,
+              duration: const Duration(milliseconds: 200),
+              child: pageNumber == 0
+                  ? SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTexts.welcome.onboardingHeaderText(),
 
-                      //! SPACER
-                      12.0.sizedBoxHeight,
+                          //! SPACER
+                          12.0.sizedBoxHeight,
 
-                      AppTexts.onboardingScreenWelcomeRider
-                          .onboardingRiderText(),
-                    ],
-                  )
-                : const SizedBox.shrink(),
+                          AppTexts.onboardingScreenWelcomeRider
+                              .onboardingRiderText(),
+                        ],
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ),
 
             const Spacer(),
 
             //! IMAGE
-            Consumer(
-              builder: (context, ref, child) {
-                return SvgPicture.asset(
-                  ref
-                      .read(onboardingScreenControllerProvider.notifier)
-                      .onboardingImages
-                      .elementAt(pageNumber!),
-                  semanticsLabel: "Onboarding image 1",
-                ).alignCenter();
-              },
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: SvgPicture.asset(
+                ref
+                    .read(onboardingScreenControllerProvider.notifier)
+                    .onboardingImages
+                    .elementAt(
+                      pageNumber ?? 0,
+                    ),
+                semanticsLabel: "Onboarding image $pageNumber",
+              ).alignCenter(),
             ),
 
             32.0.sizedBoxHeight,
 
-            SmoothPageIndicator(
-              controller: _controller,
+            //! WELCOME TEXT
+            Visibility(
+              visible: pageNumber != 0,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                child: pageNumber != 0
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ref
+                              .read(onboardingScreenControllerProvider.notifier)
+                              .onboardingTextsHeader
+                              .elementAt(pageNumber ?? 0)
+                              .txt24(
+                                fontWeight: FontWeight.w700,
+                              ),
+
+                          //! SPACER
+                          12.0.sizedBoxHeight,
+
+                          ref
+                              .read(onboardingScreenControllerProvider.notifier)
+                              .onboardingTextsRider
+                              .elementAt(pageNumber ?? 0)
+                              .txt16(
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
+              ),
+            ),
+
+            32.0.sizedBoxHeight,
+
+            AnimatedSmoothIndicator(
               count: 4,
+              activeIndex: pageNumber ?? 0,
               effect: WormEffect(
                 dotHeight: 4.0,
                 dotWidth: 24.0,
@@ -108,11 +150,26 @@ class OnboardingScreenWrapper extends ConsumerWidget {
 
             const Spacer(),
 
-            CircleButton(
-              onTap: () {
-                "Circle Button Tapped".log();
-              },
-            ).alignCenter(),
+            pageNumber != 3
+                ? CircleButton(
+                    onTap: () {
+                      "Circle Button Tapped".log();
+
+                      ref
+                          .read(onboardingScreenControllerProvider.notifier)
+                          .incrementPageIndex();
+                    },
+                  ).alignCenter()
+                : RegularButton(
+                    buttonText: AppTexts.getStarted,
+                    onTap: () {
+                      "Get Started Pressed".log();
+
+                      ref
+                          .read(onboardingScreenControllerProvider.notifier)
+                          .incrementPageIndex();
+                    },
+                  ),
 
             const Spacer(),
           ],

@@ -108,12 +108,12 @@ extension WidgetExtensions on double {
 //! PADDING EXTENSION ON WIDGET
 extension PaddingExtension on Widget {
   Widget get generalHorizontalPadding => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 21.0),
         child: this,
       );
 
   Widget get generalVerticalPadding => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 21.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: this,
       );
 
@@ -277,7 +277,7 @@ extension StyledTextExtension on String {
       maxLines: maxLines,
       style: TextStyle(
         height: height,
-        fontSize: 14,
+        fontSize: 16,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight ?? FontWeight.w400,
         fontFamily: fontFamily,

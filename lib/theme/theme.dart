@@ -72,6 +72,22 @@ class CustomFadeTransitionBuilder extends PageTransitionsBuilder {
     );
   }
 }
+/* 
+PageRouteBuilder(
+      pageBuilder: (context, animation, anotherAnimation) {
+        return view;
+      },
+      transitionDuration: const Duration(milliseconds: 1000),
+      transitionsBuilder: (context, animation, anotherAnimation, child) {
+        animation = CurvedAnimation(
+          curve: Curves.linearToEaseOut,
+          parent: animation,
+        );
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }) */
 
 class CustomSlideTransitionBuilder extends PageTransitionsBuilder {
   @override
