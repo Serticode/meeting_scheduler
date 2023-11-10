@@ -10,21 +10,21 @@ class OnboardingScreenController extends _$OnboardingScreenController {
   @override
   FutureOr<int> build() => 0;
 
-  List<String> onboardingImages = [
+  List<String> onboardingImages = const [
     AppImages.onboardingImage1SVG,
     AppImages.onboardingImage2SVG,
     AppImages.onboardingImage3SVG,
     AppImages.onboardingImage4SVG,
   ];
 
-  List<String> onboardingTextsHeader = [
+  List<String> onboardingTextsHeader = const [
     AppTexts.appName,
     AppTexts.onboardingScreenEasyVenue,
     AppTexts.onboardingScreenMeetingScheduler,
     AppTexts.joinUs,
   ];
 
-  List<String> onboardingTextsRider = [
+  List<String> onboardingTextsRider = const [
     AppTexts.appName,
     AppTexts.onboardingScreenEasyVenueRider,
     AppTexts.onboardingScreenMeetingSchedulerRider,

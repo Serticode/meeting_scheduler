@@ -11,4 +11,11 @@ class AppImages {
   static const String logoBG = "assets/svgs/logoBG.svg";
   static const String verificationSuccessful =
       "assets/svgs/verificationSuccessful.svg";
+
+  //!
+  //! HOME - SVG
+  static const home = "assets/icons/home.svg";
+  static const calender =
+      "assets/svgs/logoBG.svg"; //"assets/icons/calendar.svg";
+  static const account = "assets/icons/user.svg";
 }

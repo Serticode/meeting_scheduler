@@ -57,7 +57,7 @@ class OTPVerified extends ConsumerWidget {
             75.0.sizedBoxHeight,
 
             RegularButton(
-              onTap: () async => await AppNavigator.pushNamedAndRemoveUntil(
+              onTap: () async => await AppNavigator.navigateToPage(
                   thePageRouteName: AppRoutes.homeScreen, context: context),
               buttonText: AppTexts.enter,
             ).fadeInFromBottom(
