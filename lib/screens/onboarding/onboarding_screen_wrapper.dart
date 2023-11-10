@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
+import 'package:meeting_scheduler/screens/widgets/back_buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/services/controllers/onboarding_screen/onboarding_screen_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
@@ -29,32 +32,28 @@ class OnboardingScreenWrapper extends ConsumerWidget {
               children: [
                 Visibility(
                   visible: pageNumber != 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: AppColours.deepBlue,
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColours.white,
-                      size: 14.0,
-                    ).alignCenter(),
+                  child: AuthBackButton(
+                    onTap: () => ref
+                        .read(onboardingScreenControllerProvider.notifier)
+                        .decrementPageIndex(),
                   ),
                 ),
 
                 const Spacer(),
 
                 //! SKIP
-                AppTexts.skip
-                    .txt16(
-                  fontWeight: FontWeight.w600,
-                  color: AppColours.black50,
-                )
-                    .onTap(
-                  onTap: () {
-                    "Skip pressed".log();
-                  },
+                Visibility(
+                  visible: pageNumber != 3,
+                  child: AppTexts.skip
+                      .txt16(
+                    fontWeight: FontWeight.w600,
+                    color: AppColours.black50,
+                  )
+                      .onTap(
+                    onTap: () {
+                      "Skip pressed".log();
+                    },
+                  ),
                 )
               ],
             ),
@@ -109,7 +108,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                 duration: const Duration(milliseconds: 200),
                 child: pageNumber != 0
                     ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ref
                               .read(onboardingScreenControllerProvider.notifier)
@@ -127,6 +126,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                               .onboardingTextsRider
                               .elementAt(pageNumber ?? 0)
                               .txt16(
+                                textAlign: TextAlign.center,
                                 fontWeight: FontWeight.w400,
                               ),
                         ],
@@ -162,12 +162,13 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                   ).alignCenter()
                 : RegularButton(
                     buttonText: AppTexts.getStarted,
-                    onTap: () {
+                    onTap: () async {
                       "Get Started Pressed".log();
 
-                      ref
-                          .read(onboardingScreenControllerProvider.notifier)
-                          .incrementPageIndex();
+                      await AppNavigator.navigateToReplacementPage(
+                        thePageRouteName: AppRoutes.signUp,
+                        context: context,
+                      );
                     },
                   ),
 

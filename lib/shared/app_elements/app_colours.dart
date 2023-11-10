@@ -10,6 +10,7 @@ abstract class AppColours {
   static const scaffoldBGColour = Colors.white;
   static const appBarColour = Colors.white;
   static final wormGrey = const Color(0xFF020167).withOpacity(0.15);
+  static final red = Colors.red.shade900;
 
   AppColours._();
 }

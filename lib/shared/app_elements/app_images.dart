@@ -7,4 +7,8 @@ class AppImages {
   static const String onboardingImage3SVG = "assets/svgs/onboardingImage3.svg";
   static const String onboardingImage4SVG = "assets/svgs/onboardingImage4.svg";
   static const String arrowRight = "assets/svgs/arrowRight.svg";
+  static const String logo = "assets/png/logo.png";
+  static const String logoBG = "assets/svgs/logoBG.svg";
+  static const String verificationSuccessful =
+      "assets/svgs/verificationSuccessful.svg";
 }

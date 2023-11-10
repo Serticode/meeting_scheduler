@@ -287,6 +287,35 @@ extension StyledTextExtension on String {
     );
   }
 
+  Text txt({
+    Color? color,
+    FontWeight? fontWeight,
+    double? fontSize,
+    String? fontFamily,
+    FontStyle? fontStyle,
+    TextOverflow? overflow,
+    TextDecoration? decoration,
+    TextAlign? textAlign,
+    int? maxLines,
+    double? height,
+  }) {
+    return Text(
+      this,
+      overflow: overflow,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      style: TextStyle(
+        fontSize: fontSize ?? 12,
+        height: height,
+        color: color ?? AppColours.greyBlack,
+        fontWeight: fontWeight,
+        fontFamily: fontFamily,
+        fontStyle: fontStyle,
+        decoration: decoration,
+      ),
+    );
+  }
+
   Text txt12({
     Color? color,
     FontWeight? fontWeight,

@@ -17,7 +17,18 @@ class AppTexts {
   static const String joinUsRider =
       "Lorem ipsum dolor sit amet consectetur. At non pretium elit faucibus quam.";
   static const String skip = "Skip";
+  static const String otpVerification = "OTP Verification";
+  static const String otpVerificationRider =
+      "Enter the verification code we just sent on your email address.";
+  static const String verified = "Verified!";
+  static const String verifiedRider =
+      "Your account has been verified successfully";
+  static const String enter = "Enter";
 
   //! BUTTONS
   static const String getStarted = "Get Started";
+  static const String createAccount = "Create account";
+  static const String showPassword = "Show password";
+  static const String forgotPassword = "Forgot password?";
+  static const String sendCode = "Send code";
 }

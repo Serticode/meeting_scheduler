@@ -16,7 +16,8 @@ class AppTheme {
         //! HOW PAGES TRANSITION BETWEEN EACH OTHER
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           for (final platform in TargetPlatform.values)
-            platform: const OpenUpwardsPageTransitionsBuilder()
+            //platform: const OpenUpwardsPageTransitionsBuilder()
+            platform: CustomFadeTransitionBuilder(),
         }),
 
         //! ENSURING THAT THE DENSITY OF ELEMENTS ACROSS THE APP, MATCHES THE PLATFORM

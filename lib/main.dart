@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
@@ -33,6 +34,11 @@ class MeetingScheduler extends ConsumerWidget {
       title: AppTexts.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appThemeLight,
+
+      //! NAVIGATION
+      onGenerateRoute: (settings) =>
+          AppNavigator.generateRoute(routeSettings: settings),
+
       home: const OnboardingScreenWrapper(),
     );
   }
