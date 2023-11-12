@@ -28,3 +28,16 @@ enum AppHapticFeedbackType {
   selectionClick,
   vibrate,
 }
+
+//!
+//! MEETING STRUCTURE
+typedef ScheduledMeeting = ({
+  String fullName,
+  String professionOfVenueBooker,
+  String purposeOfMeeting,
+  String numberOfExpectedParticipants,
+  String dateOfMeeting,
+  String meetingStartTime,
+  String meetingEndTime,
+  String selectedVenue,
+});

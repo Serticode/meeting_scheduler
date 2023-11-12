@@ -5,6 +5,7 @@
     "fpdart",
     "pinput",
     "screenutil",
+    "searchfield",
     "svgs"
   ]
 }

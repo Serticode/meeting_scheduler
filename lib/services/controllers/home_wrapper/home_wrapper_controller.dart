@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meeting_scheduler/screens/calender/calender_screen.dart';
 import 'package:meeting_scheduler/screens/home/home_screen.dart';
 import 'package:meeting_scheduler/screens/profile/account_screen.dart';
+import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part "home_wrapper_controller.g.dart";
 
@@ -19,10 +20,10 @@ class HomeWrapperController extends _$HomeWrapperController {
     "Account",
   ];
 
-  List<IconData> bottomNavBarItemIcons = const [
-    Icons.home,
-    Icons.calendar_view_day,
-    Icons.person,
+  List<String> bottomNavBarItemIcons = const [
+    AppImages.home,
+    AppImages.calender,
+    AppImages.account,
   ];
 
   List<Widget> screens = const [

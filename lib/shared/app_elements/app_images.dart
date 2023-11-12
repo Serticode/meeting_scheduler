@@ -15,7 +15,7 @@ class AppImages {
   //!
   //! HOME - SVG
   static const home = "assets/icons/home.svg";
-  static const calender =
-      "assets/svgs/logoBG.svg"; //"assets/icons/calendar.svg";
+  static const calender = "assets/icons/calendar.svg";
   static const account = "assets/icons/user.svg";
+  static const noMeetings = "assets/svgs/noMeetings.svg";
 }

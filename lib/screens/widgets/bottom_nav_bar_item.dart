@@ -1,5 +1,7 @@
+// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
@@ -7,7 +9,7 @@ import 'package:meeting_scheduler/shared/utils/type_def.dart';
 class CustomBottomNavBarItem extends ConsumerWidget {
   final void Function() onTap;
   final String label;
-  final IconData itemIcon;
+  final String itemIcon;
   final bool isSelected;
   const CustomBottomNavBarItem({
     super.key,
@@ -30,9 +32,8 @@ class CustomBottomNavBarItem extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           //! ICON
-          Icon(
+          SvgPicture.asset(
             itemIcon,
-            size: isSelected ? 28 : 22,
             color: isSelected ? AppColours.deepBlue : AppColours.black50,
           ),
 
