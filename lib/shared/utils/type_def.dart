@@ -29,15 +29,20 @@ enum AppHapticFeedbackType {
   vibrate,
 }
 
-//!
-//! MEETING STRUCTURE
-typedef ScheduledMeeting = ({
-  String fullName,
-  String professionOfVenueBooker,
-  String purposeOfMeeting,
-  String numberOfExpectedParticipants,
-  String dateOfMeeting,
-  String meetingStartTime,
-  String meetingEndTime,
-  String selectedVenue,
-});
+enum MeetingVenue {
+  venue(hallName: "Venue"),
+  cit(hallName: "CIT hall"),
+  sct(hallName: "SCT hall"),
+  wra(hallName: "WRA hall"),
+  bucodel1(hallName: "BUCODEL Room 1"),
+  bucodel2(hallName: "BUCODEL Room 2"),
+  bucodel3(hallName: "BUCODEL Room 3"),
+  cafeAuditorium(hallName: "CAFE Auditorium"),
+  queenEstherActivityHall(hallName: "Queen Esther A.H");
+
+  final String hallName;
+
+  const MeetingVenue({
+    required this.hallName,
+  });
+}

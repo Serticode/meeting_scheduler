@@ -31,4 +31,7 @@ class AppTexts {
   static const String showPassword = "Show password";
   static const String forgotPassword = "Forgot password?";
   static const String sendCode = "Send code";
+
+  //! HOME
+  static const String createMeeting = "Create Meeting";
 }

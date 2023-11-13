@@ -10,4 +10,5 @@ class AppRoutes {
 
   //! HOME
   static const String homeScreen = "homeScreen";
+  static const String createMeeting = "createMeeting";
 }

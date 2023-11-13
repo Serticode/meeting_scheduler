@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/bottom_nav_bar_item.dart';
 import 'package:meeting_scheduler/services/controllers/home_wrapper/home_wrapper_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
@@ -29,6 +31,10 @@ class HomeScreenWrapper extends ConsumerWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             "Create meeting".log();
+            AppNavigator.navigateToPage(
+              thePageRouteName: AppRoutes.createMeeting,
+              context: context,
+            );
           },
           backgroundColor: AppColours.deepBlue,
           child: const Icon(
@@ -69,17 +75,35 @@ class HomeScreenWrapper extends ConsumerWidget {
                               label,
                             ),
                     label: label,
-                    itemIcon: ref
-                        .read(homeWrapperControllerProvider.notifier)
-                        .bottomNavBarItemIcons
-                        .elementAt(
-                          ref
-                              .read(homeWrapperControllerProvider.notifier)
-                              .bottomNavBarItemNames
-                              .indexOf(
-                                label,
-                              ),
-                        ),
+                    itemIcon: currentPageIndex ==
+                            ref
+                                .read(homeWrapperControllerProvider.notifier)
+                                .bottomNavBarItemNames
+                                .indexOf(
+                                  label,
+                                )
+                        ? ref
+                            .read(homeWrapperControllerProvider.notifier)
+                            .bottomNavBarItemIconsSolid
+                            .elementAt(
+                              ref
+                                  .read(homeWrapperControllerProvider.notifier)
+                                  .bottomNavBarItemNames
+                                  .indexOf(
+                                    label,
+                                  ),
+                            )
+                        : ref
+                            .read(homeWrapperControllerProvider.notifier)
+                            .bottomNavBarItemIcons
+                            .elementAt(
+                              ref
+                                  .read(homeWrapperControllerProvider.notifier)
+                                  .bottomNavBarItemNames
+                                  .indexOf(
+                                    label,
+                                  ),
+                            ),
                   ),
                 )
                 .toList(),

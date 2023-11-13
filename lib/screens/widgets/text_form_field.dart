@@ -45,6 +45,7 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             width: 1.2,
+            color: Colors.black12,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

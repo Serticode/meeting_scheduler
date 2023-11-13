@@ -25,19 +25,21 @@ class HomeScreenSearchField extends ConsumerWidget {
       //!
       //! DECORATION
       searchInputDecoration: InputDecoration(
+        suffixIcon: const Icon(Icons.search),
+        suffixIconColor: Colors.black38,
         contentPadding: 14.0.symmetricPadding,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(width: 1.5, color: Colors.black26),
+          borderSide: const BorderSide(width: 1.2, color: Colors.black12),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(width: 1.5, color: Colors.black26),
         ),
         hintStyle: const TextStyle(
-          color: AppColours.black50,
+          color: Colors.black26,
           fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w400,
         ),
       ),
       suggestionsDecoration: SuggestionDecoration(

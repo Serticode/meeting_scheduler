@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_header.dart';
+import 'package:meeting_scheduler/screens/widgets/home_screen_no_meetings.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_search_field.dart';
+import 'package:meeting_scheduler/screens/widgets/meeting_card.dart';
+import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
+import 'package:meeting_scheduler/services/models/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
-import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -51,22 +53,36 @@ class HomeScreen extends ConsumerWidget {
         ),
 
         //!
-        const Spacer(),
+        12.0.sizedBoxHeight,
 
-        SvgPicture.asset(AppImages.noMeetings).transformToScale(
-          scale: 0.8,
+        Expanded(
+          child: Consumer(
+            builder: (context, ref, child) {
+              final AsyncValue<List<ScheduledMeetingModel>> scheduledMeetings =
+                  ref.watch(userMeetingsControllerProvider);
+
+              return scheduledMeetings.when(
+                data: (listOfMeeting) {
+                  return listOfMeeting.isEmpty
+                      ? const NoMeetings()
+                      : SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            children: listOfMeeting
+                                .map((meeting) =>
+                                    MeetingCard(meetingDetails: meeting))
+                                .toList(),
+                          ),
+                        );
+                },
+
+                //!
+                error: (error, trace) => "$error".txt16(),
+                loading: () => const CircularProgressIndicator(),
+              );
+            },
+          ),
         ),
-
-        6.0.sizedBoxHeight,
-
-        "No Meetings to search for, \nkindly create below!".txt(
-          fontSize: 16,
-          color: AppColours.black50,
-          fontWeight: FontWeight.w400,
-          textAlign: TextAlign.center,
-        ),
-
-        const Spacer(),
       ],
     );
   }

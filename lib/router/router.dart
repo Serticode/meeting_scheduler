@@ -3,6 +3,7 @@ import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verification.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verified.dart';
 import 'package:meeting_scheduler/screens/auth/sign_up.dart';
+import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
 
@@ -66,9 +67,17 @@ class AppNavigator {
       //! HOME SCREEN WRAPPER - CARRYING BOTTOM NAV BAR & HOME SCREEN PAGES
       case AppRoutes.homeScreen:
         return GetPageRoute._getPageRoute(
-            routeName: routeSettings.name,
-            args: routeSettings.arguments,
-            view: const HomeScreenWrapper());
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: const HomeScreenWrapper(),
+        );
+
+      case AppRoutes.createMeeting:
+        return GetPageRoute._getPageRoute(
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: const CreateMeeting(),
+        );
 
       default:
         return MaterialPageRoute(

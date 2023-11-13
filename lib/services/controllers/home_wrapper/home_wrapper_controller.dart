@@ -26,6 +26,12 @@ class HomeWrapperController extends _$HomeWrapperController {
     AppImages.account,
   ];
 
+  List<String> bottomNavBarItemIconsSolid = const [
+    AppImages.homeSolid,
+    AppImages.calenderSolid,
+    AppImages.accountSolid,
+  ];
+
   List<Widget> screens = const [
     HomeScreen(),
     CalenderScreen(),

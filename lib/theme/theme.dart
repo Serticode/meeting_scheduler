@@ -1,4 +1,6 @@
 //! ALAS! LET THE THEMING BEGIN!
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 
@@ -10,8 +12,13 @@ class AppTheme {
     fontSize: 14.0.sp,
   ); */
 
+  //! APP DATE RANGE PICKER THEME
+  static final ThemeData dateRangePickerTheme = ThemeData(
+    platform: Platform.isIOS ? TargetPlatform.iOS : TargetPlatform.android,
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColours.buttonBlue),
+  );
+
   //! APP THEME - LIGHT
-  //! TODO: FIND A DARK UI FOR THE APP AND MAKE CHANGES HERE.
   static ThemeData get appThemeLight => ThemeData(
         //! HOW PAGES TRANSITION BETWEEN EACH OTHER
         pageTransitionsTheme: PageTransitionsTheme(builders: {
@@ -32,25 +39,6 @@ class AppTheme {
             size: 18.0,
           ),
         ),
-        /*
-      //! TEXT THEME
-      textTheme: TextTheme(
-          displayLarge: GoogleFonts.ebGaramond(
-            fontWeight: FontWeight.w500,
-            fontSize: 24.0.sp,
-            color: AppColours.textHeaderColour,
-          ),
-
-      //! ELEVATED BUTTON
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColours.primaryColour,
-          elevation: 0.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0.r),
-          ),
-        ),
-      ) */
       );
 }
 
@@ -73,22 +61,6 @@ class CustomFadeTransitionBuilder extends PageTransitionsBuilder {
     );
   }
 }
-/* 
-PageRouteBuilder(
-      pageBuilder: (context, animation, anotherAnimation) {
-        return view;
-      },
-      transitionDuration: const Duration(milliseconds: 1000),
-      transitionsBuilder: (context, animation, anotherAnimation, child) {
-        animation = CurvedAnimation(
-          curve: Curves.linearToEaseOut,
-          parent: animation,
-        );
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }) */
 
 class CustomSlideTransitionBuilder extends PageTransitionsBuilder {
   @override

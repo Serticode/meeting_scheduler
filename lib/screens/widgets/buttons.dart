@@ -73,9 +73,9 @@ class RegularButton extends ConsumerWidget {
                 fontWeight: FontWeight.w600,
               )
               .alignCenter(),
-    ).generalHorizontalPadding.withHapticFeedback(
-          feedbackType: feedbackType,
-          onTap: onTap,
-        );
+    ).withHapticFeedback(
+      feedbackType: feedbackType,
+      onTap: onTap,
+    );
   }
 }
