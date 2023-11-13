@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_header.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_no_meetings.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_search_field.dart';
@@ -69,8 +70,20 @@ class HomeScreen extends ConsumerWidget {
                           physics: const BouncingScrollPhysics(),
                           child: Column(
                             children: listOfMeeting
-                                .map((meeting) =>
-                                    MeetingCard(meetingDetails: meeting))
+                                .map(
+                                  (meeting) =>
+                                      MeetingCard(meetingDetails: meeting)
+                                          .onTap(
+                                    onTap: () => Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CreateMeeting(
+                                          meetingModel: meeting,
+                                          isEditMeeting: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
                                 .toList(),
                           ),
                         );

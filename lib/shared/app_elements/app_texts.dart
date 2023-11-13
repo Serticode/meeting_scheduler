@@ -34,4 +34,6 @@ class AppTexts {
 
   //! HOME
   static const String createMeeting = "Create Meeting";
+  static const String editMeeting = "Edit Meeting";
+  static const String saveMeeting = "Save Meeting";
 }

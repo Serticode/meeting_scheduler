@@ -17,7 +17,13 @@ import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
 
 class CreateMeeting extends ConsumerStatefulWidget {
-  const CreateMeeting({super.key});
+  final ScheduledMeetingModel? meetingModel;
+  final bool? isEditMeeting;
+  const CreateMeeting({
+    super.key,
+    this.meetingModel,
+    this.isEditMeeting,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CreateMeetingState();
@@ -36,7 +42,16 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
     'Item3',
     'Item4',
   ];
+
   String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
+      (timeStamp) => updateNeededValues(),
+    );
+  }
 
   @override
   void dispose() {
@@ -53,10 +68,15 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
       resizeToAvoidBottomInset: false,
 
       appBar: AppBar(
-        title: AppTexts.createMeeting.txt(
-          fontWeight: FontWeight.w600,
-          fontSize: 20,
-        ),
+        title: widget.isEditMeeting != null && widget.isEditMeeting == false
+            ? AppTexts.createMeeting.txt(
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+              )
+            : AppTexts.editMeeting.txt(
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+              ),
         centerTitle: true,
       ),
 
@@ -198,7 +218,10 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                           );
                     }
                   },
-                  buttonText: AppTexts.createMeeting,
+                  buttonText: widget.isEditMeeting != null &&
+                          widget.isEditMeeting == false
+                      ? AppTexts.createMeeting
+                      : AppTexts.saveMeeting,
                 )
               ],
             ),
@@ -206,5 +229,30 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
         ).generalPadding,
       ),
     );
+  }
+
+  void updateNeededValues() {
+    if (widget.meetingModel != null) {
+      _fullName.value = TextEditingValue(text: widget.meetingModel!.fullName!);
+      _profession.value =
+          TextEditingValue(text: widget.meetingModel!.professionOfVenueBooker!);
+      _purpose.value =
+          TextEditingValue(text: widget.meetingModel!.purposeOfMeeting!);
+      _attenders.value = TextEditingValue(
+          text: widget.meetingModel!.numberOfExpectedParticipants!);
+      ref
+          .read(meetingDateControllerProvider.notifier)
+          .setMeetingDate(date: widget.meetingModel!.dateOfMeeting!);
+      ref.read(meetingVenueControllerProvider.notifier).setMeetingVenue(
+            meetingVenue: MeetingVenue.values.firstWhere((element) =>
+                element.hallName == widget.meetingModel!.selectedVenue),
+          );
+      ref
+          .read(meetingStartTimeControllerProvider.notifier)
+          .setStartTime(theTime: widget.meetingModel!.meetingStartTime!);
+      ref
+          .read(meetingEndTimeControllerProvider.notifier)
+          .setEndTime(theTime: widget.meetingModel!.meetingEndTime!);
+    }
   }
 }

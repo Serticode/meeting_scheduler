@@ -2,7 +2,7 @@ import 'package:meeting_scheduler/services/models/scheduled_meeting_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part "user_meetings_controller.g.dart";
 
-@riverpod
+@Riverpod(keepAlive: true)
 class UserMeetingsController extends _$UserMeetingsController {
   @override
   FutureOr<List<ScheduledMeetingModel>> build() => [];

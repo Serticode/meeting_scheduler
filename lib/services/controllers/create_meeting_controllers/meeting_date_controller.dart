@@ -33,6 +33,23 @@ class MeetingDateController extends _$MeetingDateController {
     }
   }
 
+  void setMeetingDate({
+    required String date,
+  }) {
+    final List<String> dates = date.split("/");
+
+    DateTime dateTime = DateTime(
+      int.tryParse(dates.elementAt(2).trim())!,
+      int.tryParse(
+        AppUtils.getMonthNumber(monthName: dates.elementAt(1).trim())
+            .toString(),
+      )!,
+      int.tryParse(dates.elementAt(0))!,
+    );
+
+    state = AsyncValue.data(dateTime);
+  }
+
   String get getMeetingDate => toString();
 
   @override

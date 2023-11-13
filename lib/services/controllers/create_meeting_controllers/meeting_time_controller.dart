@@ -4,11 +4,15 @@ import 'package:meeting_scheduler/theme/theme.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part "meeting_time_controller.g.dart";
 
+//!
+//!
 //! START TIME
 @riverpod
 class MeetingStartTimeController extends _$MeetingStartTimeController {
   @override
   FutureOr<TimeOfDay?> build() => null;
+
+  String amOrPM = "";
 
   Future<void> createMeetingTime({
     required BuildContext context,
@@ -24,6 +28,7 @@ class MeetingStartTimeController extends _$MeetingStartTimeController {
     );
 
     if (result != null) {
+      amOrPM = result.period.name.toUpperCase();
       state = AsyncValue.data(result);
     } else {
       state = const AsyncValue.data(null);
@@ -32,11 +37,25 @@ class MeetingStartTimeController extends _$MeetingStartTimeController {
 
   String get getMeetingTime => toString();
 
+  void setStartTime({
+    required String theTime,
+  }) {
+    final List<String> times = theTime.split(":");
+    amOrPM = times.elementAt(1).split(" ").last;
+
+    TimeOfDay time = TimeOfDay(
+        hour: int.tryParse(times.elementAt(0).trim())!,
+        minute: int.tryParse(times.elementAt(1).split(" ")[1].trim())!);
+
+    state = AsyncValue.data(time);
+  }
+
   @override
   String toString() =>
-      "${state.value?.hourOfPeriod} : ${state.value?.minute} ${state.value?.period.name.toUpperCase()}";
+      "${state.value?.hourOfPeriod} : ${state.value?.minute} $amOrPM";
 }
 
+//!
 //!
 //! END TIME
 @riverpod
@@ -44,6 +63,8 @@ class MeetingEndTimeController extends _$MeetingEndTimeController {
   @override
   FutureOr<TimeOfDay?> build() => null;
 
+  String amOrPM = "";
+
   Future<void> createMeetingTime({
     required BuildContext context,
   }) async {
@@ -58,6 +79,7 @@ class MeetingEndTimeController extends _$MeetingEndTimeController {
     );
 
     if (result != null) {
+      amOrPM = result.period.name.toUpperCase();
       state = AsyncValue.data(result);
     } else {
       state = const AsyncValue.data(null);
@@ -66,7 +88,21 @@ class MeetingEndTimeController extends _$MeetingEndTimeController {
 
   String get getMeetingTime => toString();
 
+  void setEndTime({
+    required String theTime,
+  }) {
+    final List<String> times = theTime.split(":");
+    amOrPM = times.elementAt(1).split(" ").last;
+
+    TimeOfDay time = TimeOfDay(
+      hour: int.tryParse(times.elementAt(0).trim())!,
+      minute: int.tryParse(times.elementAt(1).split(" ")[1].trim())!,
+    );
+
+    state = AsyncValue.data(time);
+  }
+
   @override
   String toString() =>
-      "${state.value?.hourOfPeriod} : ${state.value?.minute} ${state.value?.period.name.toUpperCase()}";
+      "${state.value?.hourOfPeriod} : ${state.value?.minute} $amOrPM";
 }

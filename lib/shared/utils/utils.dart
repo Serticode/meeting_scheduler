@@ -49,4 +49,53 @@ class AppUtils {
         return theMonth;
     }
   }
+
+  //!
+//! FETCH MONTH NAME
+  static int getMonthNumber({required String monthName}) {
+    int monthNumber = 0;
+    switch (monthName) {
+      case "Jan":
+        monthNumber = 1;
+        return monthNumber;
+      case "Feb":
+        monthNumber = 2;
+        return monthNumber;
+      case "Mar":
+        monthNumber = 3;
+        return monthNumber;
+      case "Apr":
+        monthNumber = 4;
+        return monthNumber;
+      case "May":
+        monthNumber = 5;
+        return monthNumber;
+      case "Jun":
+        monthNumber = 6;
+        return monthNumber;
+      case "Jul":
+        monthNumber = 7;
+        return monthNumber;
+      case "Aug":
+        monthNumber = 8;
+        return monthNumber;
+      case "Sep":
+        monthNumber = 9;
+        return monthNumber;
+      case "Oct":
+        monthNumber = 10;
+        return monthNumber;
+      case "Nov":
+        monthNumber = 11;
+        return monthNumber;
+      case "Dec":
+        monthNumber = 12;
+        return monthNumber;
+
+      //! DEFAULT VALUES
+      default:
+        monthNumber = 1;
+        return monthNumber;
+    }
+  }
 }
