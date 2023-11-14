@@ -6,6 +6,7 @@ part "user_meetings_controller.g.dart";
 class UserMeetingsController extends _$UserMeetingsController {
   @override
   FutureOr<List<ScheduledMeetingModel>> build() => [];
+  // AsyncValue<List<ScheduledMeetingModel>> mainState;
 
   ScheduledMeetingModel? getMeetingInfo({
     required ScheduledMeetingModel selectedMeeting,
@@ -23,23 +24,13 @@ class UserMeetingsController extends _$UserMeetingsController {
     required ScheduledMeetingModel scheduledMeeting,
   }) async {
     List<ScheduledMeetingModel>? tempList = state.value;
-    tempList?.add(scheduledMeeting);
+
+    if (tempList?.contains(scheduledMeeting) == false) {
+      tempList?.add(scheduledMeeting);
+    }
+
     if (tempList != null) {
       state = AsyncValue.data(tempList);
     }
   }
-
-  List<ScheduledMeetingModel>? get getAllMeetingVenues => List.generate(
-        10,
-        (index) => ScheduledMeetingModel(
-          fullName: "Meeting $index",
-          professionOfVenueBooker: "Meeting $index",
-          purposeOfMeeting: "Meeting $index",
-          numberOfExpectedParticipants: "Meeting $index",
-          dateOfMeeting: "Meeting $index",
-          meetingStartTime: "Meeting $index",
-          meetingEndTime: "Meeting $index",
-          selectedVenue: "Meeting $index",
-        ),
-      );
 }

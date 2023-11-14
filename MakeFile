@@ -1,0 +1,7 @@
+# Makefile for Flutter project
+.PHONY: format
+
+format:
+    flutter format
+#format:
+ #   dart format .

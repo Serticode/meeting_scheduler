@@ -10,22 +10,25 @@ class NoMeetings extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      children: [
-        SvgPicture.asset(AppImages.noMeetings).transformToScale(
-          scale: 0.8,
-        ),
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(AppImages.noMeetings).transformToScale(
+            scale: 0.8,
+          ),
 
-        //!
-        6.0.sizedBoxHeight,
+          //!
+          6.0.sizedBoxHeight,
 
-        "No Meetings to search for, \nkindly create below!".txt(
-          fontSize: 16,
-          color: AppColours.black50,
-          fontWeight: FontWeight.w400,
-          textAlign: TextAlign.center,
-        ),
-      ],
+          "No Meetings to search for, \nkindly create below!".txt(
+            fontSize: 16,
+            color: AppColours.black50,
+            fontWeight: FontWeight.w400,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 }

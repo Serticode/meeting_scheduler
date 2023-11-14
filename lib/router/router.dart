@@ -76,7 +76,9 @@ class AppNavigator {
         return GetPageRoute._getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
-          view: const CreateMeeting(),
+          view: const CreateMeeting(
+            isEditMeeting: false,
+          ),
         );
 
       default:

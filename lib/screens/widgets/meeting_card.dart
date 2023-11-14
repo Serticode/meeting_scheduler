@@ -36,6 +36,27 @@ class MeetingCard extends ConsumerWidget {
           ),
         ),
 
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Icon(
+                  Icons.add,
+                  color: AppColours.buttonBlue,
+                ),
+                6.0.sizedBoxWidth,
+                "Edit".txt14(
+                  fontWeight: FontWeight.w500,
+                  color: AppColours.buttonBlue,
+                ),
+              ],
+            ).generalPadding,
+          ),
+        ),
+
         //! BODY
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
