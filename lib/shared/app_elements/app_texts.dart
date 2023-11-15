@@ -36,4 +36,7 @@ class AppTexts {
   static const String createMeeting = "Create Meeting";
   static const String editMeeting = "Edit Meeting";
   static const String saveMeeting = "Save Meeting";
+
+  //! CALENDER
+  static const String generalCalender = "General Calender";
 }

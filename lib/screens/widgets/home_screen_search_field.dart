@@ -11,7 +11,6 @@ class HomeScreenSearchField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    /* List.generate(12, (index) => 'suggestion $index'); */
     final FocusNode focus = FocusNode();
 
     return Consumer(

@@ -758,12 +758,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "simple_gesture_detector",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/simple_gesture_detector-0.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "simple_progress_indicators",
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/simple_progress_indicators-0.2.0",
       "packageUri": "lib/",
@@ -846,12 +840,6 @@
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/synchronized-3.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
-    },
-    {
-      "name": "table_calendar",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/table_calendar-3.0.8",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "term_glyph",
@@ -1016,7 +1004,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-14T18:30:49.882977Z",
+  "generated": "2023-11-15T20:33:19.542305Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

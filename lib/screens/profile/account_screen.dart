@@ -7,9 +7,6 @@ class AccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      color: Colors.red,
-      child: "Account Screen".txt24().alignCenter(),
-    );
+    return "Account Screen".txt24().alignCenter();
   }
 }

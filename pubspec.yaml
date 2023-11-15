@@ -58,7 +58,6 @@ dependencies:
   riverpod_annotation:
   cron: ^0.5.1
   searchfield: ^0.8.7
-  table_calendar: ^3.0.8
 
 dev_dependencies:
   flutter_test:

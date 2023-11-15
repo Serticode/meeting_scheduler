@@ -22,4 +22,8 @@ class AppImages {
   static const accountSolid = "assets/icons/userSolid.svg";
   static const noMeetings = "assets/svgs/noMeetings.svg";
   static const meetingTopRightBG = "assets/svgs/meetingTopRightBG.svg";
+
+  //!
+  //! CALENDER - SVG
+  static const emptyCalender = "assets/svgs/emptyCalender.svg";
 }

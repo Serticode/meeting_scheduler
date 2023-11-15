@@ -6,7 +6,6 @@ part "user_meetings_controller.g.dart";
 class UserMeetingsController extends _$UserMeetingsController {
   @override
   FutureOr<List<ScheduledMeetingModel>> build() => [];
-  // AsyncValue<List<ScheduledMeetingModel>> mainState;
 
   ScheduledMeetingModel? getMeetingInfo({
     required ScheduledMeetingModel selectedMeeting,

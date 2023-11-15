@@ -34,7 +34,7 @@ class CustomBottomNavBarItem extends ConsumerWidget {
           //! ICON
           SvgPicture.asset(
             itemIcon,
-            color: isSelected ? AppColours.deepBlue : AppColours.black50,
+            color: isSelected ? AppColours.deepBlue : null,
           ),
 
           //! SPACER
@@ -43,7 +43,7 @@ class CustomBottomNavBarItem extends ConsumerWidget {
           label.txt(
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
             fontSize: isSelected ? 12 : 10,
-            color: isSelected ? AppColours.deepBlue : AppColours.black50,
+            color: isSelected ? AppColours.deepBlue : AppColours.deepBlue,
           ),
         ],
       ).withHapticFeedback(
