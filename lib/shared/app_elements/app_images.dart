@@ -26,4 +26,10 @@ class AppImages {
   //!
   //! CALENDER - SVG
   static const emptyCalender = "assets/svgs/emptyCalender.svg";
+
+  //!
+  //! ACCOUNT - SVG
+  static const helpCenter = "assets/svgs/helpCenter.svg";
+  static const lock = "assets/svgs/lock.svg";
+  static const logout = "assets/svgs/logout.svg";
 }

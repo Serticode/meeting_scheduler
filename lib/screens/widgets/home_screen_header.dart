@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/utils.dart';
@@ -13,13 +14,8 @@ class HomeScreenHeader extends ConsumerWidget {
     return Row(
       children: [
         //! IMAGE
-        CircleAvatar(
-          radius: 24,
-          backgroundColor: AppColours.deepBlue.withOpacity(0.1),
-          child: const Icon(
-            Icons.person_2_outlined,
-            color: AppColours.deepBlue,
-          ),
+        const UserProfileImage(
+          isAccountSettingsPage: false,
         ),
 
         //!

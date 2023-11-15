@@ -59,7 +59,7 @@ class RegularButton extends ConsumerWidget {
       duration: const Duration(milliseconds: 300),
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
-        vertical: 18.0,
+        vertical: 16.0,
         horizontal: 21.0,
       ),
       decoration: BoxDecoration(

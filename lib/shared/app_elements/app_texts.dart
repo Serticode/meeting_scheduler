@@ -39,4 +39,7 @@ class AppTexts {
 
   //! CALENDER
   static const String generalCalender = "General Calender";
+
+  //! ACCOUNT SCREEN
+  static const String accountSettings = "Account Settings";
 }

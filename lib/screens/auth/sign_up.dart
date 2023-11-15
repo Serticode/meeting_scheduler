@@ -54,23 +54,19 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                28.0.sizedBoxHeight,
-
                 //! LOGO
                 SizedBox(
-                  height: 140.0,
+                  height: 120.0,
                   width: 130,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       //! BG
-                      Transform.scale(
-                        scale: 1.2,
-                        child: SvgPicture.asset(
-                          AppImages.logoBG,
-                          semanticsLabel: "Logo",
-                        ),
+                      SvgPicture.asset(
+                        AppImages.logoBG,
+                        semanticsLabel: "Logo",
                       ),
 
                       //! LOGO
@@ -214,8 +210,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 "Already have an account?  Login now"
                     .txt16(fontWeight: FontWeight.w600),
-
-                75.0.sizedBoxHeight
               ],
             ).generalPadding,
           ),
