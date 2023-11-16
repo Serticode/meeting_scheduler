@@ -38,10 +38,8 @@ dependencies:
   flutter_riverpod: ^2.1.1
   shared_preferences: ^2.0.15
   multiple_result: ^4.0.0
-  phosphor_flutter: ^1.4.0
   flutter_slidable: ^2.0.0
   image_picker: ^0.8.6
-  lottie: ^2.1.0
   pattern_formatter: ^2.0.0
   flutter_animate: ^2.1.0
   cached_network_image: ^3.2.3
@@ -49,14 +47,11 @@ dependencies:
   path_provider: ^2.0.11
   dropdown_button2: ^2.3.8
   pull_to_refresh: ^2.0.0
-  url_launcher: ^6.1.9
   flutter_fadein: ^2.0.0
   connectivity_plus: ^3.0.3
   flutter_svg: ^2.0.9
-  simple_progress_indicators: ^0.2.0
   loading_indicator: ^3.1.1
   riverpod_annotation:
-  cron: ^0.5.1
   searchfield: ^0.8.7
 
 dev_dependencies:

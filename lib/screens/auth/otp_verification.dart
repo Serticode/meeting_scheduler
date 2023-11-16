@@ -16,83 +16,84 @@ class OTPVerification extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            12.0.sizedBoxHeight,
-
-            AuthBackButton(
-              onTap: () => Navigator.pop(context),
-            ),
-
-            32.0.sizedBoxHeight,
-
-            //! TITLE
-            AppTexts.otpVerification.txt24(
-              fontWeight: FontWeight.w700,
-            ),
-
-            12.0.sizedBoxHeight,
-
-            //! RIDER
-            AppTexts.otpVerificationRider.txt14(
-              color: AppColours.black50,
-            ),
-
-            32.0.sizedBoxHeight,
-
-            //! PINPUT
-            Pinput(
-              autofocus: true,
-              defaultPinTheme: AppConstants.otpVerificationDefaultPinTheme,
-              focusedPinTheme:
-                  AppConstants.otpVerificationDefaultPinTheme.copyWith(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColours.deepBlue,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              errorPinTheme:
-                  AppConstants.otpVerificationDefaultPinTheme.copyWith(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColours.red,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              pinAnimationType: PinAnimationType.fade,
-              animationCurve: Curves.bounceInOut,
-            ).alignCenter(),
-
-            50.0.sizedBoxHeight,
-
-            RegularButton(
-              onTap: () async {
-                "Send code - OTP VERIFICATION pressed".log();
-                await AppNavigator.navigateToPage(
-                  thePageRouteName: AppRoutes.otpVerified,
-                  context: context,
-                );
-              },
-              buttonText: AppTexts.sendCode,
-            ),
-
-            const Spacer(),
-
-            "Didn’t received code? Resend"
-                .txt16(fontWeight: FontWeight.w600)
-                .alignCenter(),
-
-            12.0.sizedBoxHeight,
-          ],
-        ).generalPadding,
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 10,
       ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          12.0.sizedBoxHeight,
+
+          AuthBackButton(
+            onTap: () => Navigator.pop(context),
+          ),
+
+          32.0.sizedBoxHeight,
+
+          //! TITLE
+          AppTexts.otpVerification.txt24(
+            fontWeight: FontWeight.w700,
+          ),
+
+          12.0.sizedBoxHeight,
+
+          //! RIDER
+          AppTexts.otpVerificationRider.txt14(
+            color: AppColours.black50,
+          ),
+
+          32.0.sizedBoxHeight,
+
+          //! PINPUT
+          Pinput(
+            autofocus: true,
+            defaultPinTheme: AppConstants.otpVerificationDefaultPinTheme,
+            focusedPinTheme:
+                AppConstants.otpVerificationDefaultPinTheme.copyWith(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColours.deepBlue,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            errorPinTheme: AppConstants.otpVerificationDefaultPinTheme.copyWith(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColours.red,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            pinAnimationType: PinAnimationType.fade,
+            animationCurve: Curves.bounceInOut,
+          ).alignCenter(),
+
+          50.0.sizedBoxHeight,
+
+          RegularButton(
+            onTap: () async {
+              "Send code - OTP VERIFICATION pressed".log();
+              await AppNavigator.navigateToPage(
+                thePageRouteName: AppRoutes.otpVerified,
+                context: context,
+              );
+            },
+            buttonText: AppTexts.sendCode,
+          ),
+
+          const Spacer(),
+
+          "Didn’t received code? Resend"
+              .txt16(fontWeight: FontWeight.w600)
+              .alignCenter(),
+
+          12.0.sizedBoxHeight,
+        ],
+      ).generalPadding,
     );
   }
 }

@@ -15,61 +15,63 @@ class OTPVerified extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-
-            //! IMAGE
-            SvgPicture.asset(
-              AppImages.verificationSuccessful,
-            ).alignCenter().fadeInFromBottom(
-                  delay: const Duration(
-                    milliseconds: 200,
-                  ),
-                ),
-
-            12.0.sizedBoxHeight,
-
-            AppTexts.verified
-                .txt24(
-                  fontWeight: FontWeight.w700,
-                )
-                .fadeInFromBottom(
-                  delay: const Duration(
-                    milliseconds: 300,
-                  ),
-                ),
-
-            12.0.sizedBoxHeight,
-
-            AppTexts.verifiedRider
-                .txt16(
-                  color: AppColours.black50,
-                )
-                .fadeInFromBottom(
-                  delay: const Duration(
-                    milliseconds: 400,
-                  ),
-                ),
-
-            75.0.sizedBoxHeight,
-
-            RegularButton(
-              onTap: () async => await AppNavigator.navigateToPage(
-                  thePageRouteName: AppRoutes.homeScreen, context: context),
-              buttonText: AppTexts.enter,
-            ).fadeInFromBottom(
-              delay: const Duration(
-                milliseconds: 500,
-              ),
-            ),
-
-            const Spacer(),
-          ],
-        ).generalPadding,
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 10,
       ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Spacer(),
+
+          //! IMAGE
+          SvgPicture.asset(
+            AppImages.verificationSuccessful,
+          ).alignCenter().fadeInFromBottom(
+                delay: const Duration(
+                  milliseconds: 200,
+                ),
+              ),
+
+          12.0.sizedBoxHeight,
+
+          AppTexts.verified
+              .txt24(
+                fontWeight: FontWeight.w700,
+              )
+              .fadeInFromBottom(
+                delay: const Duration(
+                  milliseconds: 300,
+                ),
+              ),
+
+          12.0.sizedBoxHeight,
+
+          AppTexts.verifiedRider
+              .txt16(
+                color: AppColours.black50,
+              )
+              .fadeInFromBottom(
+                delay: const Duration(
+                  milliseconds: 400,
+                ),
+              ),
+
+          75.0.sizedBoxHeight,
+
+          RegularButton(
+            onTap: () async => await AppNavigator.navigateToPage(
+                thePageRouteName: AppRoutes.homeScreen, context: context),
+            buttonText: AppTexts.enter,
+          ).fadeInFromBottom(
+            delay: const Duration(
+              milliseconds: 500,
+            ),
+          ),
+
+          const Spacer(),
+        ],
+      ).generalPadding,
     );
   }
 }

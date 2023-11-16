@@ -17,14 +17,17 @@ class HomeScreenWrapper extends ConsumerWidget {
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        //! BODY
-        body: SafeArea(
-          child: ref
-              .read(homeWrapperControllerProvider.notifier)
-              .screens
-              .elementAt(currentPageIndex ?? 0)
-              .generalPadding,
+        appBar: AppBar(
+          elevation: 0,
+          toolbarHeight: 10,
         ),
+
+        //! BODY
+        body: ref
+            .read(homeWrapperControllerProvider.notifier)
+            .screens
+            .elementAt(currentPageIndex ?? 0)
+            .generalPadding,
 
         //! FAB
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

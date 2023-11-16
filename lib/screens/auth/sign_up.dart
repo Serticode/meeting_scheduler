@@ -47,172 +47,174 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                //! LOGO
-                SizedBox(
-                  height: 120.0,
-                  width: 130,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      //! BG
-                      SvgPicture.asset(
-                        AppImages.logoBG,
-                        semanticsLabel: "Logo",
-                      ),
-
-                      //! LOGO
-                      Image.asset(
-                        AppImages.logo,
-                        scale: 1.2,
-                      ),
-                    ],
-                  ),
-                ).alignCenter(),
-
-                12.0.sizedBoxHeight,
-
-                AppTexts.createAccount.txt(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                ),
-
-                36.0.sizedBoxHeight,
-
-                //! FULL NAME
-                CustomTextFormField(
-                  isForPassword: false,
-                  hint: "Full name",
-                  controller: _fullName,
-                  prefixIcon: const Icon(
-                    Icons.person,
-                    size: 18,
-                  ),
-                ),
-
-                21.0.sizedBoxHeight,
-
-                //! EMAIL
-                CustomTextFormField(
-                  isForPassword: false,
-                  hint: "Enter your email",
-                  controller: _email,
-                  prefixIcon: const Icon(
-                    Icons.email_rounded,
-                    size: 18,
-                  ),
-                ),
-
-                21.0.sizedBoxHeight,
-
-                //! PASSWORD
-                isChecked.toValueListenable(
-                  builder: (context, value, child) {
-                    return CustomTextFormField(
-                      isForPassword: false,
-                      hint: "Enter your password",
-                      controller: _password,
-                      prefixIcon: const Icon(
-                        Icons.lock,
-                        size: 18,
-                      ),
-                      suffixIcon: value == true
-                          ? const Icon(Icons.visibility)
-                          : const Icon(
-                              Icons.visibility_off,
-                            ),
-                    );
-                  },
-                ),
-
-                21.0.sizedBoxHeight,
-
-                //! CONFIRM PASSWORD
-                isChecked.toValueListenable(
-                  builder: (context, value, child) {
-                    return CustomTextFormField(
-                      isForPassword: false,
-                      hint: "Confirm your password",
-                      controller: _confirmPassword,
-                      prefixIcon: const Icon(
-                        Icons.lock,
-                        size: 18,
-                      ),
-                      suffixIcon: value == true
-                          ? const Icon(Icons.visibility)
-                          : const Icon(
-                              Icons.visibility_off,
-                            ),
-                    );
-                  },
-                ),
-
-                32.0.sizedBoxHeight,
-
-                //! SHOW PASSWORD && FORGOT PASSWORD
-                Row(
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 10,
+      ),
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              //! LOGO
+              SizedBox(
+                height: 120.0,
+                width: 130,
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    //! CHECK BOX
-                    isChecked.toValueListenable(
-                      builder: (context, value, child) {
-                        return Checkbox.adaptive(
-                          activeColor: AppColours.buttonBlue,
-                          side: BorderSide(
-                            color: isChecked.value == true
-                                ? AppColours.primaryBlue
-                                : AppColours.buttonBlue,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                          semanticLabel: "Show password checkbox",
-                          value: value,
-                          onChanged: (value) {
-                            isChecked.value = value ?? false;
-                          },
-                        );
-                      },
+                    //! BG
+                    SvgPicture.asset(
+                      AppImages.logoBG,
+                      semanticsLabel: "Logo",
                     ),
 
-                    AppTexts.showPassword.txt16(),
-
-                    const Spacer(),
-
-                    AppTexts.forgotPassword.txt16().onTap(
-                          onTap: () {},
-                        )
+                    //! LOGO
+                    Image.asset(
+                      AppImages.logo,
+                      scale: 1.2,
+                    ),
                   ],
                 ),
+              ).alignCenter(),
 
-                32.0.sizedBoxHeight,
+              12.0.sizedBoxHeight,
 
-                //! BUTTON
-                RegularButton(
-                  onTap: () async {
-                    "Create account pressed".log();
-                    await AppNavigator.navigateToPage(
-                      thePageRouteName: AppRoutes.otpVerification,
-                      context: context,
-                    );
-                  },
-                  buttonText: AppTexts.createAccount,
+              AppTexts.createAccount.txt(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w500,
+              ),
+
+              36.0.sizedBoxHeight,
+
+              //! FULL NAME
+              CustomTextFormField(
+                isForPassword: false,
+                hint: "Full name",
+                controller: _fullName,
+                prefixIcon: const Icon(
+                  Icons.person,
+                  size: 18,
                 ),
+              ),
 
-                32.0.sizedBoxHeight,
+              21.0.sizedBoxHeight,
 
-                "Already have an account?  Login now"
-                    .txt16(fontWeight: FontWeight.w600),
-              ],
-            ).generalPadding,
-          ),
+              //! EMAIL
+              CustomTextFormField(
+                isForPassword: false,
+                hint: "Enter your email",
+                controller: _email,
+                prefixIcon: const Icon(
+                  Icons.email_rounded,
+                  size: 18,
+                ),
+              ),
+
+              21.0.sizedBoxHeight,
+
+              //! PASSWORD
+              isChecked.toValueListenable(
+                builder: (context, value, child) {
+                  return CustomTextFormField(
+                    isForPassword: false,
+                    hint: "Enter your password",
+                    controller: _password,
+                    prefixIcon: const Icon(
+                      Icons.lock,
+                      size: 18,
+                    ),
+                    suffixIcon: value == true
+                        ? const Icon(Icons.visibility)
+                        : const Icon(
+                            Icons.visibility_off,
+                          ),
+                  );
+                },
+              ),
+
+              21.0.sizedBoxHeight,
+
+              //! CONFIRM PASSWORD
+              isChecked.toValueListenable(
+                builder: (context, value, child) {
+                  return CustomTextFormField(
+                    isForPassword: false,
+                    hint: "Confirm your password",
+                    controller: _confirmPassword,
+                    prefixIcon: const Icon(
+                      Icons.lock,
+                      size: 18,
+                    ),
+                    suffixIcon: value == true
+                        ? const Icon(Icons.visibility)
+                        : const Icon(
+                            Icons.visibility_off,
+                          ),
+                  );
+                },
+              ),
+
+              32.0.sizedBoxHeight,
+
+              //! SHOW PASSWORD && FORGOT PASSWORD
+              Row(
+                children: [
+                  //! CHECK BOX
+                  isChecked.toValueListenable(
+                    builder: (context, value, child) {
+                      return Checkbox.adaptive(
+                        activeColor: AppColours.buttonBlue,
+                        side: BorderSide(
+                          color: isChecked.value == true
+                              ? AppColours.primaryBlue
+                              : AppColours.buttonBlue,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        semanticLabel: "Show password checkbox",
+                        value: value,
+                        onChanged: (value) {
+                          isChecked.value = value ?? false;
+                        },
+                      );
+                    },
+                  ),
+
+                  AppTexts.showPassword.txt16(),
+
+                  const Spacer(),
+
+                  AppTexts.forgotPassword.txt16().onTap(
+                        onTap: () {},
+                      )
+                ],
+              ),
+
+              32.0.sizedBoxHeight,
+
+              //! BUTTON
+              RegularButton(
+                onTap: () async {
+                  "Create account pressed".log();
+                  await AppNavigator.navigateToPage(
+                    thePageRouteName: AppRoutes.otpVerification,
+                    context: context,
+                  );
+                },
+                buttonText: AppTexts.createAccount,
+              ),
+
+              32.0.sizedBoxHeight,
+
+              "Already have an account?  Login now"
+                  .txt16(fontWeight: FontWeight.w600),
+            ],
+          ).generalPadding,
         ),
       ),
     );

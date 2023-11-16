@@ -22,9 +22,6 @@ class CalenderScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        //!
-        12.0.sizedBoxHeight,
-
         AppTexts.generalCalender
             .txt(
               fontSize: 20.0,

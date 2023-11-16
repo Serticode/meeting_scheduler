@@ -6,6 +6,7 @@ import 'package:meeting_scheduler/screens/auth/sign_up.dart';
 import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
+import 'package:meeting_scheduler/screens/profile/edit_profile.dart';
 
 class AppNavigator {
   const AppNavigator._();
@@ -79,6 +80,14 @@ class AppNavigator {
           view: const CreateMeeting(
             isEditMeeting: false,
           ),
+        );
+
+      //!
+      case AppRoutes.editProfile:
+        return GetPageRoute._getPageRoute(
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: const EditProfileScreen(),
         );
 
       default:

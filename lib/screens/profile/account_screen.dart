@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/account_settings_item.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
@@ -29,9 +31,6 @@ class AccountScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        //!
-        12.0.sizedBoxHeight,
-
         AppTexts.accountSettings
             .txt(
               fontSize: 20.0,
@@ -81,6 +80,10 @@ class AccountScreen extends ConsumerWidget {
               ).onTap(
                 onTap: () {
                   "Edit profile".log();
+                  AppNavigator.navigateToPage(
+                    thePageRouteName: AppRoutes.editProfile,
+                    context: context,
+                  );
                 },
               )
             ]),

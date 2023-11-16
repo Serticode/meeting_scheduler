@@ -81,153 +81,149 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
       ),
 
       //! BODY
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                18.0.sizedBoxHeight,
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              18.0.sizedBoxHeight,
 
-                //! FULL NAME
-                CustomTextFormField(
-                  isForPassword: false,
-                  hint: "Full Name",
-                  controller: _fullName,
-                ),
+              //! FULL NAME
+              CustomTextFormField(
+                isForPassword: false,
+                hint: "Full Name",
+                controller: _fullName,
+              ),
 
-                18.0.sizedBoxHeight,
+              18.0.sizedBoxHeight,
 
-                //! PROFESSION
-                CustomTextFormField(
-                  isForPassword: false,
-                  hint: "Profession e.g lecturer, secretary",
-                  controller: _profession,
-                ),
+              //! PROFESSION
+              CustomTextFormField(
+                isForPassword: false,
+                hint: "Profession e.g lecturer, secretary",
+                controller: _profession,
+              ),
 
-                18.0.sizedBoxHeight,
+              18.0.sizedBoxHeight,
 
-                //! PURPOSE
-                CustomTextFormField(
-                  isForPassword: false,
-                  hint: "Purpose of Meeting",
-                  controller: _purpose,
-                ),
+              //! PURPOSE
+              CustomTextFormField(
+                isForPassword: false,
+                hint: "Purpose of Meeting",
+                controller: _purpose,
+              ),
 
-                18.0.sizedBoxHeight,
+              18.0.sizedBoxHeight,
 
-                //! ATTENDERS
-                CustomTextFormField(
-                  isForPassword: false,
-                  hint: "Number of attenders",
-                  controller: _attenders,
-                ),
+              //! ATTENDERS
+              CustomTextFormField(
+                isForPassword: false,
+                hint: "Number of attenders",
+                controller: _attenders,
+              ),
 
-                18.0.sizedBoxHeight,
+              18.0.sizedBoxHeight,
 
-                //! MEETING DATE
-                const MeetingDateSelector(),
+              //! MEETING DATE
+              const MeetingDateSelector(),
 
-                18.0.sizedBoxHeight,
+              18.0.sizedBoxHeight,
 
-                //! MEETING TIME
-                Row(
-                  children: [
-                    Expanded(
-                      child: MeetingTimeSelector(
-                          isStartTime: true,
-                          provider: meetingStartTimeControllerProvider),
-                    ),
+              //! MEETING TIME
+              Row(
+                children: [
+                  Expanded(
+                    child: MeetingTimeSelector(
+                        isStartTime: true,
+                        provider: meetingStartTimeControllerProvider),
+                  ),
 
-                    //!
-                    21.0.sizedBoxWidth,
+                  //!
+                  21.0.sizedBoxWidth,
 
-                    Expanded(
-                      child: MeetingTimeSelector(
-                          isStartTime: false,
-                          provider: meetingEndTimeControllerProvider),
-                    )
-                  ],
-                ),
+                  Expanded(
+                    child: MeetingTimeSelector(
+                        isStartTime: false,
+                        provider: meetingEndTimeControllerProvider),
+                  )
+                ],
+              ),
 
-                //!
-                18.0.sizedBoxHeight,
+              //!
+              18.0.sizedBoxHeight,
 
-                //! MEETING VENUE
-                const MeetingVenueSelector(),
+              //! MEETING VENUE
+              const MeetingVenueSelector(),
 
-                32.0.sizedBoxHeight,
+              32.0.sizedBoxHeight,
 
-                RegularButton(
-                  onTap: () async {
-                    if (ref
-                                .read(meetingVenueControllerProvider.notifier)
-                                .getSelectedVenue ==
-                            null ||
-                        ref
-                                .read(meetingVenueControllerProvider.notifier)
-                                .getSelectedVenue ==
-                            MeetingVenue.venue) {
-                      ScaffoldMessenger.of(context).showMaterialBanner(
-                        MaterialBanner(
-                          content: "Select a venue".txt24(
-                            fontWeight: FontWeight.w600,
-                            color: AppColours.white,
-                          ),
-                          backgroundColor: AppColours.buttonBlue,
-                          actions: [
-                            "Close".txt14(color: AppColours.white).onTap(
-                                  onTap: () => ScaffoldMessenger.of(context)
-                                      .clearMaterialBanners(),
-                                )
-                          ],
+              RegularButton(
+                onTap: () async {
+                  if (ref
+                              .read(meetingVenueControllerProvider.notifier)
+                              .getSelectedVenue ==
+                          null ||
+                      ref
+                              .read(meetingVenueControllerProvider.notifier)
+                              .getSelectedVenue ==
+                          MeetingVenue.venue) {
+                    ScaffoldMessenger.of(context).showMaterialBanner(
+                      MaterialBanner(
+                        content: "Select a venue".txt24(
+                          fontWeight: FontWeight.w600,
+                          color: AppColours.white,
                         ),
-                      );
-                    } else {
-                      final ScheduledMeetingModel scheduledMeeting =
-                          ScheduledMeetingModel()
-                            ..fullName = _fullName.value.text.trim()
-                            ..professionOfVenueBooker =
-                                _profession.value.text.trim()
-                            ..purposeOfMeeting = _purpose.value.text.trim()
-                            ..numberOfExpectedParticipants =
-                                _attenders.value.text.trim()
-                            ..dateOfMeeting = ref
-                                .read(meetingDateControllerProvider.notifier)
-                                .getMeetingDate
-                            ..meetingStartTime = ref
-                                .read(
-                                    meetingStartTimeControllerProvider.notifier)
-                                .getMeetingTime
-                            ..meetingEndTime = ref
-                                .read(meetingEndTimeControllerProvider.notifier)
-                                .getMeetingTime
-                            ..selectedVenue = ref
-                                    .read(
-                                        meetingVenueControllerProvider.notifier)
-                                    .getSelectedVenue
-                                    ?.hallName ??
-                                "No Venue";
+                        backgroundColor: AppColours.buttonBlue,
+                        actions: [
+                          "Close".txt14(color: AppColours.white).onTap(
+                                onTap: () => ScaffoldMessenger.of(context)
+                                    .clearMaterialBanners(),
+                              )
+                        ],
+                      ),
+                    );
+                  } else {
+                    final ScheduledMeetingModel scheduledMeeting =
+                        ScheduledMeetingModel()
+                          ..fullName = _fullName.value.text.trim()
+                          ..professionOfVenueBooker =
+                              _profession.value.text.trim()
+                          ..purposeOfMeeting = _purpose.value.text.trim()
+                          ..numberOfExpectedParticipants =
+                              _attenders.value.text.trim()
+                          ..dateOfMeeting = ref
+                              .read(meetingDateControllerProvider.notifier)
+                              .getMeetingDate
+                          ..meetingStartTime = ref
+                              .read(meetingStartTimeControllerProvider.notifier)
+                              .getMeetingTime
+                          ..meetingEndTime = ref
+                              .read(meetingEndTimeControllerProvider.notifier)
+                              .getMeetingTime
+                          ..selectedVenue = ref
+                                  .read(meetingVenueControllerProvider.notifier)
+                                  .getSelectedVenue
+                                  ?.hallName ??
+                              "No Venue";
 
-                      await ref
-                          .read(userMeetingsControllerProvider.notifier)
-                          .addMeeting(scheduledMeeting: scheduledMeeting)
-                          .whenComplete(
-                            () => Navigator.of(context).pop(),
-                          );
-                    }
-                  },
-                  buttonText: widget.isEditMeeting != null &&
-                          widget.isEditMeeting == false
-                      ? AppTexts.createMeeting
-                      : AppTexts.saveMeeting,
-                )
-              ],
-            ),
+                    await ref
+                        .read(userMeetingsControllerProvider.notifier)
+                        .addMeeting(scheduledMeeting: scheduledMeeting)
+                        .whenComplete(
+                          () => Navigator.of(context).pop(),
+                        );
+                  }
+                },
+                buttonText: widget.isEditMeeting != null &&
+                        widget.isEditMeeting == false
+                    ? AppTexts.createMeeting
+                    : AppTexts.saveMeeting,
+              )
+            ],
           ),
-        ).generalPadding,
-      ),
+        ),
+      ).generalPadding,
     );
   }
 

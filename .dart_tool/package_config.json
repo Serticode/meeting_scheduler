@@ -20,12 +20,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "archive",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/archive-3.4.8",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "args",
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/args-2.4.2",
       "packageUri": "lib/",
@@ -168,12 +162,6 @@
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/convert-3.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
-    },
-    {
-      "name": "cron",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/cron-0.5.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "cross_file",
@@ -488,12 +476,6 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "lottie",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/lottie-2.7.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.1"
-    },
-    {
       "name": "matcher",
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/matcher-0.12.16",
       "packageUri": "lib/",
@@ -602,12 +584,6 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "phosphor_flutter",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/phosphor_flutter-1.4.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "pinput",
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/pinput-2.3.0",
       "packageUri": "lib/",
@@ -624,12 +600,6 @@
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
       "packageUri": "lib/",
       "languageVersion": "2.19"
-    },
-    {
-      "name": "pointycastle",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/pointycastle-3.7.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
     },
     {
       "name": "pool",
@@ -758,12 +728,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "simple_progress_indicators",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/simple_progress_indicators-0.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "sky_engine",
       "rootUri": "file:///Users/serticode/Documents/Development/SDK/Flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -872,54 +836,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "url_launcher",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher-6.2.1",
-      "packageUri": "lib/",
-      "languageVersion": "3.1"
-    },
-    {
-      "name": "url_launcher_android",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "url_launcher_ios",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "url_launcher_linux",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher_linux-3.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "url_launcher_macos",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher_macos-3.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "url_launcher_platform_interface",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "url_launcher_web",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher_web-2.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.1"
-    },
-    {
-      "name": "url_launcher_windows",
-      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
       "name": "uuid",
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/uuid-3.0.7",
       "packageUri": "lib/",
@@ -1004,7 +920,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-15T21:37:01.544550Z",
+  "generated": "2023-11-16T19:19:12.405521Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

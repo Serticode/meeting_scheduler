@@ -19,163 +19,155 @@ class OnboardingScreenWrapper extends ConsumerWidget {
     final int? pageNumber = ref.watch(onboardingScreenControllerProvider).value;
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 10,
+      ),
       //! BODY
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //! SPACER
-            28.0.sizedBoxHeight,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          //! SKIP AND OTHERS
 
-            //! SKIP AND OTHERS
-            Row(
-              children: [
-                Visibility(
-                  visible: pageNumber != 0,
-                  child: AuthBackButton(
-                    onTap: () => ref
-                        .read(onboardingScreenControllerProvider.notifier)
-                        .decrementPageIndex(),
-                  ),
+          Row(
+            children: [
+              if (pageNumber != 0)
+                AuthBackButton(
+                  onTap: () => ref
+                      .read(onboardingScreenControllerProvider.notifier)
+                      .decrementPageIndex(),
                 ),
-
-                const Spacer(),
-
-                //! SKIP
-                Visibility(
-                  visible: pageNumber != 3,
-                  child: AppTexts.skip
-                      .txt16(
-                    fontWeight: FontWeight.w600,
-                    color: AppColours.black50,
-                  )
-                      .onTap(
-                    onTap: () {
-                      "Skip pressed".log();
-                    },
-                  ),
+              const Spacer(),
+              if (pageNumber != 3)
+                AppTexts.skip
+                    .txt16(
+                  fontWeight: FontWeight.w600,
+                  color: AppColours.black50,
                 )
-              ],
-            ),
+                    .onTap(
+                  onTap: () {
+                    "Skip pressed".log();
+                  },
+                ),
+            ],
+          ),
 
-            //! SPACER
-            32.0.sizedBoxHeight,
+          //! SPACER
+          32.0.sizedBoxHeight,
 
-            //! WELCOME TEXT
+          //! WELCOME TEXT
+          AnimatedContainer(
+            height: pageNumber == 0 ? 65.0 : 0.0,
+            duration: const Duration(milliseconds: 200),
+            child: pageNumber == 0
+                ? SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppTexts.welcome.onboardingHeaderText(),
+
+                        //! SPACER
+                        12.0.sizedBoxHeight,
+
+                        AppTexts.onboardingScreenWelcomeRider
+                            .onboardingRiderText(),
+                      ],
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+
+          const Spacer(),
+
+          //! IMAGE
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.4,
+            child: SvgPicture.asset(
+              ref
+                  .read(onboardingScreenControllerProvider.notifier)
+                  .onboardingImages
+                  .elementAt(
+                    pageNumber ?? 0,
+                  ),
+              semanticsLabel: "Onboarding image $pageNumber",
+            ).alignCenter(),
+          ),
+
+          32.0.sizedBoxHeight,
+
+          //! WELCOME TEXT
+          if (pageNumber != 0)
             AnimatedContainer(
-              height: pageNumber == 0 ? 65.0 : 0.0,
               duration: const Duration(milliseconds: 200),
-              child: pageNumber == 0
-                  ? SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppTexts.welcome.onboardingHeaderText(),
+              child: pageNumber != 0
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ref
+                            .read(onboardingScreenControllerProvider.notifier)
+                            .onboardingTextsHeader
+                            .elementAt(pageNumber ?? 0)
+                            .txt24(
+                              fontWeight: FontWeight.w700,
+                            ),
 
-                          //! SPACER
-                          12.0.sizedBoxHeight,
+                        //! SPACER
+                        12.0.sizedBoxHeight,
 
-                          AppTexts.onboardingScreenWelcomeRider
-                              .onboardingRiderText(),
-                        ],
-                      ),
+                        ref
+                            .read(onboardingScreenControllerProvider.notifier)
+                            .onboardingTextsRider
+                            .elementAt(pageNumber ?? 0)
+                            .txt16(
+                              textAlign: TextAlign.center,
+                              fontWeight: FontWeight.w400,
+                            ),
+                      ],
                     )
                   : const SizedBox.shrink(),
             ),
 
-            const Spacer(),
+          32.0.sizedBoxHeight,
 
-            //! IMAGE
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.4,
-              child: SvgPicture.asset(
-                ref
-                    .read(onboardingScreenControllerProvider.notifier)
-                    .onboardingImages
-                    .elementAt(
-                      pageNumber ?? 0,
-                    ),
-                semanticsLabel: "Onboarding image $pageNumber",
-              ).alignCenter(),
+          AnimatedSmoothIndicator(
+            count: 4,
+            activeIndex: pageNumber ?? 0,
+            effect: WormEffect(
+              dotHeight: 4.0,
+              dotWidth: 24.0,
+              dotColor: AppColours.wormGrey,
+              activeDotColor: AppColours.deepBlue,
             ),
+          ).alignCenter(),
 
-            32.0.sizedBoxHeight,
+          const Spacer(),
 
-            //! WELCOME TEXT
-            Visibility(
-              visible: pageNumber != 0,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                child: pageNumber != 0
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ref
-                              .read(onboardingScreenControllerProvider.notifier)
-                              .onboardingTextsHeader
-                              .elementAt(pageNumber ?? 0)
-                              .txt24(
-                                fontWeight: FontWeight.w700,
-                              ),
+          pageNumber != 3
+              ? CircleButton(
+                  onTap: () {
+                    "Circle Button Tapped".log();
 
-                          //! SPACER
-                          12.0.sizedBoxHeight,
+                    ref
+                        .read(onboardingScreenControllerProvider.notifier)
+                        .incrementPageIndex();
+                  },
+                ).alignCenter()
+              : RegularButton(
+                  buttonText: AppTexts.getStarted,
+                  onTap: () async {
+                    "Get Started Pressed".log();
 
-                          ref
-                              .read(onboardingScreenControllerProvider.notifier)
-                              .onboardingTextsRider
-                              .elementAt(pageNumber ?? 0)
-                              .txt16(
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w400,
-                              ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
-              ),
-            ),
+                    await AppNavigator.navigateToReplacementPage(
+                      thePageRouteName: AppRoutes.signUp,
+                      context: context,
+                    );
+                  },
+                ),
 
-            32.0.sizedBoxHeight,
-
-            AnimatedSmoothIndicator(
-              count: 4,
-              activeIndex: pageNumber ?? 0,
-              effect: WormEffect(
-                dotHeight: 4.0,
-                dotWidth: 24.0,
-                dotColor: AppColours.wormGrey,
-                activeDotColor: AppColours.deepBlue,
-              ),
-            ).alignCenter(),
-
-            const Spacer(),
-
-            pageNumber != 3
-                ? CircleButton(
-                    onTap: () {
-                      "Circle Button Tapped".log();
-
-                      ref
-                          .read(onboardingScreenControllerProvider.notifier)
-                          .incrementPageIndex();
-                    },
-                  ).alignCenter()
-                : RegularButton(
-                    buttonText: AppTexts.getStarted,
-                    onTap: () async {
-                      "Get Started Pressed".log();
-
-                      await AppNavigator.navigateToReplacementPage(
-                        thePageRouteName: AppRoutes.signUp,
-                        context: context,
-                      );
-                    },
-                  ),
-
-            const Spacer(),
-          ],
-        ).generalPadding,
-      ),
+          const Spacer(),
+        ],
+      ).generalPadding,
     );
   }
 }
