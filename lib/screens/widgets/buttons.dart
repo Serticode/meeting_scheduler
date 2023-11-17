@@ -41,9 +41,12 @@ class CircleButton extends ConsumerWidget {
 class RegularButton extends ConsumerWidget {
   final void Function() onTap;
   final AppHapticFeedbackType? feedbackType;
-  final String buttonText;
+  final String? buttonText;
   final double? radius;
   final Widget? child;
+  final Color? borderColour;
+  final Color? bgColour;
+  final Color? textColour;
   const RegularButton({
     super.key,
     required this.onTap,
@@ -51,6 +54,9 @@ class RegularButton extends ConsumerWidget {
     this.radius,
     this.child,
     this.feedbackType,
+    this.borderColour,
+    this.bgColour,
+    this.textColour,
   });
 
   @override
@@ -63,13 +69,15 @@ class RegularButton extends ConsumerWidget {
         horizontal: 21.0,
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(radius ?? 10),
-        color: AppColours.buttonBlue,
-      ),
+          borderRadius: BorderRadius.circular(radius ?? 10),
+          color: bgColour ?? AppColours.buttonBlue,
+          border: Border.all(
+            color: borderColour ?? AppColours.buttonBlue,
+          )),
       child: child ??
-          buttonText
+          buttonText!
               .txt16(
-                color: AppColours.white,
+                color: textColour ?? AppColours.white,
                 fontWeight: FontWeight.w600,
               )
               .alignCenter(),

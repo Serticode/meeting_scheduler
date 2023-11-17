@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
+import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/utils.dart';
 
@@ -46,8 +50,13 @@ class HomeScreenHeader extends ConsumerWidget {
         //!
         12.0.sizedBoxWidth,
 
-        const Icon(
-          Icons.notifications,
+        SvgPicture.asset(AppImages.notifications).onTap(
+          onTap: () {
+            AppNavigator.navigateToPage(
+              thePageRouteName: AppRoutes.notificationsScreen,
+              context: context,
+            );
+          },
         )
       ],
     );

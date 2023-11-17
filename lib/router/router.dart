@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meeting_scheduler/router/routes.dart';
+import 'package:meeting_scheduler/screens/auth/change_password.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verification.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verified.dart';
 import 'package:meeting_scheduler/screens/auth/sign_up.dart';
 import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
+import 'package:meeting_scheduler/screens/notifications/notifications.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/profile/edit_profile.dart';
 
@@ -82,12 +84,26 @@ class AppNavigator {
           ),
         );
 
+      case AppRoutes.notificationsScreen:
+        return GetPageRoute._getPageRoute(
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: const NotificationsScreen(),
+        );
+
       //!
       case AppRoutes.editProfile:
         return GetPageRoute._getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const EditProfileScreen(),
+        );
+
+      case AppRoutes.changePassword:
+        return GetPageRoute._getPageRoute(
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: const ChangePasswordScreen(),
         );
 
       default:

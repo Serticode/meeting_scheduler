@@ -32,4 +32,10 @@ class AppImages {
   static const helpCenter = "assets/svgs/helpCenter.svg";
   static const lock = "assets/svgs/lock.svg";
   static const logout = "assets/svgs/logout.svg";
+  static const editProfilePicture = "assets/svgs/editIcon.svg";
+
+  //!
+  //! NOTIFICATIONS - SVG
+  static const notifications = "assets/svgs/notification.svg";
+  static const noNotifications = "assets/svgs/noNotifications.svg";
 }
