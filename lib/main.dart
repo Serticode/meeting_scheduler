@@ -10,8 +10,6 @@ import 'package:meeting_scheduler/theme/theme.dart';
 //! RIVERPOD CODE GENERATOR COMMAND
 //! flutter pub run build_runner watch -d
 
-final navigatorKey = GlobalKey<NavigatorState>();
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,12 +33,11 @@ class MeetingScheduler extends ConsumerWidget {
     return MaterialApp(
       title: AppTexts.appName,
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
       theme: AppTheme.appThemeLight,
 
       //! NAVIGATION
       onGenerateRoute: (settings) =>
-          AppNavigator.generateRoute(routeSettings: settings),
+          AppNavigator.instance.generateRoute(routeSettings: settings),
 
       home: const OnboardingScreenWrapper(),
     );

@@ -12,105 +12,105 @@ class HomeScreenWrapper extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int? currentPageIndex =
-        ref.watch(homeWrapperControllerProvider).value;
+    final currentPageIndex = ref.watch(homeWrapperControllerProvider).value;
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          elevation: 0,
-          toolbarHeight: 10,
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 10,
+      ),
+
+      //! BODY
+      body: ref
+          .read(homeWrapperControllerProvider.notifier)
+          .screens
+          .elementAt(currentPageIndex ?? 0)
+          .generalPadding,
+
+      //! FAB
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          "Create meeting".log();
+          AppNavigator.instance.navigateToPage(
+            thePageRouteName: AppRoutes.createMeeting,
+            context: context,
+          );
+        },
+        backgroundColor: AppColours.deepBlue,
+        child: const Icon(
+          Icons.add,
+          color: AppColours.white,
         ),
+      ),
 
-        //! BODY
-        body: ref
-            .read(homeWrapperControllerProvider.notifier)
-            .screens
-            .elementAt(currentPageIndex ?? 0)
-            .generalPadding,
-
-        //! FAB
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            "Create meeting".log();
-            AppNavigator.navigateToPage(
-              thePageRouteName: AppRoutes.createMeeting,
-              context: context,
-            );
-          },
-          backgroundColor: AppColours.deepBlue,
-          child: const Icon(
-            Icons.add,
-            color: AppColours.white,
-          ),
-        ),
-
-        //!
-        //! BOTTOM NAV BAR
-        bottomNavigationBar: BottomAppBar(
-          height: 68.0,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: ref
-                .read(homeWrapperControllerProvider.notifier)
-                .bottomNavBarItemNames
-                .map(
-                  (label) => CustomBottomNavBarItem(
-                    onTap: () {
-                      "Label tapped: $label".log();
+      //!
+      //! BOTTOM NAV BAR
+      bottomNavigationBar: BottomAppBar(
+        height: 68,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: ref
+              .read(homeWrapperControllerProvider.notifier)
+              .bottomNavBarItemNames
+              .map(
+                (label) => CustomBottomNavBarItem(
+                  onTap: () {
+                    "Label tapped: $label".log();
+                    ref
+                        .read(homeWrapperControllerProvider.notifier)
+                        .updatePageIndex(
+                          currentPageIndex: ref
+                              .read(homeWrapperControllerProvider.notifier)
+                              .bottomNavBarItemNames
+                              .indexOf(
+                                label,
+                              ),
+                        );
+                  },
+                  isSelected: currentPageIndex ==
                       ref
                           .read(homeWrapperControllerProvider.notifier)
-                          .updatePageIndex(
-                            currentPageIndex: ref
-                                .read(homeWrapperControllerProvider.notifier)
-                                .bottomNavBarItemNames
-                                .indexOf(
-                                  label,
-                                ),
-                          );
-                    },
-                    isSelected: currentPageIndex ==
-                        ref
-                            .read(homeWrapperControllerProvider.notifier)
-                            .bottomNavBarItemNames
-                            .indexOf(
-                              label,
-                            ),
-                    label: label,
-                    itemIcon: currentPageIndex ==
+                          .bottomNavBarItemNames
+                          .indexOf(
+                            label,
+                          ),
+                  label: label,
+                  itemIcon: currentPageIndex ==
+                          ref
+                              .read(homeWrapperControllerProvider.notifier)
+                              .bottomNavBarItemNames
+                              .indexOf(
+                                label,
+                              )
+                      ? ref
+                          .read(homeWrapperControllerProvider.notifier)
+                          .bottomNavBarItemIconsSolid
+                          .elementAt(
                             ref
                                 .read(homeWrapperControllerProvider.notifier)
                                 .bottomNavBarItemNames
                                 .indexOf(
                                   label,
-                                )
-                        ? ref
-                            .read(homeWrapperControllerProvider.notifier)
-                            .bottomNavBarItemIconsSolid
-                            .elementAt(
-                              ref
-                                  .read(homeWrapperControllerProvider.notifier)
-                                  .bottomNavBarItemNames
-                                  .indexOf(
-                                    label,
-                                  ),
-                            )
-                        : ref
-                            .read(homeWrapperControllerProvider.notifier)
-                            .bottomNavBarItemIcons
-                            .elementAt(
-                              ref
-                                  .read(homeWrapperControllerProvider.notifier)
-                                  .bottomNavBarItemNames
-                                  .indexOf(
-                                    label,
-                                  ),
-                            ),
-                  ),
-                )
-                .toList(),
-          ),
-        ));
+                                ),
+                          )
+                      : ref
+                          .read(homeWrapperControllerProvider.notifier)
+                          .bottomNavBarItemIcons
+                          .elementAt(
+                            ref
+                                .read(homeWrapperControllerProvider.notifier)
+                                .bottomNavBarItemNames
+                                .indexOf(
+                                  label,
+                                ),
+                          ),
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
   }
 }

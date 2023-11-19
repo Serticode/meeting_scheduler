@@ -77,7 +77,7 @@ class OTPVerification extends ConsumerWidget {
           RegularButton(
             onTap: () async {
               "Send code - OTP VERIFICATION pressed".log();
-              await AppNavigator.navigateToPage(
+              await AppNavigator.instance.navigateToPage(
                 thePageRouteName: AppRoutes.otpVerified,
                 context: context,
               );

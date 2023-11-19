@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:meeting_scheduler/main.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/account_settings_item.dart';
@@ -15,17 +14,17 @@ import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
 
-  final List<String> accountSettingsIcons = const [
+  static const List<String> accountSettingsIcons = [
     AppImages.lock,
     AppImages.logout,
   ];
 
-  final List<String> titles = const [
+  static const List<String> titles = [
     "Change Password",
     "Logout",
   ];
 
-  final List<String> subtitles = const [
+  static const List<String> subtitles = [
     "Got any queries? Send us a message now",
     "Got any queries? Send us a message now",
   ];
@@ -36,7 +35,7 @@ class AccountScreen extends ConsumerWidget {
       children: [
         AppTexts.accountSettings
             .txt(
-              fontSize: 20.0,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
             )
             .alignCenter(),
@@ -45,51 +44,51 @@ class AccountScreen extends ConsumerWidget {
         24.0.sizedBoxHeight,
 
         Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const UserProfileImage(
-                    isAccountSettingsPage: true,
-                  ),
-                  12.0.sizedBoxHeight,
-                  "Mike Ayodeji".txt16(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ],
-              ),
-
-              //!
-              const Spacer(),
-
-              //! EDIT PROFILE BUTTON
-              Container(
-                width: 120,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                decoration: ShapeDecoration(
-                  color: AppColours.deepBlue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4)),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const UserProfileImage(
+                  isAccountSettingsPage: true,
                 ),
-                child: "Edit Profile"
-                    .txt12(
-                      color: AppColours.white,
-                    )
-                    .alignCenter(),
-              ).onTap(
-                onTap: () {
-                  "Edit profile".log();
-                  AppNavigator.navigateToPage(
-                    thePageRouteName: AppRoutes.editProfile,
-                    context: context,
-                  );
-                },
-              )
-            ]),
+                12.0.sizedBoxHeight,
+                "Mike Ayodeji".txt16(
+                  fontWeight: FontWeight.w600,
+                ),
+              ],
+            ),
+
+            //!
+            const Spacer(),
+
+            //! EDIT PROFILE BUTTON
+            Container(
+              width: 120,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+              decoration: ShapeDecoration(
+                color: AppColours.deepBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              child: "Edit Profile"
+                  .txt12(
+                    color: AppColours.white,
+                  )
+                  .alignCenter(),
+            ).onTap(
+              onTap: () {
+                "Edit profile".log();
+                AppNavigator.instance.navigateToPage(
+                  thePageRouteName: AppRoutes.editProfile,
+                  context: context,
+                );
+              },
+            ),
+          ],
+        ),
 
         //!
         24.0.sizedBoxHeight,
@@ -108,11 +107,10 @@ class AccountScreen extends ConsumerWidget {
             onTap: () async {
               switch (accountSettingsIcons.indexOf(icon)) {
                 case 0:
-                  AppNavigator.navigateToPage(
+                  await AppNavigator.instance.navigateToPage(
                     thePageRouteName: AppRoutes.changePassword,
                     context: context,
                   );
-                  break;
                 case 1:
                   /* navigatorKey.currentState!.push(
                     PageRouteBuilder(
@@ -141,12 +139,12 @@ class AccountScreen extends ConsumerWidget {
                     ),
                   ); */
 
+                  // ignore: inference_failure_on_function_invocation, use_build_context_synchronously
                   await showAdaptiveDialog(
                     context: context,
                     builder: (context) {
                       return Scaffold(
                         body: Container(
-                          //height: MediaQuery.of(context).size.height * 0.5,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: AppColours.white,
@@ -154,7 +152,6 @@ class AccountScreen extends ConsumerWidget {
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               //! ICON
                               CircleAvatar(
@@ -203,13 +200,12 @@ class AccountScreen extends ConsumerWidget {
                       );
                     },
                   );
-                  break;
                 default:
                   "Account Setting Item Tapped".log();
               }
             },
           ),
-        )
+        ),
       ],
     );
   }

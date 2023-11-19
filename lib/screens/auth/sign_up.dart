@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
-import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
+import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
 import 'package:meeting_scheduler/services/controllers/onboarding_screen/onboarding_screen_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
@@ -56,12 +56,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               //! LOGO
               SizedBox(
-                height: 120.0,
+                height: 120,
                 width: 130,
                 child: Stack(
                   alignment: Alignment.center,
@@ -84,7 +83,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               12.0.sizedBoxHeight,
 
               AppTexts.createAccount.txt(
-                fontSize: 18.0,
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
 
@@ -127,7 +126,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Icons.lock,
                       size: 18,
                     ),
-                    suffixIcon: value == true
+                    suffixIcon: value
                         ? const Icon(Icons.visibility)
                         : const Icon(
                             Icons.visibility_off,
@@ -149,7 +148,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Icons.lock,
                       size: 18,
                     ),
-                    suffixIcon: value == true
+                    suffixIcon: value
                         ? const Icon(Icons.visibility)
                         : const Icon(
                             Icons.visibility_off,
@@ -169,7 +168,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       return Checkbox.adaptive(
                         activeColor: AppColours.buttonBlue,
                         side: BorderSide(
-                          color: isChecked.value == true
+                          color: isChecked.value
                               ? AppColours.primaryBlue
                               : AppColours.buttonBlue,
                         ),
@@ -191,7 +190,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                   AppTexts.forgotPassword.txt16().onTap(
                         onTap: () {},
-                      )
+                      ),
                 ],
               ),
 
@@ -201,7 +200,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               RegularButton(
                 onTap: () async {
                   "Create account pressed".log();
-                  await AppNavigator.navigateToPage(
+                  await AppNavigator.instance.navigateToPage(
                     thePageRouteName: AppRoutes.otpVerification,
                     context: context,
                   );

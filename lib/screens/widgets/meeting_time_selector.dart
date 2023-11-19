@@ -3,17 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
 class MeetingTimeSelector extends ConsumerWidget {
-  final dynamic provider;
-  final bool isStartTime;
   const MeetingTimeSelector({
     super.key,
     required this.provider,
     required this.isStartTime,
   });
+  final dynamic provider;
+  final bool isStartTime;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String startOrEnd = isStartTime ? "Start Time" : "End Time";
+    final startOrEnd = isStartTime ? "Start Time" : "End Time";
 
     return Consumer(
       builder: (context, ref, child) {
@@ -33,14 +33,14 @@ class MeetingTimeSelector extends ConsumerWidget {
                     .toString()
                     .txt(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
+                      fontSize: 14,
                       color: Colors.black38,
                     )
                     .alignCenter()
                 : startOrEnd
                     .txt(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
+                      fontSize: 14,
                       color: Colors.black38,
                     )
                     .alignCenter(),
@@ -54,13 +54,13 @@ class MeetingTimeSelector extends ConsumerWidget {
             children: [
               error.toString().txt(
                     fontWeight: FontWeight.w400,
-                    fontSize: 14.0,
+                    fontSize: 14,
                     color: Colors.black38,
                   ),
               const Spacer(),
               const Icon(
                 Icons.timer,
-                size: 18.0,
+                size: 18,
                 color: Colors.black38,
               )
             ],

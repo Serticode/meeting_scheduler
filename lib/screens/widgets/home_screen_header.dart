@@ -14,7 +14,7 @@ class HomeScreenHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final DateTime dateTime = DateTime.now();
+    final dateTime = DateTime.now();
     return Row(
       children: [
         //! IMAGE
@@ -32,6 +32,7 @@ class HomeScreenHeader extends ConsumerWidget {
 
         const Spacer(),
 
+        // ignore: lines_longer_than_80_chars
         "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.day}, ${dateTime.year}"
             .txt14(
           fontWeight: FontWeight.w600,
@@ -42,8 +43,8 @@ class HomeScreenHeader extends ConsumerWidget {
         12.0.sizedBoxWidth,
 
         Container(
-          width: 1.0,
-          height: 40.0,
+          width: 1,
+          height: 40,
           color: AppColours.black50,
         ),
 
@@ -52,12 +53,12 @@ class HomeScreenHeader extends ConsumerWidget {
 
         SvgPicture.asset(AppImages.notifications).onTap(
           onTap: () {
-            AppNavigator.navigateToPage(
+            AppNavigator.instance.navigateToPage(
               thePageRouteName: AppRoutes.notificationsScreen,
               context: context,
             );
           },
-        )
+        ),
       ],
     );
   }

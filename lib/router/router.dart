@@ -12,22 +12,23 @@ import 'package:meeting_scheduler/screens/profile/edit_profile.dart';
 
 class AppNavigator {
   const AppNavigator._();
+  static const instance = AppNavigator._();
 
   //! NAVIGATE TO A PAGE WITHOUT REPLACING THE PREVIOUS PAGE.
-  static Future<void> navigateToPage({
+  Future<void> navigateToPage({
     required String thePageRouteName,
     required BuildContext context,
   }) =>
       Navigator.of(context).pushNamed(thePageRouteName);
 
   //! NAVIGATE TO A PAGE AND REPLACE THE PREVIOUS PAGE
-  static Future<void> navigateToReplacementPage({
+  Future<void> navigateToReplacementPage({
     required String thePageRouteName,
     required BuildContext context,
   }) =>
       Navigator.of(context).pushReplacementNamed(thePageRouteName);
 
-  static Future<void> pushNamedAndRemoveUntil({
+  Future<void> pushNamedAndRemoveUntil({
     required String thePageRouteName,
     required BuildContext context,
   }) =>
@@ -35,11 +36,11 @@ class AppNavigator {
           .pushNamedAndRemoveUntil(thePageRouteName, (route) => false);
 
   //! ROUTE GENERATOR
-  static Route<dynamic> generateRoute({required RouteSettings routeSettings}) {
+  Route<dynamic> generateRoute({required RouteSettings routeSettings}) {
     switch (routeSettings.name) {
       //! ONBOARDING SCREEN
       case AppRoutes.onboardingScreen:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const OnboardingScreenWrapper(),
@@ -47,21 +48,21 @@ class AppNavigator {
 
       //! AUTH
       case AppRoutes.signUp:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const SignUpScreen(),
         );
 
       case AppRoutes.otpVerification:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const OTPVerification(),
         );
 
       case AppRoutes.otpVerified:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const OTPVerified(),
@@ -69,14 +70,14 @@ class AppNavigator {
 
       //! HOME SCREEN WRAPPER - CARRYING BOTTOM NAV BAR & HOME SCREEN PAGES
       case AppRoutes.homeScreen:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const HomeScreenWrapper(),
         );
 
       case AppRoutes.createMeeting:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const CreateMeeting(
@@ -85,7 +86,7 @@ class AppNavigator {
         );
 
       case AppRoutes.notificationsScreen:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const NotificationsScreen(),
@@ -93,14 +94,14 @@ class AppNavigator {
 
       //!
       case AppRoutes.editProfile:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const EditProfileScreen(),
         );
 
       case AppRoutes.changePassword:
-        return GetPageRoute._getPageRoute(
+        return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const ChangePasswordScreen(),
@@ -115,9 +116,15 @@ class AppNavigator {
 }
 
 class GetPageRoute {
+  const GetPageRoute._();
+  static const instance = GetPageRoute._();
+
   //! GET A PAGE ROUTE
-  static PageRoute _getPageRoute(
-          {String? routeName, Widget? view, Object? args}) =>
+  PageRoute<MaterialPageRoute<Widget?>> getPageRoute({
+    String? routeName,
+    Widget? view,
+    Object? args,
+  }) =>
       MaterialPageRoute(
         settings: RouteSettings(name: routeName, arguments: args),
         builder: (_) => view!,

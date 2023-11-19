@@ -16,7 +16,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int? pageNumber = ref.watch(onboardingScreenControllerProvider).value;
+    final pageNumber = ref.watch(onboardingScreenControllerProvider).value;
 
     return Scaffold(
       appBar: AppBar(
@@ -102,7 +102,6 @@ class OnboardingScreenWrapper extends ConsumerWidget {
               duration: const Duration(milliseconds: 200),
               child: pageNumber != 0
                   ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ref
                             .read(onboardingScreenControllerProvider.notifier)
@@ -134,8 +133,8 @@ class OnboardingScreenWrapper extends ConsumerWidget {
             count: 4,
             activeIndex: pageNumber ?? 0,
             effect: WormEffect(
-              dotHeight: 4.0,
-              dotWidth: 24.0,
+              dotHeight: 4,
+              dotWidth: 24,
               dotColor: AppColours.wormGrey,
               activeDotColor: AppColours.deepBlue,
             ),
@@ -158,7 +157,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                   onTap: () async {
                     "Get Started Pressed".log();
 
-                    await AppNavigator.navigateToReplacementPage(
+                    await AppNavigator.instance.navigateToReplacementPage(
                       thePageRouteName: AppRoutes.signUp,
                       context: context,
                     );

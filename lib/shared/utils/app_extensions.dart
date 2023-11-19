@@ -1,4 +1,5 @@
 //! THIS FILE CONTAINS HOPEFULLY, ALL EXTENSIONS USED IN THE APP.
+import "dart:developer" as dev_tools show log;
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
@@ -6,7 +7,6 @@ import "package:flutter_animate/flutter_animate.dart";
 import "package:intl/intl.dart";
 import "package:meeting_scheduler/shared/app_elements/app_colours.dart";
 import "package:meeting_scheduler/shared/utils/type_def.dart";
-import "dart:developer" as dev_tools show log;
 
 //!
 //! LOG EXTENSION - THIS HELPS TO CALL A .log() ON ANY OBJECT
@@ -58,7 +58,7 @@ extension AppHapticFeedback on Widget {
               await HapticFeedback.selectionClick(),
             AppHapticFeedbackType.vibrate => await HapticFeedback.vibrate(),
             _ => null
-          }
+          },
         },
         child: this,
       );
@@ -75,7 +75,7 @@ extension HapticFeedbackForApp on bool {
 //! EXTENSIONS ON TRANSFORM
 extension TransformExtension on Widget {
   Widget transformToScale({
-    required scale,
+    required double scale,
   }) =>
       Transform.scale(
         scale: scale,
@@ -108,19 +108,19 @@ extension WidgetExtensions on double {
 //! PADDING EXTENSION ON WIDGET
 extension PaddingExtension on Widget {
   Widget get generalHorizontalPadding => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 21.0),
+        padding: const EdgeInsets.symmetric(horizontal: 21),
         child: this,
       );
 
   Widget get generalVerticalPadding => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         child: this,
       );
 
   Widget get generalPadding => Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 12.0,
-          horizontal: 21.0,
+          vertical: 12,
+          horizontal: 21,
         ),
         child: this,
       );
@@ -164,7 +164,6 @@ extension AlignExtension on Widget {
 
   Align alignCenter() {
     return Align(
-      alignment: Alignment.center,
       child: this,
     );
   }

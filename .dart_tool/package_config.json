@@ -578,6 +578,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "pedantic_mono",
+      "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/pedantic_mono-1.24.0+1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "petitparser",
       "rootUri": "file:///Users/serticode/.pub-cache/hosted/pub.dev/petitparser-5.4.0",
       "packageUri": "lib/",
@@ -920,7 +926,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-17T11:17:25.323285Z",
+  "generated": "2023-11-19T20:50:27.036551Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }

@@ -7,7 +7,6 @@ import 'package:meeting_scheduler/screens/widgets/home_screen_no_meetings.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_search_field.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_card.dart';
 import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
-import 'package:meeting_scheduler/services/models/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -37,8 +36,7 @@ class HomeScreen extends ConsumerWidget {
 
         Consumer(
           builder: (context, ref, child) {
-            final AsyncValue<List<ScheduledMeetingModel>> scheduledMeetings =
-                ref.watch(userMeetingsControllerProvider);
+            final scheduledMeetings = ref.watch(userMeetingsControllerProvider);
 
             return scheduledMeetings.when(
               data: (listOfMeeting) {
@@ -48,41 +46,41 @@ class HomeScreen extends ConsumerWidget {
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Divider(),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Divider(),
 
-                                12.0.sizedBoxHeight,
+                              12.0.sizedBoxHeight,
 
-                                "Your Schedule"
-                                    .txt16(fontWeight: FontWeight.w600),
+                              "Your Schedule"
+                                  .txt16(fontWeight: FontWeight.w600),
 
-                                6.0.sizedBoxHeight,
+                              6.0.sizedBoxHeight,
 
-                                "All your scheduled meetings or classes".txt12(
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black54),
+                              "All your scheduled meetings or classes".txt12(
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black54,
+                              ),
 
-                                12.0.sizedBoxHeight,
+                              12.0.sizedBoxHeight,
 
-                                //! MEETING
-                                ...listOfMeeting
-                                    .map(
-                                      (meeting) =>
-                                          MeetingCard(meetingDetails: meeting)
-                                              .onTap(
-                                        onTap: () => Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) => CreateMeeting(
-                                              meetingModel: meeting,
-                                              isEditMeeting: true,
-                                            ),
-                                          ),
-                                        ),
+                              //! MEETING
+                              ...listOfMeeting.map(
+                                (meeting) =>
+                                    MeetingCard(meetingDetails: meeting).onTap(
+                                  onTap: () => Navigator.of(context)
+                                      .push<Future<MaterialPageRoute<Widget?>>>(
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateMeeting(
+                                        meetingModel: meeting,
+                                        isEditMeeting: true,
                                       ),
-                                    )
-                                    .toList(),
-                              ]),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
               },

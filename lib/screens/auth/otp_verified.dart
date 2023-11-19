@@ -20,7 +20,6 @@ class OTPVerified extends ConsumerWidget {
         toolbarHeight: 10,
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(),
 
@@ -60,8 +59,10 @@ class OTPVerified extends ConsumerWidget {
           75.0.sizedBoxHeight,
 
           RegularButton(
-            onTap: () async => await AppNavigator.navigateToPage(
-                thePageRouteName: AppRoutes.homeScreen, context: context),
+            onTap: () => AppNavigator.instance.navigateToPage(
+              thePageRouteName: AppRoutes.homeScreen,
+              context: context,
+            ),
             buttonText: AppTexts.enter,
           ).fadeInFromBottom(
             delay: const Duration(
