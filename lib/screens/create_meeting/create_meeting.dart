@@ -15,6 +15,7 @@ import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateMeeting extends ConsumerStatefulWidget {
   final ScheduledMeetingModel? meetingModel;
@@ -35,15 +36,6 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
   final TextEditingController _purpose = TextEditingController();
   final TextEditingController _attenders = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
-
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-  ];
-
-  String? selectedValue;
 
   @override
   void initState() {
@@ -170,8 +162,8 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                           MeetingVenue.venue) {
                     ScaffoldMessenger.of(context).showMaterialBanner(
                       MaterialBanner(
-                        content: "Select a venue".txt24(
-                          fontWeight: FontWeight.w600,
+                        content: "Select a venue".txt16(
+                          fontWeight: FontWeight.w500,
                           color: AppColours.white,
                         ),
                         backgroundColor: AppColours.buttonBlue,
@@ -184,8 +176,12 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                       ),
                     );
                   } else {
-                    final ScheduledMeetingModel scheduledMeeting =
+                    ScheduledMeetingModel scheduledMeeting =
                         ScheduledMeetingModel()
+                          ..meetingID = widget.isEditMeeting != null &&
+                                  widget.isEditMeeting == true
+                              ? widget.meetingModel?.meetingID
+                              : null
                           ..fullName = _fullName.value.text.trim()
                           ..professionOfVenueBooker =
                               _profession.value.text.trim()
@@ -207,12 +203,25 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                                   ?.hallName ??
                               "No Venue";
 
-                    await ref
-                        .read(userMeetingsControllerProvider.notifier)
-                        .addMeeting(scheduledMeeting: scheduledMeeting)
-                        .whenComplete(
-                          () => Navigator.of(context).pop(),
-                        );
+                    //!TODO: SHOW SUCCESS MESSAGE OF ACTIONS BELOW
+                    if (widget.isEditMeeting!) {
+                      await ref
+                          .read(userMeetingsControllerProvider.notifier)
+                          .updateMeeting(scheduledMeeting: scheduledMeeting)
+                          .whenComplete(
+                            () => Navigator.of(context).pop(),
+                          );
+                    } else {
+                      const uuid = Uuid();
+                      scheduledMeeting = scheduledMeeting
+                        ..meetingID = uuid.v4();
+                      await ref
+                          .read(userMeetingsControllerProvider.notifier)
+                          .addMeeting(scheduledMeeting: scheduledMeeting)
+                          .whenComplete(
+                            () => Navigator.of(context).pop(),
+                          );
+                    }
                   }
                 },
                 buttonText: widget.isEditMeeting != null &&
