@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:meeting_scheduler/services/models/scheduled_meeting_model.dart';
+import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
@@ -65,9 +65,10 @@ class MeetingCard extends ConsumerWidget {
             8.0.sizedBoxHeight,
 
             //! VENUE - HEADER
-            meetingDetails.selectedVenue!.txt24(
+            meetingDetails.purposeOfMeeting!.txt(
               fontWeight: FontWeight.w600,
               color: AppColours.white,
+              fontSize: 22,
             ),
 
             24.0.sizedBoxHeight,

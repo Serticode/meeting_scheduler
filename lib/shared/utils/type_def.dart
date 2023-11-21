@@ -15,7 +15,7 @@ typedef FutureVoid = FutureEither<void>;
 enum NotificationType { success, failure, info }
 
 //! AUTHENTICATION RESULT - USED TO MANAGE APP AUTHENTICATION STATE
-enum AuthResult { success, failure }
+enum AuthResult { success, failure, noResult }
 
 //! ENUM FOR CONNECTIVITY STATUS
 enum ConnectivityStatus { wifi, mobile, online, offline }
@@ -46,3 +46,5 @@ enum MeetingVenue {
     required this.hallName,
   });
 }
+
+typedef UserId = String;

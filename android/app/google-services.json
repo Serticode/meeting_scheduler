@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "146424481188",
+    "project_id": "meeting-scheduler-d17e1",
+    "storage_bucket": "meeting-scheduler-d17e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146424481188:android:b093f0ce5dd22d9624ad31",
+        "android_client_info": {
+          "package_name": "com.example.meeting_scheduler"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpdwJyzE_43ZdtiaqEFN9i43Q4lQIMpmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

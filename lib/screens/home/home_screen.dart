@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_calender.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_header.dart';
@@ -7,6 +8,8 @@ import 'package:meeting_scheduler/screens/widgets/home_screen_no_meetings.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_search_field.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_card.dart';
 import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
+import 'package:meeting_scheduler/services/controllers/search_field_controller/search_field_controller.dart';
+import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -37,10 +40,24 @@ class HomeScreen extends ConsumerWidget {
         Consumer(
           builder: (context, ref, child) {
             final scheduledMeetings = ref.watch(userMeetingsControllerProvider);
+            final searchKeyword =
+                ref.watch(searchFieldControllerProvider).value!;
 
             return scheduledMeetings.when(
               data: (listOfMeeting) {
-                return listOfMeeting.isEmpty
+                List<ScheduledMeetingModel> displayedList = searchKeyword
+                        .isEmpty
+                    ? listOfMeeting
+                    : listOfMeeting
+                        .filter(
+                          (meeting) =>
+                              meeting.purposeOfMeeting!.toLowerCase().contains(
+                                    searchKeyword.toLowerCase(),
+                                  ),
+                        )
+                        .toList();
+
+                return displayedList.isEmpty
                     ? const NoMeetings()
                     : Expanded(
                         child: SingleChildScrollView(
@@ -65,7 +82,7 @@ class HomeScreen extends ConsumerWidget {
                               12.0.sizedBoxHeight,
 
                               //! MEETING
-                              ...listOfMeeting.map(
+                              ...displayedList.map(
                                 (meeting) =>
                                     MeetingCard(meetingDetails: meeting).onTap(
                                   onTap: () => Navigator.of(context)

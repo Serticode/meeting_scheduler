@@ -5,13 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 
 class AppTheme {
-  //! ELEVATED BUTTON TEXT THEME
-  /* static TextStyle appButtonTextTheme = GoogleFonts.spaceGrotesk(
-    fontWeight: FontWeight.w500,
-    color: AppColours.white,
-    fontSize: 14.0.sp,
-  ); */
-
   //! APP DATE RANGE PICKER THEME
   static final ThemeData dateRangePickerTheme = ThemeData(
     platform: Platform.isIOS ? TargetPlatform.iOS : TargetPlatform.android,
@@ -23,7 +16,6 @@ class AppTheme {
         //! HOW PAGES TRANSITION BETWEEN EACH OTHER
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           for (final platform in TargetPlatform.values)
-            //platform: const OpenUpwardsPageTransitionsBuilder()
             platform: CustomFadeTransitionBuilder(),
         }),
 

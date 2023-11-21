@@ -17,3 +17,19 @@ class ScheduledMeetingFieldNames {
 
   const ScheduledMeetingFieldNames._();
 }
+
+@immutable
+class FirebaseCollectionName {
+  static const String users = "Users";
+  static const String meetings = "meetings";
+  const FirebaseCollectionName._();
+}
+
+@immutable
+class FirebaseUserFieldName {
+  static const String userId = "uid";
+  static const String fullName = "fullName";
+  static const String email = "email";
+
+  const FirebaseUserFieldName._();
+}

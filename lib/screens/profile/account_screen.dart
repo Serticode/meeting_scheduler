@@ -6,6 +6,7 @@ import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/account_settings_item.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
+import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
@@ -184,7 +185,20 @@ class AccountScreen extends ConsumerWidget {
                               14.0.sizedBoxHeight,
 
                               RegularButton(
-                                onTap: () => "Log out button pressed".log(),
+                                onTap: () async {
+                                  "Log out button pressed".log();
+
+                                  /* await ref
+                                      .read(authControllerProvider.notifier)
+                                      .logOut()
+                                      .whenComplete(
+                                        () => AppNavigator.instance
+                                            .pushNamedAndRemoveUntil(
+                                                thePageRouteName:
+                                                    AppRoutes.signUp,
+                                                context: context),
+                                      ); */
+                                },
                                 buttonText: "Yes, log me out",
                                 bgColour: AppColours.white,
                                 child: "Yes, log me out"

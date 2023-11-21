@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
@@ -10,7 +9,7 @@ import 'package:meeting_scheduler/services/controllers/create_meeting_controller
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_time_controller.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_venue_controller.dart';
 import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
-import 'package:meeting_scheduler/services/models/scheduled_meeting_model.dart';
+import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';

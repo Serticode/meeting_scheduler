@@ -36,9 +36,8 @@ dependencies:
   pinput: ^2.2.30
   fpdart: ^0.3.0
   flutter_riverpod: ^2.1.1
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.2.2
   multiple_result: ^4.0.0
-  flutter_slidable: ^2.0.0
   image_picker: ^0.8.6
   pattern_formatter: ^2.0.0
   flutter_animate: ^2.1.0
@@ -54,6 +53,9 @@ dependencies:
   riverpod_annotation:
   searchfield: ^0.8.7
   uuid: ^3.0.7
+  firebase_core: ^2.22.0
+  firebase_auth: ^4.14.0
+  cloud_firestore: ^4.13.1
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/back_buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/services/controllers/onboarding_screen/onboarding_screen_controller.dart';
+import 'package:meeting_scheduler/services/preferences/app_preferences.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
@@ -42,14 +43,14 @@ class OnboardingScreenWrapper extends ConsumerWidget {
               if (pageNumber != 3)
                 AppTexts.skip
                     .txt16(
-                  fontWeight: FontWeight.w600,
-                  color: AppColours.black50,
-                )
+                      fontWeight: FontWeight.w600,
+                      color: AppColours.black50,
+                    )
                     .onTap(
-                  onTap: () {
-                    "Skip pressed".log();
-                  },
-                ),
+                      onTap: () => ref
+                          .read(onboardingScreenControllerProvider.notifier)
+                          .setPageIndex(index: 3),
+                    ),
             ],
           ),
 
@@ -154,14 +155,15 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                 ).alignCenter()
               : RegularButton(
                   buttonText: AppTexts.getStarted,
-                  onTap: () async {
-                    "Get Started Pressed".log();
-
-                    await AppNavigator.instance.navigateToReplacementPage(
-                      thePageRouteName: AppRoutes.signUp,
-                      context: context,
-                    );
-                  },
+                  onTap: () async => await AppPreferences.instance
+                      .setShowHome(showHome: true)
+                      .whenComplete(
+                        () async => await AppNavigator.instance
+                            .navigateToReplacementPage(
+                          thePageRouteName: AppRoutes.signUp,
+                          context: context,
+                        ),
+                      ),
                 ),
 
           const Spacer(),

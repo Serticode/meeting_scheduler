@@ -9,11 +9,13 @@ class CustomTextFormField extends ConsumerStatefulWidget {
   final TextInputType? keyboardType;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
+  final bool? isPasswordVisible;
   const CustomTextFormField({
     super.key,
     required this.isForPassword,
     required this.hint,
     required this.controller,
+    this.isPasswordVisible,
     this.keyboardType,
     this.prefixIcon,
     this.suffixIcon,
@@ -30,8 +32,10 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
     return TextFormField(
       controller: widget.controller,
       keyboardType: widget.keyboardType,
+      obscureText: widget.isPasswordVisible ?? false,
       decoration: InputDecoration(
         hintText: widget.hint,
+
         hintStyle: const TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 14.0,

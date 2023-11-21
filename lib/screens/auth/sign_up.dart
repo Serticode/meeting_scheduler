@@ -5,6 +5,7 @@ import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
+import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/services/controllers/onboarding_screen/onboarding_screen_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
@@ -120,6 +121,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 builder: (context, value, child) {
                   return CustomTextFormField(
                     isForPassword: false,
+                    isPasswordVisible: !value,
                     hint: "Enter your password",
                     controller: _password,
                     prefixIcon: const Icon(
@@ -142,6 +144,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 builder: (context, value, child) {
                   return CustomTextFormField(
                     isForPassword: false,
+                    isPasswordVisible: !value,
                     hint: "Confirm your password",
                     controller: _confirmPassword,
                     prefixIcon: const Icon(
@@ -197,16 +200,38 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               32.0.sizedBoxHeight,
 
               //! BUTTON
-              RegularButton(
-                onTap: () async {
-                  "Create account pressed".log();
-                  await AppNavigator.instance.navigateToPage(
-                    thePageRouteName: AppRoutes.otpVerification,
-                    context: context,
-                  );
-                },
-                buttonText: AppTexts.createAccount,
-              ),
+              //!TODO: ADD PASSWORD VALIDATION
+              //!TODO: SHOW ERRORS ABOUT AUTH PROCESS
+
+              /* Builder(builder: (context) {
+                bool isLoading = ref.watch(authControllerProvider).isLoading;
+                return RegularButton(
+                  onTap: () async {
+                    "Create account pressed".log();
+                    await ref
+                        .read(authControllerProvider.notifier)
+                        .signUp(
+                          fullName: _fullName.value.text.trim(),
+                          email: _email.value.text.trim(),
+                          password: _password.value.text.trim(),
+                        )
+                        .then((value) async {
+                      if (value) {
+                        await AppNavigator.instance.navigateToPage(
+                          thePageRouteName: AppRoutes.otpVerification,
+                          context: context,
+                        );
+                      }
+                    });
+                    /* await AppNavigator.instance.navigateToPage(
+                        thePageRouteName: AppRoutes.otpVerification,
+                        context: context,
+                      ); */
+                  },
+                  buttonText: AppTexts.createAccount,
+                  width: isLoading ? 50 : null,
+                );
+              }), */
 
               32.0.sizedBoxHeight,
 

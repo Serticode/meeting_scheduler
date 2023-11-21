@@ -41,4 +41,6 @@ class OnboardingScreenController extends _$OnboardingScreenController {
       state = AsyncValue.data(state.value! + 1);
     }
   }
+
+  void setPageIndex({required int index}) => state = AsyncValue.data(index);
 }

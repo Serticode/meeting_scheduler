@@ -1,10 +1,11 @@
-import 'package:meeting_scheduler/services/models/scheduled_meeting_model.dart';
+import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part "user_meetings_controller.g.dart";
 
 @Riverpod(keepAlive: true)
 class UserMeetingsController extends _$UserMeetingsController {
+  //!
   @override
   FutureOr<List<ScheduledMeetingModel>> build() => [];
 
@@ -40,19 +41,29 @@ class UserMeetingsController extends _$UserMeetingsController {
     required ScheduledMeetingModel scheduledMeeting,
   }) async {
     ScheduledMeetingModel? initialMeeting = state.value?.firstWhere(
-        (element) => element.meetingID == scheduledMeeting.meetingID);
+      (element) => element.meetingID == scheduledMeeting.meetingID,
+    );
 
     if (initialMeeting == scheduledMeeting) return;
 
     List<ScheduledMeetingModel>? tempList = state.value;
 
     tempList?.removeWhere(
-        (element) => element.meetingID == scheduledMeeting.meetingID);
+      (element) => element.meetingID == scheduledMeeting.meetingID,
+    );
 
     tempList?.add(scheduledMeeting);
 
     state = AsyncValue.data(tempList!);
 
     state.log();
+  }
+
+  Future<void> deleteMeeting({
+    required ScheduledMeetingModel scheduledMeeting,
+  }) async {
+    state.value?.removeWhere(
+      (element) => element.meetingID == scheduledMeeting.meetingID,
+    );
   }
 }

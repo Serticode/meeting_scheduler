@@ -43,6 +43,7 @@ class RegularButton extends ConsumerWidget {
   final AppHapticFeedbackType? feedbackType;
   final String? buttonText;
   final double? radius;
+  final double? width;
   final Widget? child;
   final Color? borderColour;
   final Color? bgColour;
@@ -52,6 +53,7 @@ class RegularButton extends ConsumerWidget {
     required this.onTap,
     required this.buttonText,
     this.radius,
+    this.width,
     this.child,
     this.feedbackType,
     this.borderColour,
@@ -63,7 +65,7 @@ class RegularButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: double.infinity,
+      width: width ?? double.infinity,
       padding: const EdgeInsets.symmetric(
         vertical: 16.0,
         horizontal: 21.0,
