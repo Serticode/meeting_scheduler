@@ -62,10 +62,8 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
   pedantic_mono: ^1.24.0+1
-  riverpod_lint: ^1.0.1
+  riverpod_lint: ^2.3.6
   custom_lint:
-  build_runner:
-  riverpod_generator:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
