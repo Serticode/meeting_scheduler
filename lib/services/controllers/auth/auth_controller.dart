@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+/* import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/services/controllers/auth/state/auth_state.dart';
@@ -132,3 +132,4 @@ class AuthController extends _$AuthController {
     return didSignUp;
   }
 } */
+ */

@@ -1,4 +1,4 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+/* import 'package:riverpod_annotation/riverpod_annotation.dart';
 part "search_field_controller.g.dart";
 
 @Riverpod(keepAlive: true)
@@ -10,3 +10,4 @@ class SearchFieldController extends _$SearchFieldController {
   void setSearchFieldValue({required String query}) =>
       state = AsyncValue.data(query);
 }
+ */

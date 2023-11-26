@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_public_notifier_properties
+/* // ignore_for_file: avoid_public_notifier_properties
 import 'package:flutter/material.dart';
 import 'package:meeting_scheduler/theme/theme.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -106,3 +106,4 @@ class MeetingEndTimeController extends _$MeetingEndTimeController {
   String toString() =>
       "${state.value?.hourOfPeriod} : ${state.value?.minute} $amOrPM";
 }
+ */

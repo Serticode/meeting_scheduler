@@ -1,4 +1,4 @@
-import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
+/* import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part "user_meetings_controller.g.dart";
@@ -67,3 +67,4 @@ class UserMeetingsController extends _$UserMeetingsController {
     );
   }
 }
+ */

@@ -39,7 +39,7 @@ class AppNavigator {
   Route<dynamic> generateRoute({required RouteSettings routeSettings}) {
     switch (routeSettings.name) {
       //! ONBOARDING SCREEN
-      case AppRoutes.onboardingScreen:
+      /* case AppRoutes.onboardingScreen:
         return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
@@ -52,7 +52,7 @@ class AppNavigator {
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const SignUpScreen(),
-        );
+        ); */
 
       case AppRoutes.otpVerification:
         return GetPageRoute.instance.getPageRoute(
@@ -69,7 +69,7 @@ class AppNavigator {
         );
 
       //! HOME SCREEN WRAPPER - CARRYING BOTTOM NAV BAR & HOME SCREEN PAGES
-      case AppRoutes.homeScreen:
+      /* case AppRoutes.homeScreen:
         return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
@@ -83,7 +83,7 @@ class AppNavigator {
           view: const CreateMeeting(
             isEditMeeting: false,
           ),
-        );
+        ); */
 
       case AppRoutes.notificationsScreen:
         return GetPageRoute.instance.getPageRoute(

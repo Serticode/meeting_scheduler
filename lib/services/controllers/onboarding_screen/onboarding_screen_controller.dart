@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_public_notifier_properties
+/* // ignore_for_file: avoid_public_notifier_properties
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -44,3 +44,4 @@ class OnboardingScreenController extends _$OnboardingScreenController {
 
   void setPageIndex({required int index}) => state = AsyncValue.data(index);
 }
+ */
