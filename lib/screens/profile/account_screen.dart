@@ -7,6 +7,8 @@ import 'package:meeting_scheduler/screens/widgets/account_settings_item.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
+import 'package:meeting_scheduler/services/controllers/home_wrapper/home_wrapper_controller.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
@@ -47,19 +49,27 @@ class AccountScreen extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const UserProfileImage(
-                  isAccountSettingsPage: true,
-                ),
-                12.0.sizedBoxHeight,
-                "Mike Ayodeji".txt16(
-                  fontWeight: FontWeight.w600,
-                ),
-              ],
-            ),
+            Builder(builder: (context) {
+              final userFullName = ref.watch(userFullNameProvider);
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const UserProfileImage(
+                    isAccountSettingsPage: true,
+                  ),
+                  12.0.sizedBoxHeight,
+                  userFullName != null
+                      ? userFullName.txt16(
+                          fontWeight: FontWeight.w600,
+                        )
+                      : "Hello there!".txt16(
+                          fontWeight: FontWeight.w600,
+                        ),
+                ],
+              );
+            }),
 
             //!
             const Spacer(),
@@ -193,8 +203,15 @@ class AccountScreen extends ConsumerWidget {
                                       .read(authControllerProvider.notifier)
                                       .logOut()
                                       .whenComplete(
-                                        () => Navigator.of(context).pop(),
-                                      );
+                                    () {
+                                      ref
+                                          .read(homeWrapperControllerProvider
+                                              .notifier)
+                                          .updatePageIndex(currentPageIndex: 0);
+
+                                      Navigator.of(context).pop();
+                                    },
+                                  );
                                 },
                                 buttonText: "Yes, log me out",
                                 bgColour: AppColours.white,

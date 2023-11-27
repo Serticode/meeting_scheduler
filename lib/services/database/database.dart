@@ -45,32 +45,4 @@ class Database {
       return false;
     }
   }
-
-  Future<UserModel?> getUserInfo({
-    required UserId? userId,
-    required String? email,
-  }) async {
-    try {
-      late UserModel user;
-
-      final QuerySnapshot<Object?> snapshot = await userCollection
-          .where(FirebaseUserFieldName.userId, isEqualTo: userId)
-          .limit(1)
-          .get();
-
-      user = UserModel.fromJSON(
-        userId: userId!,
-        json: snapshot.docs.first.data() as Map<String, dynamic>,
-      );
-
-      user.log();
-
-      // await userCollection.add(user);
-      return user;
-    } catch (error) {
-      error.toString().log();
-
-      return null;
-    }
-  }
 }

@@ -68,15 +68,15 @@ class RegularButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: isLoading ? 60 : 400,
-      height: 60,
+      width: isLoading ? 75 : 400,
+      height: isLoading ? 75 : 60,
       padding: EdgeInsets.symmetric(
         vertical: isLoading ? 8.0 : 16.0,
         horizontal: isLoading ? 10.5 : 21.0,
       ),
       decoration: BoxDecoration(
           borderRadius: isLoading
-              ? BorderRadius.circular(60)
+              ? BorderRadius.circular(75)
               : BorderRadius.circular(radius ?? 10),
           color: bgColour ?? AppColours.buttonBlue,
           border: Border.all(
@@ -87,7 +87,7 @@ class RegularButton extends ConsumerWidget {
               color: AppColours.white,
               trackColor: AppColours.white.withOpacity(0.7),
               waveColor: AppColours.white.withOpacity(0.5),
-              size: 60,
+              size: 65,
             ).alignCenter()
           : buttonText!
               .txt16(

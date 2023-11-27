@@ -48,3 +48,6 @@ enum MeetingVenue {
 }
 
 typedef UserId = String;
+typedef UserDisplayName = String;
+typedef UserFullName = String;
+typedef UserProfileImage = String;

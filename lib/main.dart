@@ -56,8 +56,6 @@ class MeetingScheduler extends ConsumerWidget {
         builder: (context, ref, child) {
           final authState = ref.watch(authControllerProvider);
 
-          //return const SignInScreen();
-
           if (authState.isLoggedIn) {
             return const HomeScreenWrapper();
           } else if (showHome) {

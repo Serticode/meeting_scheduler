@@ -10,16 +10,19 @@ import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/utils.dart';
 
 final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
-  (ref) => AuthController(),
+  (ref) => AuthController(controllerRef: ref),
 );
 
 class AuthController extends StateNotifier<AuthState> {
-  final AuthRepository _authRepository = AuthRepository.instance;
   User? get _user => FirebaseAuth.instance.currentUser;
   UserId? get _userId => _user?.uid;
+  final Ref? _authControllerRef;
 
   //! CONSTRUCTOR
-  AuthController() : super(const AuthState.logOut()) {
+  AuthController({
+    required Ref? controllerRef,
+  })  : _authControllerRef = controllerRef,
+        super(const AuthState.logOut()) {
     if (_userId != null) {
       state = AuthState(
         result: AuthResult.success,
@@ -69,11 +72,12 @@ class AuthController extends StateNotifier<AuthState> {
 
     await Future.delayed(const Duration(seconds: 3));
 
-    final Either<Failure, AuthResult> result = await _authRepository.signUp(
-      fullName: fullName,
-      email: email,
-      password: password,
-    );
+    final Either<Failure, AuthResult> result =
+        await _authControllerRef!.read(authRepositoryProvider).signUp(
+              fullName: fullName,
+              email: email,
+              password: password,
+            );
 
     result.fold(
       (Failure failure) {
@@ -120,10 +124,11 @@ class AuthController extends StateNotifier<AuthState> {
 
     await Future.delayed(const Duration(seconds: 3));
 
-    final Either<Failure, AuthResult> result = await _authRepository.login(
-      email: email,
-      password: password,
-    );
+    final Either<Failure, AuthResult> result =
+        await _authControllerRef!.read(authRepositoryProvider).login(
+              email: email,
+              password: password,
+            );
 
     result.fold(
       (Failure failure) {
@@ -163,7 +168,7 @@ class AuthController extends StateNotifier<AuthState> {
   Future<void> logOut() async {
     state = state.copiedWithIsLoading(isLoading: true);
 
-    await _authRepository.logOut();
+    await _authControllerRef!.read(authRepositoryProvider).logOut();
 
     state = const AuthState.logOut();
   }

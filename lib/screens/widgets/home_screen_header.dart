@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
@@ -26,8 +27,18 @@ class HomeScreenHeader extends ConsumerWidget {
         12.0.sizedBoxWidth,
 
         //! GREETING
-        "Hello, Mike!".txt14(
-          fontWeight: FontWeight.w700,
+        Builder(
+          builder: (context) {
+            final userDisplayName = ref.watch(userDisplayNameProvider);
+
+            return userDisplayName != null
+                ? userDisplayName.split(" ").first.txt14(
+                      fontWeight: FontWeight.w700,
+                    )
+                : "Hello!".txt14(
+                    fontWeight: FontWeight.w700,
+                  );
+          },
         ),
 
         const Spacer(),

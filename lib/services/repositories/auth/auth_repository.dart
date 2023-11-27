@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/services/database/database.dart';
-import 'package:meeting_scheduler/services/models/auth/user_model.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/failure.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
 
+final Provider<AuthRepository> authRepositoryProvider =
+    Provider((ref) => const AuthRepository._());
+
 class AuthRepository {
-  const AuthRepository._();
-  static const instance = AuthRepository._();
+  const AuthRepository._() : super();
   static const Database database = Database.instance;
 
   //!  SIGN UP
@@ -34,9 +36,7 @@ class AuthRepository {
 
         return isUpdateSuccessful
             ? right(AuthResult.success)
-            : left(
-                Failure(failureMessage: "Failed to register user"),
-              );
+            : left(Failure(failureMessage: "Failed to register user"));
       } else {
         return left(Failure(failureMessage: "Failed to register user"));
       }
@@ -63,18 +63,7 @@ class AuthRepository {
       );
 
       if (loggedInUser.user?.uid != null) {
-        UserModel? userData = await database.getUserInfo(
-          email: email,
-          userId: loggedInUser.user?.uid,
-        );
-
-        if (userData != null) {
-          return right(AuthResult.success);
-        } else {
-          return left(
-            Failure(failureMessage: "Could not fetch user info"),
-          );
-        }
+        return right(AuthResult.success);
       } else {
         return left(Failure(failureMessage: "Failed to login user"));
       }
