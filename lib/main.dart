@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_scheduler/firebase_options.dart';
 import 'package:meeting_scheduler/router/router.dart';
-import 'package:meeting_scheduler/screens/auth/sign_up.dart';
+import 'package:meeting_scheduler/screens/auth/sign_in.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
@@ -56,10 +56,12 @@ class MeetingScheduler extends ConsumerWidget {
         builder: (context, ref, child) {
           final authState = ref.watch(authControllerProvider);
 
+          //return const SignInScreen();
+
           if (authState.isLoggedIn) {
             return const HomeScreenWrapper();
           } else if (showHome) {
-            return const SignUpScreen();
+            return const SignInScreen();
           } else {
             return const OnboardingScreenWrapper();
           }

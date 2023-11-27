@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
@@ -48,10 +49,12 @@ class RegularButton extends ConsumerWidget {
   final Color? borderColour;
   final Color? bgColour;
   final Color? textColour;
+  final bool isLoading;
   const RegularButton({
     super.key,
     required this.onTap,
     required this.buttonText,
+    required this.isLoading,
     this.radius,
     this.width,
     this.child,
@@ -65,19 +68,28 @@ class RegularButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: width ?? double.infinity,
-      padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 21.0,
+      width: isLoading ? 60 : 400,
+      height: 60,
+      padding: EdgeInsets.symmetric(
+        vertical: isLoading ? 8.0 : 16.0,
+        horizontal: isLoading ? 10.5 : 21.0,
       ),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(radius ?? 10),
+          borderRadius: isLoading
+              ? BorderRadius.circular(60)
+              : BorderRadius.circular(radius ?? 10),
           color: bgColour ?? AppColours.buttonBlue,
           border: Border.all(
             color: borderColour ?? AppColours.buttonBlue,
           )),
-      child: child ??
-          buttonText!
+      child: isLoading
+          ? SpinKitWaveSpinner(
+              color: AppColours.white,
+              trackColor: AppColours.white.withOpacity(0.7),
+              waveColor: AppColours.white.withOpacity(0.5),
+              size: 60,
+            ).alignCenter()
+          : buttonText!
               .txt16(
                 color: textColour ?? AppColours.white,
                 fontWeight: FontWeight.w600,

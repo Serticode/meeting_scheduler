@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/services/controllers/auth/state/auth_state.dart';
@@ -6,6 +7,7 @@ import 'package:meeting_scheduler/services/repositories/auth/auth_repository.dar
 import 'package:meeting_scheduler/shared/utils/failure.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:meeting_scheduler/shared/utils/utils.dart';
 
 final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
   (ref) => AuthController(),
@@ -28,12 +30,44 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
-  Future<bool> signUp({
+  Future<void> authenticateSignUp({
+    required bool isValidated,
     required String fullName,
     required String email,
     required String password,
+    required BuildContext context,
   }) async {
-    bool didSignUp = false;
+    await signUp(
+      fullName: fullName,
+      email: email,
+      password: password,
+      context: context,
+    );
+  }
+
+  Future<void> authenticateLogin({
+    required bool isValidated,
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    "Authenticating login".log();
+    await login(
+      email: email,
+      password: password,
+      context: context,
+    );
+  }
+
+  Future<void> signUp({
+    required String fullName,
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    state = state.copiedWithIsLoading(isLoading: true);
+
+    await Future.delayed(const Duration(seconds: 3));
 
     final Either<Failure, AuthResult> result = await _authRepository.signUp(
       fullName: fullName,
@@ -42,24 +76,87 @@ class AuthController extends StateNotifier<AuthState> {
     );
 
     result.fold(
-      (Failure failure) => failure.failureMessage?.log(),
+      (Failure failure) {
+        failure.failureMessage?.log();
+
+        AppUtils.showAppBanner(
+          message: failure.failureMessage ?? "Sign up failed, please try again",
+          context: context,
+        );
+
+        Future.delayed(
+          const Duration(seconds: 4),
+        );
+
+        AppUtils.closeAppBanner(context: context);
+
+        state = state.copiedWithIsLoading(isLoading: false);
+      },
       (AuthResult result) {
         "Auth Result: $result".log();
 
         if (result == AuthResult.success) {
+          true.withHapticFeedback();
+
           state = AuthState(
             result: result,
             isLoading: false,
             isLoggedIn: true,
             userId: _userId,
           );
-
-          didSignUp = true;
         }
       },
     );
+  }
 
-    return didSignUp;
+  Future<void> login({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    "Logging in".log();
+
+    state = state.copiedWithIsLoading(isLoading: true);
+
+    await Future.delayed(const Duration(seconds: 3));
+
+    final Either<Failure, AuthResult> result = await _authRepository.login(
+      email: email,
+      password: password,
+    );
+
+    result.fold(
+      (Failure failure) {
+        failure.failureMessage?.log();
+
+        AppUtils.showAppBanner(
+          message: failure.failureMessage ?? "Sign up failed, please try again",
+          context: context,
+        );
+
+        Future.delayed(
+          const Duration(seconds: 4),
+        );
+
+        AppUtils.closeAppBanner(context: context);
+
+        state = state.copiedWithIsLoading(isLoading: false);
+      },
+      (AuthResult result) {
+        "Auth Result: $result".log();
+
+        if (result == AuthResult.success) {
+          true.withHapticFeedback();
+
+          state = AuthState(
+            result: result,
+            isLoading: false,
+            isLoggedIn: true,
+            userId: _userId,
+          );
+        }
+      },
+    );
   }
 
   //! LOGOUT

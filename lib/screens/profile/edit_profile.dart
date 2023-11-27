@@ -119,6 +119,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     RegularButton(
                       onTap: () {},
                       buttonText: AppTexts.enter,
+                      isLoading: false,
                     ),
 
                     12.0.sizedBoxHeight,

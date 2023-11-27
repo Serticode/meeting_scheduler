@@ -1,5 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
+import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+
 class AppUtils {
   const AppUtils._();
+
+  //!
+  //! MATERIAL BANNERS
+  static showAppBanner(
+          {required String message, required BuildContext context}) =>
+      ScaffoldMessenger.of(context).showMaterialBanner(
+        MaterialBanner(
+          content: message.txt14(
+            fontWeight: FontWeight.w500,
+            color: AppColours.white,
+          ),
+          backgroundColor: AppColours.buttonBlue,
+          actions: [
+            "Close".txt14(color: AppColours.white).onTap(
+                  onTap: () =>
+                      ScaffoldMessenger.of(context).clearMaterialBanners(),
+                )
+          ],
+        ),
+      );
+
+  //!
+  static closeAppBanner({required BuildContext context}) =>
+      ScaffoldMessenger.of(context).clearMaterialBanners();
 
 //!
 //! FETCH MONTH NAME

@@ -3,6 +3,7 @@ import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/auth/change_password.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verification.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verified.dart';
+import 'package:meeting_scheduler/screens/auth/sign_in.dart';
 import 'package:meeting_scheduler/screens/auth/sign_up.dart';
 import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
@@ -52,6 +53,13 @@ class AppNavigator {
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const SignUpScreen(),
+        );
+
+      case AppRoutes.signIn:
+        return GetPageRoute.instance.getPageRoute(
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: const SignInScreen(),
         );
 
       case AppRoutes.otpVerification:

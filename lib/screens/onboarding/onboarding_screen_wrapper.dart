@@ -155,6 +155,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                 ).alignCenter()
               : RegularButton(
                   buttonText: AppTexts.getStarted,
+                  isLoading: false,
                   onTap: () async => await AppPreferences.instance
                       .setShowHome(showHome: true)
                       .whenComplete(

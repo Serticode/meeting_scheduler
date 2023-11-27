@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/services/database/database.dart';
+import 'package:meeting_scheduler/services/models/auth/user_model.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/failure.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
@@ -44,6 +45,44 @@ class AuthRepository {
 
       return left(
         Failure(failureMessage: "Failed to register user"),
+      );
+    }
+  }
+
+  //!  LOGIN
+  FutureEither<AuthResult> login({
+    required String email,
+    required String password,
+  }) async {
+    UserCredential? loggedInUser;
+
+    try {
+      loggedInUser = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (loggedInUser.user?.uid != null) {
+        UserModel? userData = await database.getUserInfo(
+          email: email,
+          userId: loggedInUser.user?.uid,
+        );
+
+        if (userData != null) {
+          return right(AuthResult.success);
+        } else {
+          return left(
+            Failure(failureMessage: "Could not fetch user info"),
+          );
+        }
+      } else {
+        return left(Failure(failureMessage: "Failed to login user"));
+      }
+    } on FirebaseAuthException catch (error) {
+      error.toString().log();
+
+      return left(
+        Failure(failureMessage: "Failed to login user"),
       );
     }
   }

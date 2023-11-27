@@ -4,7 +4,7 @@ class AppRoutes {
 
   //! AUTH
   static const String signUp = "signUp";
-  static const String signInWithEmail = "signInWithEmail";
+  static const String signIn = "signIn";
   static const String otpVerification = "otpVerification";
   static const String otpVerified = "otpVerified";
 

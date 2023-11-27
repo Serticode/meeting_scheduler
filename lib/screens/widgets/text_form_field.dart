@@ -10,6 +10,7 @@ class CustomTextFormField extends ConsumerStatefulWidget {
   final Icon? prefixIcon;
   final Icon? suffixIcon;
   final bool? isPasswordVisible;
+  final String? Function(String?)? validator;
   const CustomTextFormField({
     super.key,
     required this.isForPassword,
@@ -19,6 +20,7 @@ class CustomTextFormField extends ConsumerStatefulWidget {
     this.keyboardType,
     this.prefixIcon,
     this.suffixIcon,
+    this.validator,
   });
 
   @override
@@ -33,6 +35,7 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       obscureText: widget.isPasswordVisible ?? false,
+      keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
         hintText: widget.hint,
 
@@ -41,8 +44,17 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
           fontSize: 14.0,
           color: Colors.black38,
         ),
+        errorStyle: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 14.0,
+          color: AppColours.red,
+        ),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
+        suffixIconColor:
+            widget.isPasswordVisible != null && !widget.isPasswordVisible!
+                ? AppColours.deepBlue
+                : AppColours.wormGrey,
         prefixIconColor: AppColours.black50,
 
         //! BORDERS
@@ -60,6 +72,13 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
           ),
           borderRadius: BorderRadius.circular(10),
         ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1.6,
+            color: AppColours.red,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1.6,
@@ -68,6 +87,7 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
+      validator: widget.validator,
     );
   }
 }

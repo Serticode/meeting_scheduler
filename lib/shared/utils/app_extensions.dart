@@ -84,6 +84,18 @@ extension TransformExtension on Widget {
 }
 
 //!
+//! IGNORE POINTER
+extension IgnorePointerExtension on Widget {
+  ignorePointer({
+    required bool isLoading,
+  }) =>
+      IgnorePointer(
+        ignoring: isLoading,
+        child: this,
+      );
+}
+
+//!
 //! EXTENSIONS ON NUMBER
 extension WidgetExtensions on double {
   Widget get sizedBoxHeight => SizedBox(

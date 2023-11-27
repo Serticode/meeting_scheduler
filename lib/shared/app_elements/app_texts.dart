@@ -28,6 +28,7 @@ class AppTexts {
   //! BUTTONS
   static const String getStarted = "Get Started";
   static const String createAccount = "Create account";
+  static const String login = "Login";
   static const String showPassword = "Show password";
   static const String forgotPassword = "Forgot password?";
   static const String sendCode = "Send code";

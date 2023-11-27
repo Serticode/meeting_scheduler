@@ -83,6 +83,7 @@ class OTPVerification extends ConsumerWidget {
               );
             },
             buttonText: AppTexts.sendCode,
+            isLoading: false,
           ),
 
           const Spacer(),

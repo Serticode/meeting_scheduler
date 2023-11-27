@@ -111,6 +111,7 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
           RegularButton(
             onTap: () => "Change Password Pressed".log(),
             buttonText: AppTexts.enter,
+            isLoading: false,
           ),
 
           21.0.sizedBoxHeight,

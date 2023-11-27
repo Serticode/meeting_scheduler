@@ -64,6 +64,7 @@ class OTPVerified extends ConsumerWidget {
               context: context,
             ),
             buttonText: AppTexts.enter,
+            isLoading: false,
           ).fadeInFromBottom(
             delay: const Duration(
               milliseconds: 500,

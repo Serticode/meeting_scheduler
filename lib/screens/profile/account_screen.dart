@@ -180,6 +180,7 @@ class AccountScreen extends ConsumerWidget {
                                   Navigator.of(context).pop();
                                 },
                                 buttonText: "No, cancel",
+                                isLoading: false,
                               ),
 
                               14.0.sizedBoxHeight,
@@ -192,15 +193,12 @@ class AccountScreen extends ConsumerWidget {
                                       .read(authControllerProvider.notifier)
                                       .logOut()
                                       .whenComplete(
-                                        () => AppNavigator.instance
-                                            .pushNamedAndRemoveUntil(
-                                                thePageRouteName:
-                                                    AppRoutes.signUp,
-                                                context: context),
+                                        () => Navigator.of(context).pop(),
                                       );
                                 },
                                 buttonText: "Yes, log me out",
                                 bgColour: AppColours.white,
+                                isLoading: false,
                                 child: "Yes, log me out"
                                     .txt16(
                                       color: AppColours.deepBlue,
