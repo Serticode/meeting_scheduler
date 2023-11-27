@@ -5,10 +5,13 @@ import 'package:meeting_scheduler/screens/home/home_screen.dart';
 import 'package:meeting_scheduler/screens/profile/account_screen.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-part "home_wrapper_controller.g.dart";
 
-@riverpod
-class HomeWrapperController extends _$HomeWrapperController {
+final homeWrapperControllerProvider =
+    AsyncNotifierProvider<HomeWrapperController, int>(
+  HomeWrapperController.new,
+);
+
+class HomeWrapperController extends AsyncNotifier<int> {
   @override
   FutureOr<int> build() => 0;
 

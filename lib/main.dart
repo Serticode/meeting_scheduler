@@ -8,14 +8,10 @@ import 'package:meeting_scheduler/screens/auth/sign_up.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
-import 'package:meeting_scheduler/services/controllers/auth/state/auth_state.dart';
 import 'package:meeting_scheduler/services/preferences/app_preferences.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/theme/theme.dart';
-
-//! RIVERPOD CODE GENERATOR COMMAND
-//! flutter pub run build_runner watch -d
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,10 +52,9 @@ class MeetingScheduler extends ConsumerWidget {
       onGenerateRoute: (settings) =>
           AppNavigator.instance.generateRoute(routeSettings: settings),
 
-      home:
-          const HomeScreenWrapper() /* Consumer(
+      home: Consumer(
         builder: (context, ref, child) {
-          final AuthState authState = ref.watch(authControllerProvider);
+          final authState = ref.watch(authControllerProvider);
 
           if (authState.isLoggedIn) {
             return const HomeScreenWrapper();
@@ -69,8 +64,7 @@ class MeetingScheduler extends ConsumerWidget {
             return const OnboardingScreenWrapper();
           }
         },
-      ) */
-      ,
+      ),
     );
   }
 }

@@ -188,7 +188,7 @@ class AccountScreen extends ConsumerWidget {
                                 onTap: () async {
                                   "Log out button pressed".log();
 
-                                  /* await ref
+                                  await ref
                                       .read(authControllerProvider.notifier)
                                       .logOut()
                                       .whenComplete(
@@ -197,7 +197,7 @@ class AccountScreen extends ConsumerWidget {
                                                 thePageRouteName:
                                                     AppRoutes.signUp,
                                                 context: context),
-                                      ); */
+                                      );
                                 },
                                 buttonText: "Yes, log me out",
                                 bgColour: AppColours.white,

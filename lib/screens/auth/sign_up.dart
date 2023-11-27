@@ -1,4 +1,4 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
@@ -203,8 +203,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               //!TODO: ADD PASSWORD VALIDATION
               //!TODO: SHOW ERRORS ABOUT AUTH PROCESS
 
-              /* Builder(builder: (context) {
-                bool isLoading = ref.watch(authControllerProvider).isLoading;
+              Builder(builder: (context) {
+                final bool isLoading =
+                    ref.watch(authControllerProvider).isLoading;
+
                 return RegularButton(
                   onTap: () async {
                     "Create account pressed".log();
@@ -231,7 +233,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   buttonText: AppTexts.createAccount,
                   width: isLoading ? 50 : null,
                 );
-              }), */
+              }),
 
               32.0.sizedBoxHeight,
 
@@ -244,4 +246,3 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     );
   }
 }
- */

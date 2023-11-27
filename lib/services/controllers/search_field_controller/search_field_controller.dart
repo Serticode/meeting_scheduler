@@ -1,8 +1,11 @@
-/* import 'package:riverpod_annotation/riverpod_annotation.dart';
-part "search_field_controller.g.dart";
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-@Riverpod(keepAlive: true)
-class SearchFieldController extends _$SearchFieldController {
+final searchFieldControllerProvider =
+    AsyncNotifierProvider<SearchFieldController, String>(
+  SearchFieldController.new,
+);
+
+class SearchFieldController extends AsyncNotifier<String> {
   //!
   @override
   FutureOr<String> build() => "";
@@ -10,4 +13,3 @@ class SearchFieldController extends _$SearchFieldController {
   void setSearchFieldValue({required String query}) =>
       state = AsyncValue.data(query);
 }
- */

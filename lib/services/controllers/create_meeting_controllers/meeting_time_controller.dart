@@ -1,14 +1,22 @@
-/* // ignore_for_file: avoid_public_notifier_properties
+// ignore_for_file: avoid_public_notifier_properties
 import 'package:flutter/material.dart';
 import 'package:meeting_scheduler/theme/theme.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-part "meeting_time_controller.g.dart";
+
+final meetingStartTimeControllerProvider =
+    AsyncNotifierProvider<MeetingStartTimeController, TimeOfDay?>(
+  MeetingStartTimeController.new,
+);
+
+final meetingEndTimeControllerProvider =
+    AsyncNotifierProvider<MeetingEndTimeController, TimeOfDay?>(
+  MeetingEndTimeController.new,
+);
 
 //!
 //!
 //! START TIME
-@riverpod
-class MeetingStartTimeController extends _$MeetingStartTimeController {
+class MeetingStartTimeController extends AsyncNotifier<TimeOfDay?> {
   @override
   FutureOr<TimeOfDay?> build() => null;
 
@@ -58,8 +66,7 @@ class MeetingStartTimeController extends _$MeetingStartTimeController {
 //!
 //!
 //! END TIME
-@riverpod
-class MeetingEndTimeController extends _$MeetingEndTimeController {
+class MeetingEndTimeController extends AsyncNotifier<TimeOfDay?> {
   @override
   FutureOr<TimeOfDay?> build() => null;
 
@@ -106,4 +113,3 @@ class MeetingEndTimeController extends _$MeetingEndTimeController {
   String toString() =>
       "${state.value?.hourOfPeriod} : ${state.value?.minute} $amOrPM";
 }
- */

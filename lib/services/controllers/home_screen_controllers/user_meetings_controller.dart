@@ -1,10 +1,14 @@
-/* import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
+import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-part "user_meetings_controller.g.dart";
 
-@Riverpod(keepAlive: true)
-class UserMeetingsController extends _$UserMeetingsController {
+final userMeetingsControllerProvider =
+    AsyncNotifierProvider<UserMeetingsController, List<ScheduledMeetingModel>>(
+  UserMeetingsController.new,
+);
+
+class UserMeetingsController
+    extends AsyncNotifier<List<ScheduledMeetingModel>> {
   //!
   @override
   FutureOr<List<ScheduledMeetingModel>> build() => [];
@@ -67,4 +71,3 @@ class UserMeetingsController extends _$UserMeetingsController {
     );
   }
 }
- */

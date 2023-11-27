@@ -1,12 +1,15 @@
-/* // ignore_for_file: avoid_public_notifier_properties
+// ignore_for_file: avoid_public_notifier_properties
 import 'package:flutter/material.dart';
 import 'package:meeting_scheduler/shared/utils/utils.dart';
 import 'package:meeting_scheduler/theme/theme.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-part "meeting_date_controller.g.dart";
 
-@riverpod
-class MeetingDateController extends _$MeetingDateController {
+final meetingDateControllerProvider =
+    AsyncNotifierProvider<MeetingDateController, DateTime?>(
+  MeetingDateController.new,
+);
+
+class MeetingDateController extends AsyncNotifier<DateTime?> {
   @override
   FutureOr<DateTime?> build() => null;
 
@@ -56,4 +59,3 @@ class MeetingDateController extends _$MeetingDateController {
   String toString() =>
       "${state.value?.day} / ${AppUtils.getMonth(dateTime: state.value!)} / ${state.value?.year}";
 }
- */

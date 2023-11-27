@@ -1,4 +1,4 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
 import 'package:meeting_scheduler/services/controllers/search_field_controller/search_field_controller.dart';
@@ -85,9 +85,9 @@ class HomeScreenSearchField extends ConsumerWidget {
                         .contains(query.toLowerCase()))
                     .toList();
 
-                /* ref
+                ref
                     .read(searchFieldControllerProvider.notifier)
-                    .setSearchFieldValue(query: query); */
+                    .setSearchFieldValue(query: query);
 
                 return filter
                     .map((meeting) =>
@@ -116,4 +116,3 @@ class HomeScreenSearchField extends ConsumerWidget {
     );
   }
 }
- */
