@@ -8,6 +8,7 @@ import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/services/controllers/onboarding_screen/onboarding_screen_controller.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
@@ -241,13 +242,21 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 return RegularButton(
                   onTap: () async => await ref
                       .read(authControllerProvider.notifier)
-                      .authenticateSignUp(
+                      .validateSignUp(
                         context: context,
                         isValidated: _formKey.currentState!.validate(),
                         fullName: _fullName.value.text.trim(),
                         email: _email.value.text.trim(),
                         password: _password.value.text.trim(),
-                      ),
+                      )
+                      .whenComplete(() {
+                    final user = ref.read(userIdProvider);
+                    if (user != null && user.isNotEmpty) {
+                      AppNavigator.instance.pushNamedAndRemoveUntil(
+                          thePageRouteName: AppRoutes.homeScreen,
+                          context: context);
+                    }
+                  }),
                   buttonText: AppTexts.createAccount,
                   isLoading: isLoading,
                 );

@@ -11,6 +11,15 @@ typedef FutureEither<SuccessType> = Future<Either<Failure, SuccessType>>;
 //! REGULAR FUTURE THAT RETURNS NOTHING.
 typedef FutureVoid = FutureEither<void>;
 
+typedef UserId = String;
+typedef UserDisplayName = String;
+typedef UserFullName = String;
+typedef UserProfileImageType = String;
+typedef IsLoading = bool;
+
+//! ENUM FOR UPDATING USER INFO
+enum UserInfoUpdateType { fullName, profession, email, phoneNumber }
+
 //! ENUM FOR NOTIFICATION TYPE
 enum NotificationType { success, failure, info }
 
@@ -47,7 +56,4 @@ enum MeetingVenue {
   });
 }
 
-typedef UserId = String;
-typedef UserDisplayName = String;
-typedef UserFullName = String;
-typedef UserProfileImage = String;
+enum FileType { image }

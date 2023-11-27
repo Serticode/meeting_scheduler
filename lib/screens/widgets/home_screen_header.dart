@@ -19,9 +19,13 @@ class HomeScreenHeader extends ConsumerWidget {
     return Row(
       children: [
         //! IMAGE
-        const UserProfileImage(
-          isAccountSettingsPage: false,
-        ),
+        Builder(builder: (context) {
+          final userProfileImage = ref.watch(userProfileImageProvider);
+          return UserProfileImage(
+            isAccountSettingsPage: false,
+            imageURL: userProfileImage,
+          );
+        }),
 
         //!
         12.0.sizedBoxWidth,
@@ -43,7 +47,6 @@ class HomeScreenHeader extends ConsumerWidget {
 
         const Spacer(),
 
-        // ignore: lines_longer_than_80_chars
         "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.day}, ${dateTime.year}"
             .txt14(
           fontWeight: FontWeight.w600,

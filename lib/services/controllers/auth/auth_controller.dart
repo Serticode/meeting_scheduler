@@ -33,33 +33,55 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> authenticateSignUp({
+  Future<void> validateSignUp({
     required bool isValidated,
     required String fullName,
     required String email,
     required String password,
     required BuildContext context,
   }) async {
-    await signUp(
-      fullName: fullName,
-      email: email,
-      password: password,
-      context: context,
-    );
+    if (isValidated) {
+      await signUp(
+        fullName: fullName,
+        email: email,
+        password: password,
+        context: context,
+      );
+    }
   }
 
-  Future<void> authenticateLogin({
+  Future<void> validateLogin({
     required bool isValidated,
     required String email,
     required String password,
     required BuildContext context,
   }) async {
-    "Authenticating login".log();
-    await login(
-      email: email,
-      password: password,
-      context: context,
-    );
+    if (isValidated) {
+      await login(
+        email: email,
+        password: password,
+        context: context,
+      );
+    }
+  }
+
+  Future<void> validateProfileUpdate({
+    required bool isValidated,
+    required String email,
+    required String fullName,
+    required String profession,
+    required String phoneNumber,
+    required BuildContext context,
+  }) async {
+    if (isValidated) {
+      await updateUserInfo(
+        email: email,
+        fullName: fullName,
+        profession: profession,
+        phoneNumber: phoneNumber,
+        context: context,
+      );
+    }
   }
 
   Future<void> signUp({
@@ -69,8 +91,6 @@ class AuthController extends StateNotifier<AuthState> {
     required BuildContext context,
   }) async {
     state = state.copiedWithIsLoading(isLoading: true);
-
-    await Future.delayed(const Duration(seconds: 3));
 
     final Either<Failure, AuthResult> result =
         await _authControllerRef!.read(authRepositoryProvider).signUp(
@@ -118,11 +138,7 @@ class AuthController extends StateNotifier<AuthState> {
     required String password,
     required BuildContext context,
   }) async {
-    "Logging in".log();
-
     state = state.copiedWithIsLoading(isLoading: true);
-
-    await Future.delayed(const Duration(seconds: 3));
 
     final Either<Failure, AuthResult> result =
         await _authControllerRef!.read(authRepositoryProvider).login(
@@ -159,6 +175,51 @@ class AuthController extends StateNotifier<AuthState> {
             isLoggedIn: true,
             userId: _userId,
           );
+        }
+      },
+    );
+  }
+
+  Future<void> updateUserInfo({
+    required String email,
+    required String fullName,
+    required String profession,
+    required String phoneNumber,
+    required BuildContext context,
+  }) async {
+    state = state.copiedWithIsLoading(isLoading: true);
+
+    final Either<Failure, bool> result = await _authControllerRef!
+        .read(authRepositoryProvider)
+        .updateUserProfile(
+          email: email,
+          fullName: fullName,
+          profession: profession,
+          phoneNumber: phoneNumber,
+        );
+
+    result.fold(
+      (Failure failure) {
+        failure.failureMessage?.log();
+
+        AppUtils.showAppBanner(
+          message: failure.failureMessage ?? "Sign up failed, please try again",
+          context: context,
+        );
+
+        Future.delayed(
+          const Duration(seconds: 4),
+        );
+
+        AppUtils.closeAppBanner(context: context);
+
+        state = state.copiedWithIsLoading(isLoading: false);
+      },
+      (bool result) {
+        if (result) {
+          true.withHapticFeedback();
+
+          state = state.copiedWithIsLoading(isLoading: false);
         }
       },
     );

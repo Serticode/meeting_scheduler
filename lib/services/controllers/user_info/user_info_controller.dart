@@ -33,7 +33,8 @@ final userFullNameProvider = Provider.autoDispose<UserFullName?>((ref) {
 
 //!
 //! USER PROFILE IMAGE PROVIDER
-final userProfileImageProvider = Provider.autoDispose<UserProfileImage?>((ref) {
+final userProfileImageProvider =
+    Provider.autoDispose<UserProfileImageType?>((ref) {
   final userModelStream = ref.watch(userInfoControllerProvider);
 
   ref.keepAlive();
@@ -59,8 +60,10 @@ final AutoDisposeStreamProvider<UserModel?> userInfoControllerProvider =
         .where(FirebaseUserFieldName.userId, isEqualTo: userId)
         .snapshots(includeMetadataChanges: true)
         .listen((snapshot) {
-      final UserModel userInfo =
-          UserModel.fromJSON(userId: userId!, json: snapshot.docs.first.data());
+      final UserModel userInfo = UserModel.fromJSON(
+        userId: userId,
+        json: snapshot.docs.first.data(),
+      );
 
       controller.sink.add(userInfo);
     });

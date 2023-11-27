@@ -14,6 +14,8 @@ class Database {
     FirebaseCollectionName.users,
   );
 
+  //!
+  //! SAVE USER INFO
   Future<bool> saveUserInfo({
     required UserId? userId,
     required String? fullName,
@@ -23,6 +25,9 @@ class Database {
       userId: userId,
       fullName: fullName,
       email: email,
+      profileImage: "",
+      profession: "",
+      phoneNumber: "",
     );
 
     try {
@@ -38,6 +43,50 @@ class Database {
       });
 
       await userCollection.add(user);
+      return true;
+    } catch (error) {
+      error.toString().log();
+
+      return false;
+    }
+  }
+
+  //!
+  //! UPDATE
+  Future<bool> updateUserInfo({
+    required UserId? userId,
+    required String? fullName,
+    required String? email,
+    required String? profession,
+    required String? phoneNumber,
+  }) async {
+    try {
+      await userCollection
+          .where(FirebaseUserFieldName.userId, isEqualTo: userId)
+          .limit(1)
+          .get()
+          .then((userInfo) async {
+        if (userInfo.docs.isNotEmpty) {
+          final UserModel storedUserInfo = UserModel.fromJSON(
+              userId: userId,
+              json: userInfo.docs.first.data() as Map<String, dynamic>);
+
+          UserModel newUserInfo = UserModel(
+            userId: userId,
+            profileImage: storedUserInfo.profileImage,
+            email: email!.isEmpty ? storedUserInfo.email : email,
+            fullName: fullName!.isEmpty ? storedUserInfo.fullName : fullName,
+            profession:
+                profession!.isEmpty ? storedUserInfo.profession : profession,
+            phoneNumber:
+                phoneNumber!.isEmpty ? storedUserInfo.phoneNumber : phoneNumber,
+          );
+
+          await userInfo.docs.first.reference.update(newUserInfo);
+          return true;
+        }
+      });
+
       return true;
     } catch (error) {
       error.toString().log();

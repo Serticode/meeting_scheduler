@@ -31,6 +31,14 @@ class FirebaseUserFieldName {
   static const String fullName = "fullName";
   static const String email = "email";
   static const String profileImage = "profileImage";
+  static const String profession = "profession";
+  static const String phoneNumber = "phoneNumber";
 
   const FirebaseUserFieldName._();
+}
+
+@immutable
+class FirestoreFileFieldNames {
+  static const profileImage = "profileImage";
+  const FirestoreFileFieldNames._();
 }

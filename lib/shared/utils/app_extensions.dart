@@ -35,6 +35,15 @@ extension WidgetAnnotatedRegion on Widget {
       );
 }
 
+extension CollectionName on FileType {
+  String get collectionName {
+    switch (this) {
+      case FileType.image:
+        return "images";
+    }
+  }
+}
+
 //!
 //! HAPTIC FEEDBACK
 extension AppHapticFeedback on Widget {

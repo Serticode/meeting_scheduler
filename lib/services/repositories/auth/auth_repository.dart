@@ -76,6 +76,36 @@ class AuthRepository {
     }
   }
 
+  //!  UPDATE USER PROFILE
+  FutureEither<bool> updateUserProfile({
+    required String email,
+    required String fullName,
+    required String profession,
+    required String phoneNumber,
+  }) async {
+    try {
+      final isUserUpdated = await database.updateUserInfo(
+        userId: FirebaseAuth.instance.currentUser?.uid,
+        fullName: fullName,
+        email: email,
+        profession: profession,
+        phoneNumber: phoneNumber,
+      );
+
+      if (isUserUpdated) {
+        return right(isUserUpdated);
+      } else {
+        return left(Failure(failureMessage: "Failed to update profile"));
+      }
+    } on FirebaseAuthException catch (error) {
+      error.toString().log();
+
+      return left(
+        Failure(failureMessage: "Failed to update profile"),
+      );
+    }
+  }
+
   //!
   //! LOGOUT
   Future<void> logOut() async => await FirebaseAuth.instance.signOut();

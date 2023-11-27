@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
+import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
+import 'package:meeting_scheduler/services/upload_image/helper/upload_image_helper.dart';
+import 'package:meeting_scheduler/services/upload_image/upload_image_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:meeting_scheduler/shared/utils/type_def.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
@@ -72,6 +78,20 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       isForPassword: false,
                       hint: "Full Name",
                       controller: _fullName,
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (_fullName.value.text.trim().isEmpty) {
+                          return null;
+                        } else if (_fullName.value.text
+                                .trim()
+                                .split(" ")
+                                .length <
+                            2) {
+                          return "Enter a Last and First name";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
 
                     12.0.sizedBoxHeight,
@@ -85,6 +105,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       isForPassword: false,
                       hint: "Profession e.g lecturer, secretary",
                       controller: _profession,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (_profession.value.text.trim().isEmpty) {
+                          return "Enter a profession";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
 
                     21.0.sizedBoxHeight,
@@ -98,6 +126,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       isForPassword: false,
                       hint: "Email",
                       controller: _email,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (!_email.value.text.trim().contains("@")) {
+                          return "Enter a valid email";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
 
                     21.0.sizedBoxHeight,
@@ -116,11 +152,33 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     32.0.sizedBoxHeight,
 
                     //!
-                    RegularButton(
-                      onTap: () {},
-                      buttonText: AppTexts.enter,
-                      isLoading: false,
-                    ),
+                    Builder(builder: (context) {
+                      final bool isLoading =
+                          ref.watch(authControllerProvider).isLoading;
+
+                      return RegularButton(
+                        onTap: () async {
+                          await ref
+                              .read(authControllerProvider.notifier)
+                              .validateProfileUpdate(
+                                isValidated: _formKey.currentState!.validate(),
+                                fullName: _fullName.value.text.trim(),
+                                email: _email.value.text.trim(),
+                                profession: _profession.value.text.trim(),
+                                phoneNumber: _phoneNumber.value.text.trim(),
+                                context: context,
+                              )
+                              .whenComplete(() {
+                            _fullName.clear();
+                            _email.clear();
+                            _profession.clear();
+                            _phoneNumber.clear();
+                          });
+                        },
+                        buttonText: AppTexts.enter,
+                        isLoading: isLoading,
+                      );
+                    }).alignCenter(),
 
                     12.0.sizedBoxHeight,
                   ],
@@ -129,17 +187,53 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             ),
           ).alignBottomCenter(),
 
-          //! TODO: KINDLY MAKE THIS RESPONSIVE
-          const Positioned(
+          Positioned(
             bottom: 580,
-            child: CircleAvatar(
-              radius: 50,
-              backgroundColor: AppColours.profileImageBGColour,
-              child: UserProfileImage(
-                isAccountSettingsPage: false,
-                radius: 50.0,
-                iconColour: AppColours.white,
-              ),
+            child: Consumer(builder: (context, ref, child) {
+              final bool isLoading = ref.watch(uploadImageProvider);
+              final String? userProfileImage =
+                  ref.watch(userProfileImageProvider);
+
+              return isLoading
+                  ? CircleAvatar(
+                      radius: 50,
+                      backgroundColor: AppColours.profileImageBGColour,
+                      child: SpinKitWaveSpinner(
+                        color: AppColours.white,
+                        trackColor: AppColours.primaryBlue.withOpacity(0.7),
+                        waveColor: AppColours.deepBlue.withOpacity(0.5),
+                        size: 65,
+                      ).alignCenter(),
+                    )
+                  : CircleAvatar(
+                      radius: 50,
+                      backgroundColor: AppColours.profileImageBGColour,
+                      child: UserProfileImage(
+                        isAccountSettingsPage: false,
+                        radius: 50.0,
+                        iconColour: AppColours.white,
+                        imageURL: userProfileImage,
+                      ),
+                    );
+            }).onTap(
+              onTap: () async {
+                await UploadImageHelper.pickImage().then((profilePhoto) async {
+                  if (profilePhoto == null) {
+                    "Select profile photo aborted".log();
+                    return;
+                  } else {
+                    await ref
+                        .read(uploadImageProvider.notifier)
+                        .uploadProfilePhoto(
+                          userId: ref.read(userIdProvider)!,
+                          profilePhoto: profilePhoto,
+                          fileType: FileType.image,
+                          loggedInUser:
+                              ref.read(userInfoControllerProvider).value!,
+                        );
+                  }
+                });
+              },
             ),
           ),
 
@@ -152,6 +246,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             ),
           )
         ],
+      ).ignorePointer(
+        isLoading: ref.watch(uploadImageProvider),
       ),
     );
   }

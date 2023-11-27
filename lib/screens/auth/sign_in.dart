@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
@@ -8,6 +11,7 @@ import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:meeting_scheduler/shared/utils/type_def.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
@@ -171,7 +175,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 return RegularButton(
                   onTap: () async => await ref
                       .read(authControllerProvider.notifier)
-                      .authenticateLogin(
+                      .validateLogin(
                         context: context,
                         isValidated: _formKey.currentState!.validate(),
                         email: _email.value.text.trim(),
@@ -183,6 +187,34 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               }),
 
               32.0.sizedBoxHeight,
+              32.0.sizedBoxHeight,
+
+              RichText(
+                text: TextSpan(children: [
+                  const TextSpan(
+                      text: "Don't have an account? ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: AppColours.greyBlack,
+                      )),
+                  TextSpan(
+                    text: " Sign up now",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: AppColours.purple,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => AppNavigator.instance
+                          .navigateToReplacementPage(
+                              thePageRouteName: AppRoutes.signUp,
+                              context: context),
+                  ),
+                ]),
+              ).withHapticFeedback(
+                onTap: null,
+                feedbackType: AppHapticFeedbackType.mediumImpact,
+              ),
             ],
           ).generalPadding.ignorePointer(
                 isLoading: ref.watch(authControllerProvider).isLoading,
