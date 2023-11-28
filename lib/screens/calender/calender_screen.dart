@@ -92,6 +92,8 @@ class CalenderScreen extends ConsumerWidget {
                         listOfMeeting: listOfMeeting,
                       );
 
+              displayedList.sortList();
+
               return displayedList.isEmpty
                   ? const EmptyCalender()
                   : Expanded(

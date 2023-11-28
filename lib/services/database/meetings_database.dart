@@ -18,6 +18,7 @@ class MeetingsDatabase {
     required ScheduledMeetingModel meeting,
   }) async {
     ScheduledMeetingModel meetingPayload = ScheduledMeetingModel(
+      ownerID: meeting.ownerID,
       meetingID: meeting.meetingID,
       fullName: meeting.fullName,
       professionOfVenueBooker: meeting.professionOfVenueBooker,
@@ -45,6 +46,7 @@ class MeetingsDatabase {
     required ScheduledMeetingModel meeting,
   }) async {
     ScheduledMeetingModel meetingPayload = ScheduledMeetingModel(
+      ownerID: meeting.ownerID,
       meetingID: meeting.meetingID,
       fullName: meeting.fullName,
       professionOfVenueBooker: meeting.professionOfVenueBooker,
@@ -71,6 +73,30 @@ class MeetingsDatabase {
           return true;
         }
       });
+
+      return true;
+    } catch (error) {
+      error.toString().log();
+
+      return false;
+    }
+  }
+
+  //!
+  //!
+  Future<bool> deleteMeeting({
+    required String meetingID,
+    required String ownerID,
+  }) async {
+    try {
+      await meetingCollection
+          .where(
+            ScheduledMeetingFieldNames.meetingID,
+            isEqualTo: meetingID,
+          )
+          .limit(1)
+          .get()
+          .then((meetingInfo) async {});
 
       return true;
     } catch (error) {

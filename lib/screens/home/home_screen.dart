@@ -9,8 +9,11 @@ import 'package:meeting_scheduler/screens/widgets/meeting_card.dart';
 import 'package:meeting_scheduler/services/controllers/calender_controller/calender_controller.dart';
 import 'package:meeting_scheduler/services/controllers/meetings_controllers/meetings_controller.dart';
 import 'package:meeting_scheduler/services/controllers/search_field_controller/search_field_controller.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
+import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -51,6 +54,8 @@ class HomeScreen extends ConsumerWidget {
                         listOfMeeting: listOfMeeting,
                       );
 
+              displayedList.sortList();
+
               return displayedList.isEmpty
                   ? const NoMeetings()
                   : Expanded(
@@ -76,14 +81,42 @@ class HomeScreen extends ConsumerWidget {
 
                             //! MEETING
                             ...displayedList.map(
-                              (meeting) =>
-                                  MeetingCard(meetingDetails: meeting!).onTap(
-                                onTap: () => Navigator.of(context)
-                                    .push<Future<MaterialPageRoute<Widget?>>>(
-                                  MaterialPageRoute(
-                                    builder: (context) => CreateMeeting(
-                                      meetingModel: meeting,
-                                      isEditMeeting: true,
+                              (meeting) => Slidable(
+                                key: ValueKey(displayedList.indexOf(meeting)),
+                                endActionPane: meeting?.ownerID ==
+                                        ref.read(userIdProvider)
+                                    ? ActionPane(
+                                        motion: const DrawerMotion(),
+                                        children: [
+                                          SlidableAction(
+                                            onPressed: (context) {
+                                              "Slidable Tapped".log();
+
+                                              meeting?.log();
+
+                                              if (meeting?.ownerID !=
+                                                  ref.read(userIdProvider)) {}
+                                            },
+                                            spacing: 12.0,
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            backgroundColor:
+                                                AppColours.red.withOpacity(0.2),
+                                            foregroundColor: AppColours.red,
+                                            icon: Icons.delete,
+                                            label: 'Delete',
+                                          ),
+                                        ],
+                                      )
+                                    : null,
+                                child:
+                                    MeetingCard(meetingDetails: meeting!).onTap(
+                                  onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateMeeting(
+                                        meetingModel: meeting,
+                                        isEditMeeting: true,
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -44,6 +44,14 @@ extension CollectionName on FileType {
   }
 }
 
+extension SortExtension on List {
+  void sortList() => sort((a, b) => a!.dateOfMeeting!
+      .split("/")
+      .first
+      .trim()
+      .compareTo(b!.dateOfMeeting!.split("/").first.trim()));
+}
+
 //!
 //! HAPTIC FEEDBACK
 extension AppHapticFeedback on Widget {

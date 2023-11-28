@@ -9,6 +9,7 @@ import 'package:meeting_scheduler/services/controllers/create_meeting_controller
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_time_controller.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_venue_controller.dart';
 import 'package:meeting_scheduler/services/controllers/meetings_controllers/meetings_controller.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
@@ -238,6 +239,9 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
       );
     } else if (_formKey.currentState!.validate()) {
       ScheduledMeetingModel scheduledMeeting = ScheduledMeetingModel()
+        ..ownerID = widget.isEditMeeting != null && widget.isEditMeeting == true
+            ? widget.meetingModel?.ownerID
+            : ref.read(userIdProvider)
         ..meetingID =
             widget.isEditMeeting != null && widget.isEditMeeting == true
                 ? widget.meetingModel?.meetingID

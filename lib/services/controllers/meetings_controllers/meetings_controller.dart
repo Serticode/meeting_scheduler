@@ -43,7 +43,9 @@ class MeetingsController extends StateNotifier<IsLoading> {
 
     final Either<Failure, MeetingUploaded> result = await meetingsControllerRef!
         .read(meetingsRepositoryProvider)
-        .addMeeting(meeting: meeting);
+        .addMeeting(
+          meeting: meeting,
+        );
 
     result.fold(
       (Failure failure) {
@@ -68,7 +70,38 @@ class MeetingsController extends StateNotifier<IsLoading> {
 
     final Either<Failure, MeetingUploaded> result = await meetingsControllerRef!
         .read(meetingsRepositoryProvider)
-        .updateMeeting(meeting: meeting);
+        .updateMeeting(
+          meeting: meeting,
+        );
+
+    result.fold(
+      (Failure failure) {
+        failure.failureMessage?.log();
+
+        state = false;
+      },
+      (MeetingUploaded result) {
+        result.withHapticFeedback();
+
+        state = false;
+      },
+    );
+  }
+
+  //!
+  //!
+  Future<void> deleteMeeting({
+    required String meetingID,
+    required String ownerID,
+  }) async {
+    state = true;
+
+    final Either<Failure, MeetingDeleted> result = await meetingsControllerRef!
+        .read(meetingsRepositoryProvider)
+        .deleteMeeting(
+          meetingID: meetingID,
+          ownerID: ownerID,
+        );
 
     result.fold(
       (Failure failure) {

@@ -27,7 +27,6 @@ class NotificationsScreen extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          //! TODO: BUILD NOTIFICATION ITEM WIDGET
           const NoNotifications().alignCenter(),
         ],
       ).generalPadding,

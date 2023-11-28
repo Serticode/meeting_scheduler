@@ -20,7 +20,9 @@ class MeetingsRepository {
     required ScheduledMeetingModel meeting,
   }) async {
     try {
-      final isMeetingUploaded = await database.addMeeting(meeting: meeting);
+      final isMeetingUploaded = await database.addMeeting(
+        meeting: meeting,
+      );
 
       if (isMeetingUploaded) {
         return right(isMeetingUploaded);
@@ -42,10 +44,38 @@ class MeetingsRepository {
     required ScheduledMeetingModel meeting,
   }) async {
     try {
-      final isMeetingUploaded = await database.updateMeeting(meeting: meeting);
+      final isMeetingUploaded = await database.updateMeeting(
+        meeting: meeting,
+      );
 
       if (isMeetingUploaded) {
         return right(isMeetingUploaded);
+      } else {
+        return left(Failure(failureMessage: "Failed to upload meeting"));
+      }
+    } on FirebaseAuthException catch (error) {
+      error.toString().log();
+
+      return left(
+        Failure(failureMessage: "Failed to register user"),
+      );
+    }
+  }
+
+  //!
+  //!  UPDATE MEETING
+  FutureEither<MeetingUploaded> deleteMeeting({
+    required String meetingID,
+    required String ownerID,
+  }) async {
+    try {
+      final isMeetingDeleted = await database.deleteMeeting(
+        meetingID: meetingID,
+        ownerID: ownerID,
+      );
+
+      if (isMeetingDeleted) {
+        return right(isMeetingDeleted);
       } else {
         return left(Failure(failureMessage: "Failed to upload meeting"));
       }

@@ -3,6 +3,7 @@ import 'package:meeting_scheduler/services/models/model_field_names.dart';
 
 class ScheduledMeetingModel extends MapView<String, dynamic> {
   //! DEFINITIONS
+  late String? ownerID;
   late String? meetingID;
   late String? fullName;
   late String? professionOfVenueBooker;
@@ -14,6 +15,7 @@ class ScheduledMeetingModel extends MapView<String, dynamic> {
   late String? selectedVenue;
 
   ScheduledMeetingModel({
+    this.ownerID,
     this.meetingID,
     this.fullName,
     this.professionOfVenueBooker,
@@ -24,6 +26,7 @@ class ScheduledMeetingModel extends MapView<String, dynamic> {
     this.meetingEndTime,
     this.selectedVenue,
   }) : super({
+          ScheduledMeetingFieldNames.ownerID: ownerID,
           ScheduledMeetingFieldNames.meetingID: meetingID,
           ScheduledMeetingFieldNames.fullName: fullName,
           ScheduledMeetingFieldNames.professionOfVenueBooker:
@@ -40,6 +43,7 @@ class ScheduledMeetingModel extends MapView<String, dynamic> {
   ScheduledMeetingModel.fromJSON({
     required Map<String, dynamic> json,
   }) : this(
+          ownerID: json[ScheduledMeetingFieldNames.ownerID] ?? "",
           meetingID: json[ScheduledMeetingFieldNames.meetingID] ?? "",
           fullName: json[ScheduledMeetingFieldNames.fullName] ?? "",
           professionOfVenueBooker:
@@ -58,13 +62,14 @@ class ScheduledMeetingModel extends MapView<String, dynamic> {
 
   @override
   String toString() =>
-      "ScheduledMeetingModel(MeetingID: $meetingID, fullName: $fullName, professionOfVenueBooker: $professionOfVenueBooker, purposeOfMeeting: $purposeOfMeeting, numberOfExpectedParticipants: $numberOfExpectedParticipants, dateOfMeeting: $dateOfMeeting, meetingStartTime: $meetingStartTime, meetingEndTime: $meetingEndTime, selectedVenue: $selectedVenue)";
+      "ScheduledMeetingModel(OwnerID: $ownerID, MeetingID: $meetingID, fullName: $fullName, professionOfVenueBooker: $professionOfVenueBooker, purposeOfMeeting: $purposeOfMeeting, numberOfExpectedParticipants: $numberOfExpectedParticipants, dateOfMeeting: $dateOfMeeting, meetingStartTime: $meetingStartTime, meetingEndTime: $meetingEndTime, selectedVenue: $selectedVenue)";
 
   @override
   bool operator ==(covariant ScheduledMeetingModel other) {
     if (identical(this, other)) return true;
 
-    return other.meetingID == meetingID &&
+    return other.ownerID == ownerID &&
+        other.meetingID == meetingID &&
         other.fullName == fullName &&
         other.professionOfVenueBooker == professionOfVenueBooker &&
         other.purposeOfMeeting == purposeOfMeeting &&
@@ -77,7 +82,8 @@ class ScheduledMeetingModel extends MapView<String, dynamic> {
 
   @override
   int get hashCode {
-    return meetingID.hashCode ^
+    return ownerID.hashCode ^
+        meetingID.hashCode ^
         fullName.hashCode ^
         professionOfVenueBooker.hashCode ^
         purposeOfMeeting.hashCode ^
