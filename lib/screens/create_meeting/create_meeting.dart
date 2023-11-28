@@ -229,6 +229,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
   }
 
   Future<void> validateInputFields() async {
+    //! USER HAS NOT SELECTED A VENUE
     if (ref.read(meetingVenueControllerProvider.notifier).getSelectedVenue ==
             null ||
         ref.read(meetingVenueControllerProvider.notifier).getSelectedVenue ==
@@ -238,6 +239,8 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
         context: context,
       );
     } else if (_formKey.currentState!.validate()) {
+      bool meetingExists = false;
+
       ScheduledMeetingModel scheduledMeeting = ScheduledMeetingModel()
         ..ownerID = widget.isEditMeeting != null && widget.isEditMeeting == true
             ? widget.meetingModel?.ownerID
@@ -257,10 +260,9 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
         ..meetingEndTime =
             ref.read(meetingEndTimeControllerProvider.notifier).getMeetingTime
         ..selectedVenue = ref
-                .read(meetingVenueControllerProvider.notifier)
-                .getSelectedVenue
-                ?.hallName ??
-            "No Venue";
+            .read(meetingVenueControllerProvider.notifier)
+            .getSelectedVenue
+            ?.hallName;
 
       if (widget.isEditMeeting!) {
         await ref
@@ -270,14 +272,30 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
               () => Navigator.of(context).pop(),
             );
       } else {
-        const uuid = Uuid();
-        scheduledMeeting = scheduledMeeting..meetingID = uuid.v4();
-        await ref
-            .read(meetingsControllerProvider.notifier)
-            .addMeeting(meeting: scheduledMeeting)
-            .whenComplete(
-              () => Navigator.of(context).pop(),
-            );
+        for (ScheduledMeetingModel? element
+            in ref.read(meetingsProvider).value ?? []) {
+          if (scheduledMeeting.dateOfMeeting == element?.dateOfMeeting &&
+              scheduledMeeting.meetingStartTime == element?.meetingStartTime &&
+              scheduledMeeting.selectedVenue == element?.selectedVenue) {
+            meetingExists = true;
+            break;
+          }
+        }
+
+        if (meetingExists) {
+          AppUtils.showAppBanner(
+              message: "This venue is unavailable on this day and time",
+              context: context);
+        } else {
+          const uuid = Uuid();
+          scheduledMeeting = scheduledMeeting..meetingID = uuid.v4();
+          await ref
+              .read(meetingsControllerProvider.notifier)
+              .addMeeting(meeting: scheduledMeeting)
+              .whenComplete(
+                () => Navigator.of(context).pop(),
+              );
+        }
       }
     }
   }
