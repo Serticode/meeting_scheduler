@@ -7,6 +7,7 @@ import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
@@ -180,13 +181,20 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         isValidated: _formKey.currentState!.validate(),
                         email: _email.value.text.trim(),
                         password: _password.value.text.trim(),
-                      ),
+                      )
+                      .whenComplete(() {
+                    final user = ref.read(userIdProvider);
+                    if (user != null && user.isNotEmpty) {
+                      AppNavigator.instance.pushNamedAndRemoveUntil(
+                          thePageRouteName: AppRoutes.homeScreen,
+                          context: context);
+                    }
+                  }),
                   buttonText: AppTexts.login,
                   isLoading: isLoading,
                 );
               }),
 
-              32.0.sizedBoxHeight,
               32.0.sizedBoxHeight,
 
               RichText(

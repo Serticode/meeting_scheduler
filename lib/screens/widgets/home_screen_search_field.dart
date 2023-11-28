@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
+import 'package:meeting_scheduler/services/controllers/meetings_controllers/meetings_controller.dart';
 import 'package:meeting_scheduler/services/controllers/search_field_controller/search_field_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';

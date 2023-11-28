@@ -8,7 +8,7 @@ import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_date_controller.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_time_controller.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_venue_controller.dart';
-import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
+import 'package:meeting_scheduler/services/controllers/meetings_controllers/meetings_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
@@ -182,7 +182,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
               32.0.sizedBoxHeight,
 
               Builder(builder: (context) {
-                final isLoading = ref.watch(userMeetingsControllerProvider);
+                final isLoading = ref.watch(meetingsControllerProvider);
                 return RegularButton(
                   onTap: () async {
                     await validateInputFields();
@@ -202,7 +202,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                         //!TODO: SHOW SUCCESS MESSAGE OF ACTIONS BELOW
                         /* if (widget.isEditMeeting!) {
                           await ref
-                              .read(userMeetingsControllerProvider.notifier)
+                              .read(meetingsControllerProvider.notifier)
                               .updateMeeting(scheduledMeeting: scheduledMeeting)
                               .whenComplete(
                                 () => Navigator.of(context).pop(),
@@ -212,7 +212,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                           scheduledMeeting = scheduledMeeting
                             ..meetingID = uuid.v4();
                           await ref
-                              .read(userMeetingsControllerProvider.notifier)
+                              .read(meetingsControllerProvider.notifier)
                               .addMeeting(scheduledMeeting: scheduledMeeting)
                               .whenComplete(
                                 () => Navigator.of(context).pop(),
@@ -231,7 +231,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
           ),
         ),
       ).generalPadding.ignorePointer(
-            isLoading: ref.watch(userMeetingsControllerProvider),
+            isLoading: ref.watch(meetingsControllerProvider),
           ),
     );
   }
@@ -294,7 +294,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
 
       if (widget.isEditMeeting!) {
         await ref
-            .read(userMeetingsControllerProvider.notifier)
+            .read(meetingsControllerProvider.notifier)
             .updateMeeting(meeting: scheduledMeeting)
             .whenComplete(
               () => Navigator.of(context).pop(),
@@ -303,7 +303,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
         const uuid = Uuid();
         scheduledMeeting = scheduledMeeting..meetingID = uuid.v4();
         await ref
-            .read(userMeetingsControllerProvider.notifier)
+            .read(meetingsControllerProvider.notifier)
             .addMeeting(meeting: scheduledMeeting)
             .whenComplete(
               () => Navigator.of(context).pop(),

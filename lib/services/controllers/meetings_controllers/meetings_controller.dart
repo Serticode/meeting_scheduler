@@ -9,18 +9,18 @@ import 'package:meeting_scheduler/shared/utils/failure.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
-final userMeetingsControllerProvider =
-    StateNotifierProvider<UserMeetingsController, IsLoading>(
-  (ref) => UserMeetingsController(controllerRef: ref),
+final meetingsControllerProvider =
+    StateNotifierProvider<MeetingsController, IsLoading>(
+  (ref) => MeetingsController(controllerRef: ref),
 );
 
-class UserMeetingsController extends StateNotifier<IsLoading> {
-  final Ref? _userMeetingsControllerRef;
+class MeetingsController extends StateNotifier<IsLoading> {
+  final Ref? meetingsControllerRef;
 
   //! CONSTRUCTOR
-  UserMeetingsController({
+  MeetingsController({
     required Ref? controllerRef,
-  })  : _userMeetingsControllerRef = controllerRef,
+  })  : meetingsControllerRef = controllerRef,
         super(false);
 
   //!
@@ -41,10 +41,9 @@ class UserMeetingsController extends StateNotifier<IsLoading> {
   }) async {
     state = true;
 
-    final Either<Failure, MeetingUploaded> result =
-        await _userMeetingsControllerRef!
-            .read(meetingsRepositoryProvider)
-            .addMeeting(meeting: meeting);
+    final Either<Failure, MeetingUploaded> result = await meetingsControllerRef!
+        .read(meetingsRepositoryProvider)
+        .addMeeting(meeting: meeting);
 
     result.fold(
       (Failure failure) {
@@ -67,10 +66,9 @@ class UserMeetingsController extends StateNotifier<IsLoading> {
   }) async {
     state = true;
 
-    final Either<Failure, MeetingUploaded> result =
-        await _userMeetingsControllerRef!
-            .read(meetingsRepositoryProvider)
-            .updateMeeting(meeting: meeting);
+    final Either<Failure, MeetingUploaded> result = await meetingsControllerRef!
+        .read(meetingsRepositoryProvider)
+        .updateMeeting(meeting: meeting);
 
     result.fold(
       (Failure failure) {
@@ -78,17 +76,45 @@ class UserMeetingsController extends StateNotifier<IsLoading> {
 
         state = false;
       },
-      (IsLoading result) {
+      (MeetingUploaded result) {
         result.withHapticFeedback();
 
         state = false;
       },
     );
   }
+
+  List<ScheduledMeetingModel?> getMeetings({
+    required String searchKeyword,
+    required int dateFilter,
+    required List<ScheduledMeetingModel?> listOfMeeting,
+  }) {
+    if (searchKeyword.isEmpty && dateFilter == DateTime.now().day) {
+      return listOfMeeting;
+    } else if (searchKeyword.isNotEmpty) {
+      return listOfMeeting
+          .filter((meeting) => meeting!.selectedVenue!
+              .toLowerCase()
+              .contains(searchKeyword.toLowerCase()))
+          .toList();
+    } else {
+      return listOfMeeting
+          .filter(
+            (meeting) =>
+                meeting!.dateOfMeeting!
+                    .split("/")
+                    .first
+                    .trim()
+                    .compareTo(dateFilter.toString()) ==
+                0,
+          )
+          .toList();
+    }
+  }
 }
 
 //!
-//! MEETING PROVIDER
+//! MEETINGS PROVIDER
 final AutoDisposeStreamProvider<List<ScheduledMeetingModel?>> meetingsProvider =
     StreamProvider.autoDispose<List<ScheduledMeetingModel?>>(
   (ref) {

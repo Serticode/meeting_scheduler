@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
 import 'package:meeting_scheduler/screens/widgets/empty_calender.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_calender.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_search_field.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_card.dart';
-import 'package:meeting_scheduler/services/controllers/home_screen_controllers/user_meetings_controller.dart';
+import 'package:meeting_scheduler/services/controllers/calender_controller/calender_controller.dart';
+import 'package:meeting_scheduler/services/controllers/meetings_controllers/meetings_controller.dart';
 import 'package:meeting_scheduler/services/controllers/search_field_controller/search_field_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
@@ -80,19 +80,16 @@ class CalenderScreen extends ConsumerWidget {
             final scheduledMeetings = ref.watch(meetingsProvider);
             final searchKeyword =
                 ref.watch(searchFieldControllerProvider).value!;
+            final dateFilter = ref.watch(calenderControllerProvider).value!;
 
             return scheduledMeetings.when(
               data: (listOfMeeting) {
                 final List<ScheduledMeetingModel?> displayedList =
-                    searchKeyword.isEmpty
-                        ? listOfMeeting
-                        : listOfMeeting
-                            .filter(
-                              (meeting) => meeting!.purposeOfMeeting!
-                                  .toLowerCase()
-                                  .contains(searchKeyword.toLowerCase()),
-                            )
-                            .toList();
+                    ref.read(meetingsControllerProvider.notifier).getMeetings(
+                          searchKeyword: searchKeyword,
+                          dateFilter: dateFilter,
+                          listOfMeeting: listOfMeeting,
+                        );
 
                 return displayedList.isEmpty
                     ? const EmptyCalender()
