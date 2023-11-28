@@ -39,23 +39,22 @@ class HomeScreen extends ConsumerWidget {
 
         Consumer(
           builder: (context, ref, child) {
-            final scheduledMeetings = ref.watch(userMeetingsControllerProvider);
+            final scheduledMeetings = ref.watch(meetingsProvider);
             final searchKeyword =
                 ref.watch(searchFieldControllerProvider).value!;
 
             return scheduledMeetings.when(
               data: (listOfMeeting) {
-                List<ScheduledMeetingModel> displayedList = searchKeyword
-                        .isEmpty
-                    ? listOfMeeting
-                    : listOfMeeting
-                        .filter(
-                          (meeting) =>
-                              meeting.purposeOfMeeting!.toLowerCase().contains(
-                                    searchKeyword.toLowerCase(),
-                                  ),
-                        )
-                        .toList();
+                final List<ScheduledMeetingModel?> displayedList =
+                    searchKeyword.isEmpty
+                        ? listOfMeeting
+                        : listOfMeeting
+                            .filter(
+                              (meeting) => meeting!.purposeOfMeeting!
+                                  .toLowerCase()
+                                  .contains(searchKeyword.toLowerCase()),
+                            )
+                            .toList();
 
                 return displayedList.isEmpty
                     ? const NoMeetings()
@@ -84,7 +83,7 @@ class HomeScreen extends ConsumerWidget {
                               //! MEETING
                               ...displayedList.map(
                                 (meeting) =>
-                                    MeetingCard(meetingDetails: meeting).onTap(
+                                    MeetingCard(meetingDetails: meeting!).onTap(
                                   onTap: () => Navigator.of(context)
                                       .push<Future<MaterialPageRoute<Widget?>>>(
                                     MaterialPageRoute(

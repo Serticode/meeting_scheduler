@@ -16,6 +16,7 @@ typedef UserDisplayName = String;
 typedef UserFullName = String;
 typedef UserProfileImageType = String;
 typedef IsLoading = bool;
+typedef MeetingUploaded = bool;
 
 //! ENUM FOR UPDATING USER INFO
 enum UserInfoUpdateType { fullName, profession, email, phoneNumber }

@@ -1,73 +1,126 @@
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
+import 'package:meeting_scheduler/services/models/model_field_names.dart';
+import 'package:meeting_scheduler/services/repositories/meetings/meetings_repository.dart';
+import 'package:meeting_scheduler/shared/utils/failure.dart';
+import 'package:meeting_scheduler/shared/utils/type_def.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final userMeetingsControllerProvider =
-    AsyncNotifierProvider<UserMeetingsController, List<ScheduledMeetingModel>>(
-  UserMeetingsController.new,
+    StateNotifierProvider<UserMeetingsController, IsLoading>(
+  (ref) => UserMeetingsController(controllerRef: ref),
 );
 
-class UserMeetingsController
-    extends AsyncNotifier<List<ScheduledMeetingModel>> {
+class UserMeetingsController extends StateNotifier<IsLoading> {
+  final Ref? _userMeetingsControllerRef;
+
+  //! CONSTRUCTOR
+  UserMeetingsController({
+    required Ref? controllerRef,
+  })  : _userMeetingsControllerRef = controllerRef,
+        super(false);
+
   //!
-  @override
-  FutureOr<List<ScheduledMeetingModel>> build() => [];
+  //!
+  Future<void> validateMeetingDetails({
+    required bool isValidated,
+    required ScheduledMeetingModel meeting,
+  }) async {
+    if (isValidated) {
+      await addMeeting(meeting: meeting);
+    }
+  }
 
-  ScheduledMeetingModel? getMeetingInfo({
-    required ScheduledMeetingModel selectedMeeting,
-  }) =>
-      state.value?.firstWhere(
-        (meeting) => meeting.selectedVenue == selectedMeeting.selectedVenue,
-      );
-
-  void setMeetings({
-    required List<ScheduledMeetingModel> meetingVenue,
-  }) =>
-      state = AsyncValue.data(meetingVenue);
-
+  //!
+  //!
   Future<void> addMeeting({
-    required ScheduledMeetingModel scheduledMeeting,
+    required ScheduledMeetingModel meeting,
   }) async {
-    List<ScheduledMeetingModel>? tempList = state.value;
+    state = true;
 
-    if (tempList?.contains(scheduledMeeting) == false) {
-      tempList?.add(scheduledMeeting);
-    }
+    final Either<Failure, MeetingUploaded> result =
+        await _userMeetingsControllerRef!
+            .read(meetingsRepositoryProvider)
+            .addMeeting(meeting: meeting);
 
-    if (tempList != null) {
-      state = AsyncValue.data(tempList);
-    }
+    result.fold(
+      (Failure failure) {
+        failure.failureMessage?.log();
 
-    state.log();
+        state = false;
+      },
+      (IsLoading result) {
+        result.withHapticFeedback();
+
+        state = false;
+      },
+    );
   }
 
+  //!
+  //!
   Future<void> updateMeeting({
-    required ScheduledMeetingModel scheduledMeeting,
+    required ScheduledMeetingModel meeting,
   }) async {
-    ScheduledMeetingModel? initialMeeting = state.value?.firstWhere(
-      (element) => element.meetingID == scheduledMeeting.meetingID,
-    );
+    state = true;
 
-    if (initialMeeting == scheduledMeeting) return;
+    final Either<Failure, MeetingUploaded> result =
+        await _userMeetingsControllerRef!
+            .read(meetingsRepositoryProvider)
+            .updateMeeting(meeting: meeting);
 
-    List<ScheduledMeetingModel>? tempList = state.value;
+    result.fold(
+      (Failure failure) {
+        failure.failureMessage?.log();
 
-    tempList?.removeWhere(
-      (element) => element.meetingID == scheduledMeeting.meetingID,
-    );
+        state = false;
+      },
+      (IsLoading result) {
+        result.withHapticFeedback();
 
-    tempList?.add(scheduledMeeting);
-
-    state = AsyncValue.data(tempList!);
-
-    state.log();
-  }
-
-  Future<void> deleteMeeting({
-    required ScheduledMeetingModel scheduledMeeting,
-  }) async {
-    state.value?.removeWhere(
-      (element) => element.meetingID == scheduledMeeting.meetingID,
+        state = false;
+      },
     );
   }
 }
+
+//!
+//! MEETING PROVIDER
+final AutoDisposeStreamProvider<List<ScheduledMeetingModel?>> meetingsProvider =
+    StreamProvider.autoDispose<List<ScheduledMeetingModel?>>(
+  (ref) {
+    final controller = StreamController<List<ScheduledMeetingModel?>>();
+
+    controller.onListen = () {
+      controller.sink.add([]);
+    };
+
+    final sub = FirebaseFirestore.instance
+        .collection(FirebaseCollectionName.meetings)
+        .snapshots(includeMetadataChanges: true)
+        .listen((snapshot) {
+      List<ScheduledMeetingModel?> meetings = [];
+
+      for (QueryDocumentSnapshot<Map<String, dynamic>> element
+          in snapshot.docs) {
+        final ScheduledMeetingModel meeting = ScheduledMeetingModel.fromJSON(
+          json: element.data(),
+        );
+
+        meetings.add(meeting);
+      }
+
+      controller.sink.add(meetings);
+    });
+
+    ref.onDispose(() {
+      sub.cancel();
+      controller.close();
+    });
+
+    return controller.stream;
+  },
+);

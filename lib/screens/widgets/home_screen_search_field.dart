@@ -16,8 +16,7 @@ class HomeScreenSearchField extends ConsumerWidget {
 
     return Consumer(
       builder: (context, ref, child) {
-        final AsyncValue<List<ScheduledMeetingModel>> listOfMeetings =
-            ref.watch(userMeetingsControllerProvider);
+        final listOfMeetings = ref.watch(meetingsProvider);
 
         return listOfMeetings.when(
           data: (meetings) {
@@ -66,7 +65,7 @@ class HomeScreenSearchField extends ConsumerWidget {
               suggestions: meetings
                   .map(
                     (meeting) => SearchFieldListItem<ScheduledMeetingModel?>(
-                        meeting.selectedVenue!,
+                        meeting!.selectedVenue!,
                         child: Text(
                           meeting.selectedVenue!,
                           style: const TextStyle(
@@ -80,7 +79,7 @@ class HomeScreenSearchField extends ConsumerWidget {
               //! ON SEARCH TEXT CHANGE
               onSearchTextChanged: (query) {
                 final filter = meetings
-                    .where((element) => element.selectedVenue!
+                    .where((element) => element!.selectedVenue!
                         .toLowerCase()
                         .contains(query.toLowerCase()))
                     .toList();
@@ -91,7 +90,7 @@ class HomeScreenSearchField extends ConsumerWidget {
 
                 return filter
                     .map((meeting) =>
-                        SearchFieldListItem<String>(meeting.selectedVenue!,
+                        SearchFieldListItem<String>(meeting!.selectedVenue!,
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),

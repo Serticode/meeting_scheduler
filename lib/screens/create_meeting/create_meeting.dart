@@ -85,6 +85,14 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                 isForPassword: false,
                 hint: "Full Name",
                 controller: _fullName,
+                keyboardType: TextInputType.name,
+                validator: (value) {
+                  if (_fullName.value.text.trim().split(" ").length < 2) {
+                    return "Enter a Last and First name";
+                  } else {
+                    return null;
+                  }
+                },
               ),
 
               18.0.sizedBoxHeight,
@@ -94,6 +102,14 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                 isForPassword: false,
                 hint: "Profession e.g lecturer, secretary",
                 controller: _profession,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (_profession.value.text.trim().isEmpty) {
+                    return "Enter a profession";
+                  } else {
+                    return null;
+                  }
+                },
               ),
 
               18.0.sizedBoxHeight,
@@ -103,6 +119,14 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                 isForPassword: false,
                 hint: "Purpose of Meeting",
                 controller: _purpose,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (_purpose.value.text.trim().isEmpty) {
+                    return "Enter a purpose for the meeting";
+                  } else {
+                    return null;
+                  }
+                },
               ),
 
               18.0.sizedBoxHeight,
@@ -112,6 +136,14 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                 isForPassword: false,
                 hint: "Number of attenders",
                 controller: _attenders,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (_attenders.value.text.trim().isEmpty) {
+                    return "This field cannot be empty";
+                  } else {
+                    return null;
+                  }
+                },
               ),
 
               18.0.sizedBoxHeight,
@@ -149,79 +181,58 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
 
               32.0.sizedBoxHeight,
 
-              RegularButton(
-                onTap: () async {
-                  if (ref
-                              .read(meetingVenueControllerProvider.notifier)
-                              .getSelectedVenue ==
-                          null ||
-                      ref
-                              .read(meetingVenueControllerProvider.notifier)
-                              .getSelectedVenue ==
-                          MeetingVenue.venue) {
-                    AppUtils.showAppBanner(
-                      message: "Select a venue",
-                      context: context,
-                    );
-                  } else {
-                    ScheduledMeetingModel scheduledMeeting =
-                        ScheduledMeetingModel()
-                          ..meetingID = widget.isEditMeeting != null &&
-                                  widget.isEditMeeting == true
-                              ? widget.meetingModel?.meetingID
-                              : null
-                          ..fullName = _fullName.value.text.trim()
-                          ..professionOfVenueBooker =
-                              _profession.value.text.trim()
-                          ..purposeOfMeeting = _purpose.value.text.trim()
-                          ..numberOfExpectedParticipants =
-                              _attenders.value.text.trim()
-                          ..dateOfMeeting = ref
-                              .read(meetingDateControllerProvider.notifier)
-                              .getMeetingDate
-                          ..meetingStartTime = ref
-                              .read(meetingStartTimeControllerProvider.notifier)
-                              .getMeetingTime
-                          ..meetingEndTime = ref
-                              .read(meetingEndTimeControllerProvider.notifier)
-                              .getMeetingTime
-                          ..selectedVenue = ref
+              Builder(builder: (context) {
+                final isLoading = ref.watch(userMeetingsControllerProvider);
+                return RegularButton(
+                  onTap: () async {
+                    await validateInputFields();
+                    /* if (ref
                                   .read(meetingVenueControllerProvider.notifier)
-                                  .getSelectedVenue
-                                  ?.hallName ??
-                              "No Venue";
-
-                    //!TODO: SHOW SUCCESS MESSAGE OF ACTIONS BELOW
-                    if (widget.isEditMeeting!) {
-                      await ref
-                          .read(userMeetingsControllerProvider.notifier)
-                          .updateMeeting(scheduledMeeting: scheduledMeeting)
-                          .whenComplete(
-                            () => Navigator.of(context).pop(),
-                          );
-                    } else {
-                      const uuid = Uuid();
-                      scheduledMeeting = scheduledMeeting
-                        ..meetingID = uuid.v4();
-                      await ref
-                          .read(userMeetingsControllerProvider.notifier)
-                          .addMeeting(scheduledMeeting: scheduledMeeting)
-                          .whenComplete(
-                            () => Navigator.of(context).pop(),
-                          );
-                    }
-                  }
-                },
-                buttonText: widget.isEditMeeting != null &&
-                        widget.isEditMeeting == false
-                    ? AppTexts.createMeeting
-                    : AppTexts.saveMeeting,
-                isLoading: false,
-              )
+                                  .getSelectedVenue ==
+                              null ||
+                          ref
+                                  .read(meetingVenueControllerProvider.notifier)
+                                  .getSelectedVenue ==
+                              MeetingVenue.venue) {
+                        AppUtils.showAppBanner(
+                          message: "Select a venue",
+                          context: context,
+                        );
+                      } else {
+                        //!TODO: SHOW SUCCESS MESSAGE OF ACTIONS BELOW
+                        /* if (widget.isEditMeeting!) {
+                          await ref
+                              .read(userMeetingsControllerProvider.notifier)
+                              .updateMeeting(scheduledMeeting: scheduledMeeting)
+                              .whenComplete(
+                                () => Navigator.of(context).pop(),
+                              );
+                        } else {
+                          const uuid = Uuid();
+                          scheduledMeeting = scheduledMeeting
+                            ..meetingID = uuid.v4();
+                          await ref
+                              .read(userMeetingsControllerProvider.notifier)
+                              .addMeeting(scheduledMeeting: scheduledMeeting)
+                              .whenComplete(
+                                () => Navigator.of(context).pop(),
+                              );
+                        } */
+                      } */
+                  },
+                  buttonText: widget.isEditMeeting != null &&
+                          widget.isEditMeeting == false
+                      ? AppTexts.createMeeting
+                      : AppTexts.saveMeeting,
+                  isLoading: isLoading,
+                );
+              })
             ],
           ),
         ),
-      ).generalPadding,
+      ).generalPadding.ignorePointer(
+            isLoading: ref.watch(userMeetingsControllerProvider),
+          ),
     );
   }
 
@@ -247,6 +258,57 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
       ref
           .read(meetingEndTimeControllerProvider.notifier)
           .setEndTime(theTime: widget.meetingModel!.meetingEndTime!);
+    }
+  }
+
+  Future<void> validateInputFields() async {
+    if (ref.read(meetingVenueControllerProvider.notifier).getSelectedVenue ==
+            null ||
+        ref.read(meetingVenueControllerProvider.notifier).getSelectedVenue ==
+            MeetingVenue.venue) {
+      AppUtils.showAppBanner(
+        message: "Select a venue",
+        context: context,
+      );
+    } else if (_formKey.currentState!.validate()) {
+      ScheduledMeetingModel scheduledMeeting = ScheduledMeetingModel()
+        ..meetingID =
+            widget.isEditMeeting != null && widget.isEditMeeting == true
+                ? widget.meetingModel?.meetingID
+                : null
+        ..fullName = _fullName.value.text.trim()
+        ..professionOfVenueBooker = _profession.value.text.trim()
+        ..purposeOfMeeting = _purpose.value.text.trim()
+        ..numberOfExpectedParticipants = _attenders.value.text.trim()
+        ..dateOfMeeting =
+            ref.read(meetingDateControllerProvider.notifier).getMeetingDate
+        ..meetingStartTime =
+            ref.read(meetingStartTimeControllerProvider.notifier).getMeetingTime
+        ..meetingEndTime =
+            ref.read(meetingEndTimeControllerProvider.notifier).getMeetingTime
+        ..selectedVenue = ref
+                .read(meetingVenueControllerProvider.notifier)
+                .getSelectedVenue
+                ?.hallName ??
+            "No Venue";
+
+      if (widget.isEditMeeting!) {
+        await ref
+            .read(userMeetingsControllerProvider.notifier)
+            .updateMeeting(meeting: scheduledMeeting)
+            .whenComplete(
+              () => Navigator.of(context).pop(),
+            );
+      } else {
+        const uuid = Uuid();
+        scheduledMeeting = scheduledMeeting..meetingID = uuid.v4();
+        await ref
+            .read(userMeetingsControllerProvider.notifier)
+            .addMeeting(meeting: scheduledMeeting)
+            .whenComplete(
+              () => Navigator.of(context).pop(),
+            );
+      }
     }
   }
 }
