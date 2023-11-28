@@ -188,35 +188,34 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           ).alignBottomCenter(),
 
           Positioned(
-            bottom: 580,
-            child: Consumer(builder: (context, ref, child) {
-              final bool isLoading = ref.watch(uploadImageProvider);
-              final String? userProfileImage =
-                  ref.watch(userProfileImageProvider);
+              bottom: 580,
+              child: Builder(builder: (context) {
+                final bool isLoading = ref.watch(uploadImageProvider);
+                final String? userProfileImage =
+                    ref.watch(userProfileImageProvider);
 
-              return isLoading
-                  ? CircleAvatar(
-                      radius: 50,
-                      backgroundColor: AppColours.profileImageBGColour,
-                      child: SpinKitWaveSpinner(
-                        color: AppColours.white,
-                        trackColor: AppColours.primaryBlue.withOpacity(0.7),
-                        waveColor: AppColours.deepBlue.withOpacity(0.5),
-                        size: 65,
-                      ).alignCenter(),
-                    )
-                  : CircleAvatar(
-                      radius: 50,
-                      backgroundColor: AppColours.profileImageBGColour,
-                      child: UserProfileImage(
-                        isAccountSettingsPage: false,
-                        radius: 50.0,
-                        iconColour: AppColours.white,
-                        imageURL: userProfileImage,
-                      ),
-                    );
-            }).onTap(
-              onTap: () async {
+                return isLoading
+                    ? CircleAvatar(
+                        radius: 50,
+                        backgroundColor: AppColours.profileImageBGColour,
+                        child: SpinKitWaveSpinner(
+                          color: AppColours.white,
+                          trackColor: AppColours.primaryBlue.withOpacity(0.7),
+                          waveColor: AppColours.deepBlue.withOpacity(0.5),
+                          size: 65,
+                        ).alignCenter(),
+                      )
+                    : CircleAvatar(
+                        radius: 50,
+                        backgroundColor: AppColours.profileImageBGColour,
+                        child: UserProfileImage(
+                          isAccountSettingsPage: false,
+                          radius: 50.0,
+                          iconColour: AppColours.white,
+                          imageURL: userProfileImage,
+                        ),
+                      );
+              }).onTap(onTap: () async {
                 await UploadImageHelper.pickImage().then((profilePhoto) async {
                   if (profilePhoto == null) {
                     "Select profile photo aborted".log();
@@ -233,9 +232,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         );
                   }
                 });
-              },
-            ),
-          ),
+              })),
 
           //!
           Positioned(

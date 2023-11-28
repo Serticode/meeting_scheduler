@@ -19,8 +19,6 @@ class CalenderScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dateTime = DateTime.now();
-
     return Column(
       children: [
         AppTexts.generalCalender
@@ -33,34 +31,39 @@ class CalenderScreen extends ConsumerWidget {
         //!
         24.0.sizedBoxHeight,
 
-        Row(
-          children: [
-            //! DATE
-            dateTime.day.toString().txt(
-                  fontSize: 44,
-                  fontWeight: FontWeight.w500,
-                ),
+        Builder(builder: (context) {
+          final dateTime = DateTime.now();
 
-            6.0.sizedBoxWidth,
+          return Row(
+            children: [
+              //! DATE
+              dateTime.day.toString().txt(
+                    fontSize: 44,
+                    fontWeight: FontWeight.w500,
+                  ),
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                "${AppUtils.listOfDays.elementAt(dateTime.weekday - 1)} ".txt14(
-                  fontWeight: FontWeight.w500,
-                  color: AppColours.wormGrey,
-                ),
-                6.0.sizedBoxHeight,
-                "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.year}"
-                    .txt14(
-                  fontWeight: FontWeight.w500,
-                  color: AppColours.wormGrey,
-                ),
-              ],
-            ),
-          ],
-        ),
+              6.0.sizedBoxWidth,
+
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  "${AppUtils.listOfDays.elementAt(dateTime.weekday - 1)} "
+                      .txt14(
+                    fontWeight: FontWeight.w500,
+                    color: AppColours.wormGrey,
+                  ),
+                  6.0.sizedBoxHeight,
+                  "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.year}"
+                      .txt14(
+                    fontWeight: FontWeight.w500,
+                    color: AppColours.wormGrey,
+                  ),
+                ],
+              ),
+            ],
+          );
+        }),
 
         //!
         12.0.sizedBoxHeight,
@@ -75,73 +78,69 @@ class CalenderScreen extends ConsumerWidget {
         //!
         12.0.sizedBoxHeight,
 
-        Consumer(
-          builder: (context, ref, child) {
-            final scheduledMeetings = ref.watch(meetingsProvider);
-            final searchKeyword =
-                ref.watch(searchFieldControllerProvider).value!;
-            final dateFilter = ref.watch(calenderControllerProvider).value!;
+        Builder(builder: (context) {
+          final scheduledMeetings = ref.watch(meetingsProvider);
+          final searchKeyword = ref.watch(searchFieldControllerProvider).value!;
+          final dateFilter = ref.watch(calenderControllerProvider).value!;
 
-            return scheduledMeetings.when(
-              data: (listOfMeeting) {
-                final List<ScheduledMeetingModel?> displayedList =
-                    ref.read(meetingsControllerProvider.notifier).getMeetings(
-                          searchKeyword: searchKeyword,
-                          dateFilter: dateFilter,
-                          listOfMeeting: listOfMeeting,
-                        );
+          return scheduledMeetings.when(
+            data: (listOfMeeting) {
+              final List<ScheduledMeetingModel?> displayedList =
+                  ref.read(meetingsControllerProvider.notifier).getMeetings(
+                        searchKeyword: searchKeyword,
+                        dateFilter: dateFilter,
+                        listOfMeeting: listOfMeeting,
+                      );
 
-                return displayedList.isEmpty
-                    ? const EmptyCalender()
-                    : Expanded(
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Divider(),
+              return displayedList.isEmpty
+                  ? const EmptyCalender()
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Divider(),
 
-                              12.0.sizedBoxHeight,
+                            12.0.sizedBoxHeight,
 
-                              "Your Schedule"
-                                  .txt16(fontWeight: FontWeight.w600),
+                            "Your Schedule".txt16(fontWeight: FontWeight.w600),
 
-                              6.0.sizedBoxHeight,
+                            6.0.sizedBoxHeight,
 
-                              "All your scheduled meetings or classes".txt12(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black54,
-                              ),
+                            "All your scheduled meetings or classes".txt12(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black54,
+                            ),
 
-                              12.0.sizedBoxHeight,
+                            12.0.sizedBoxHeight,
 
-                              //! MEETING
-                              ...displayedList.map(
-                                (meeting) =>
-                                    MeetingCard(meetingDetails: meeting!).onTap(
-                                  onTap: () => Navigator.of(context)
-                                      .push<Future<MaterialPageRoute<Widget>>>(
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateMeeting(
-                                        meetingModel: meeting,
-                                        isEditMeeting: true,
-                                      ),
+                            //! MEETING
+                            ...displayedList.map(
+                              (meeting) =>
+                                  MeetingCard(meetingDetails: meeting!).onTap(
+                                onTap: () => Navigator.of(context)
+                                    .push<Future<MaterialPageRoute<Widget>>>(
+                                  MaterialPageRoute(
+                                    builder: (context) => CreateMeeting(
+                                      meetingModel: meeting,
+                                      isEditMeeting: true,
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-              },
+                      ),
+                    );
+            },
 
-              //!
-              error: (error, trace) => "$error".txt16(),
-              loading: () => const CircularProgressIndicator(),
-            );
-          },
-        ),
+            //!
+            error: (error, trace) => "$error".txt16(),
+            loading: () => const CircularProgressIndicator(),
+          );
+        }),
       ],
     );
   }

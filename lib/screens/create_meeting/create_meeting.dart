@@ -183,43 +183,9 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
 
               Builder(builder: (context) {
                 final isLoading = ref.watch(meetingsControllerProvider);
+
                 return RegularButton(
-                  onTap: () async {
-                    await validateInputFields();
-                    /* if (ref
-                                  .read(meetingVenueControllerProvider.notifier)
-                                  .getSelectedVenue ==
-                              null ||
-                          ref
-                                  .read(meetingVenueControllerProvider.notifier)
-                                  .getSelectedVenue ==
-                              MeetingVenue.venue) {
-                        AppUtils.showAppBanner(
-                          message: "Select a venue",
-                          context: context,
-                        );
-                      } else {
-                        //!TODO: SHOW SUCCESS MESSAGE OF ACTIONS BELOW
-                        /* if (widget.isEditMeeting!) {
-                          await ref
-                              .read(meetingsControllerProvider.notifier)
-                              .updateMeeting(scheduledMeeting: scheduledMeeting)
-                              .whenComplete(
-                                () => Navigator.of(context).pop(),
-                              );
-                        } else {
-                          const uuid = Uuid();
-                          scheduledMeeting = scheduledMeeting
-                            ..meetingID = uuid.v4();
-                          await ref
-                              .read(meetingsControllerProvider.notifier)
-                              .addMeeting(scheduledMeeting: scheduledMeeting)
-                              .whenComplete(
-                                () => Navigator.of(context).pop(),
-                              );
-                        } */
-                      } */
-                  },
+                  onTap: () async => await validateInputFields(),
                   buttonText: widget.isEditMeeting != null &&
                           widget.isEditMeeting == false
                       ? AppTexts.createMeeting

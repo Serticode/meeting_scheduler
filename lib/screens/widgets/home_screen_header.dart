@@ -15,7 +15,6 @@ class HomeScreenHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dateTime = DateTime.now();
     return Row(
       children: [
         //! IMAGE
@@ -47,10 +46,16 @@ class HomeScreenHeader extends ConsumerWidget {
 
         const Spacer(),
 
-        "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.day}, ${dateTime.year}"
-            .txt14(
-          fontWeight: FontWeight.w600,
-          color: AppColours.deepBlue.withOpacity(0.3),
+        Builder(
+          builder: (context) {
+            final dateTime = DateTime.now();
+
+            return "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.day}, ${dateTime.year}"
+                .txt14(
+              fontWeight: FontWeight.w600,
+              color: AppColours.deepBlue.withOpacity(0.3),
+            );
+          },
         ),
 
         //!

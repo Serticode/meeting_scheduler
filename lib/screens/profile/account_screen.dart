@@ -124,34 +124,7 @@ class AccountScreen extends ConsumerWidget {
                     context: context,
                   );
                 case 1:
-                  /* navigatorKey.currentState!.push(
-                    PageRouteBuilder(
-                      barrierDismissible: true,
-                      barrierLabel: "Go Home",
-                      barrierColor: AppColours.greyBlack.withOpacity(0.2),
-                      opaque: false,
-                      transitionDuration: const Duration(milliseconds: 200),
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return Container(
-                          height: 200,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColours.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ).generalPadding;
-                      },
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        );
-                      },
-                    ),
-                  ); */
-
-                  // ignore: inference_failure_on_function_invocation, use_build_context_synchronously
+                  // ignore: use_build_context_synchronously
                   await showAdaptiveDialog(
                     context: context,
                     builder: (context) {
@@ -223,6 +196,7 @@ class AccountScreen extends ConsumerWidget {
                       );
                     },
                   );
+
                 default:
                   "Account Setting Item Tapped".log();
               }

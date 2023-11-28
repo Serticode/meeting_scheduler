@@ -11,68 +11,65 @@ class MeetingVenueSelector extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final List<MeetingVenue> items = ref
-            .read(meetingVenueControllerProvider.notifier)
-            .getAllMeetingVenues;
+    return Builder(builder: (context) {
+      final List<MeetingVenue> items =
+          ref.read(meetingVenueControllerProvider.notifier).getAllMeetingVenues;
 
-        final AsyncValue<MeetingVenue> meetingVenue =
-            ref.watch(meetingVenueControllerProvider);
+      final AsyncValue<MeetingVenue> meetingVenue =
+          ref.watch(meetingVenueControllerProvider);
 
-        return Container(
-          padding: 18.0.symmetricPadding,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black12, width: 1.2),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton2<MeetingVenue>(
-              isExpanded: true,
-              buttonStyleData: const ButtonStyleData(
-                height: 20,
-                width: double.infinity,
-              ),
-              menuItemStyleData: MenuItemStyleData(
-                height: 60,
-                padding: 21.0.symmetricPadding,
-              ),
-              dropdownStyleData: DropdownStyleData(
-                maxHeight: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                offset: const Offset(0, 250),
-                scrollbarTheme: ScrollbarThemeData(
-                  radius: const Radius.circular(40),
-                  thickness: MaterialStateProperty.all(3),
-                  thumbVisibility: MaterialStateProperty.all(true),
-                ),
-              ),
-
-              //!
-              items: items
-                  .map(
-                    (MeetingVenue item) => DropdownMenuItem<MeetingVenue>(
-                      value: item,
-                      child: item.hallName.txt16(
-                        color: AppColours.black50,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  )
-                  .toList(),
-              value: meetingVenue.value,
-              onChanged: (MeetingVenue? newMeetingVenue) => ref
-                  .read(meetingVenueControllerProvider.notifier)
-                  .setMeetingVenue(
-                    meetingVenue: newMeetingVenue ?? MeetingVenue.cit,
-                  ),
+      return Container(
+        padding: 18.0.symmetricPadding,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black12, width: 1.2),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton2<MeetingVenue>(
+            isExpanded: true,
+            buttonStyleData: const ButtonStyleData(
+              height: 20,
+              width: double.infinity,
             ),
+            menuItemStyleData: MenuItemStyleData(
+              height: 60,
+              padding: 21.0.symmetricPadding,
+            ),
+            dropdownStyleData: DropdownStyleData(
+              maxHeight: 200,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              offset: const Offset(0, 250),
+              scrollbarTheme: ScrollbarThemeData(
+                radius: const Radius.circular(40),
+                thickness: MaterialStateProperty.all(3),
+                thumbVisibility: MaterialStateProperty.all(true),
+              ),
+            ),
+
+            //!
+            items: items
+                .map(
+                  (MeetingVenue item) => DropdownMenuItem<MeetingVenue>(
+                    value: item,
+                    child: item.hallName.txt16(
+                      color: AppColours.black50,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                )
+                .toList(),
+            value: meetingVenue.value,
+            onChanged: (MeetingVenue? newMeetingVenue) => ref
+                .read(meetingVenueControllerProvider.notifier)
+                .setMeetingVenue(
+                  meetingVenue: newMeetingVenue ?? MeetingVenue.cit,
+                ),
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }

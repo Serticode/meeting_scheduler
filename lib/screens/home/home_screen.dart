@@ -37,73 +37,69 @@ class HomeScreen extends ConsumerWidget {
         //!
         12.0.sizedBoxHeight,
 
-        Consumer(
-          builder: (context, ref, child) {
-            final scheduledMeetings = ref.watch(meetingsProvider);
-            final searchKeyword =
-                ref.watch(searchFieldControllerProvider).value!;
-            final dateFilter = ref.watch(calenderControllerProvider).value!;
+        Builder(builder: (context) {
+          final scheduledMeetings = ref.watch(meetingsProvider);
+          final searchKeyword = ref.watch(searchFieldControllerProvider).value!;
+          final dateFilter = ref.watch(calenderControllerProvider).value!;
 
-            return scheduledMeetings.when(
-              data: (listOfMeeting) {
-                final List<ScheduledMeetingModel?> displayedList =
-                    ref.read(meetingsControllerProvider.notifier).getMeetings(
-                          searchKeyword: searchKeyword,
-                          dateFilter: dateFilter,
-                          listOfMeeting: listOfMeeting,
-                        );
+          return scheduledMeetings.when(
+            data: (listOfMeeting) {
+              final List<ScheduledMeetingModel?> displayedList =
+                  ref.read(meetingsControllerProvider.notifier).getMeetings(
+                        searchKeyword: searchKeyword,
+                        dateFilter: dateFilter,
+                        listOfMeeting: listOfMeeting,
+                      );
 
-                return displayedList.isEmpty
-                    ? const NoMeetings()
-                    : Expanded(
-                        child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Divider(),
+              return displayedList.isEmpty
+                  ? const NoMeetings()
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Divider(),
 
-                              12.0.sizedBoxHeight,
+                            12.0.sizedBoxHeight,
 
-                              "Your Schedule"
-                                  .txt16(fontWeight: FontWeight.w600),
+                            "Your Schedule".txt16(fontWeight: FontWeight.w600),
 
-                              6.0.sizedBoxHeight,
+                            6.0.sizedBoxHeight,
 
-                              "All your scheduled meetings or classes".txt12(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black54,
-                              ),
+                            "All your scheduled meetings or classes".txt12(
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black54,
+                            ),
 
-                              12.0.sizedBoxHeight,
+                            12.0.sizedBoxHeight,
 
-                              //! MEETING
-                              ...displayedList.map(
-                                (meeting) =>
-                                    MeetingCard(meetingDetails: meeting!).onTap(
-                                  onTap: () => Navigator.of(context)
-                                      .push<Future<MaterialPageRoute<Widget?>>>(
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateMeeting(
-                                        meetingModel: meeting,
-                                        isEditMeeting: true,
-                                      ),
+                            //! MEETING
+                            ...displayedList.map(
+                              (meeting) =>
+                                  MeetingCard(meetingDetails: meeting!).onTap(
+                                onTap: () => Navigator.of(context)
+                                    .push<Future<MaterialPageRoute<Widget?>>>(
+                                  MaterialPageRoute(
+                                    builder: (context) => CreateMeeting(
+                                      meetingModel: meeting,
+                                      isEditMeeting: true,
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-              },
+                      ),
+                    );
+            },
 
-              //!
-              error: (error, trace) => "$error".txt16(),
-              loading: () => const CircularProgressIndicator(),
-            );
-          },
-        ),
+            //!
+            error: (error, trace) => "$error".txt16(),
+            loading: () => const CircularProgressIndicator(),
+          );
+        }),
       ],
     );
   }

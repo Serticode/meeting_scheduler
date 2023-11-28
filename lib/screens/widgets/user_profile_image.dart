@@ -35,13 +35,5 @@ class UserProfileImage extends ConsumerWidget {
             radius: radius ?? (isAccountSettingsPage ? 32 : 24),
             backgroundColor: AppColours.deepBlue.withOpacity(0.1),
             backgroundImage: CachedNetworkImageProvider(imageURL!));
-    /* CircleAvatar(
-      radius: largerRadius ?? 24.0,
-      backgroundColor: AppColours.primaryColour,
-      child: CircleAvatar(
-          radius: smallerRadius ?? 21.0.r,
-          backgroundColor: AppColours.appGreyFaint,
-          backgroundImage: CachedNetworkImageProvider(imageURL)),
-    ); */
   }
 }
