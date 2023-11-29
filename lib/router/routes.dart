@@ -16,4 +16,7 @@ class AppRoutes {
   //! PROFILE
   static const String editProfile = "editProfile";
   static const String changePassword = "changePassword";
+
+  //! SUCCESS
+  static const String successScreen = "successScreen";
 }

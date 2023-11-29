@@ -229,6 +229,8 @@ class AuthController extends StateNotifier<AuthState> {
   Future<void> logOut() async {
     state = state.copiedWithIsLoading(isLoading: true);
 
+    await Future.delayed(const Duration(seconds: 1));
+
     await _authControllerRef!.read(authRepositoryProvider).logOut();
 
     state = const AuthState.logOut();

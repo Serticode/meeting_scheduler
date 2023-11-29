@@ -23,6 +23,9 @@ class AppTexts {
   static const String verified = "Verified!";
   static const String verifiedRider =
       "Your account has been verified successfully";
+  static const String successful = "Successful!";
+  static const String successfulRider =
+      "You successfully created a meeting, \ncopy invite below";
   static const String enter = "Enter";
 
   //! BUTTONS
@@ -32,6 +35,7 @@ class AppTexts {
   static const String showPassword = "Show password";
   static const String forgotPassword = "Forgot password?";
   static const String sendCode = "Send code";
+  static const String goBack = "Go back";
 
   //! HOME
   static const String createMeeting = "Create Meeting";

@@ -7,6 +7,7 @@ import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/screens/auth/sign_in.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
+import 'package:meeting_scheduler/screens/widgets/success_screen.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/services/preferences/app_preferences.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';

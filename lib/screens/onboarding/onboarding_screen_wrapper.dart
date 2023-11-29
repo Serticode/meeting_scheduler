@@ -136,7 +136,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
             effect: WormEffect(
               dotHeight: 4,
               dotWidth: 24,
-              dotColor: AppColours.wormGrey,
+              dotColor: AppColours.warmGrey,
               activeDotColor: AppColours.deepBlue,
             ),
           ).alignCenter(),

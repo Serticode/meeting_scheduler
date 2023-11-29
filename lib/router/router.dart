@@ -10,6 +10,7 @@ import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/notifications/notifications.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/profile/edit_profile.dart';
+import 'package:meeting_scheduler/screens/widgets/success_screen.dart';
 
 class AppNavigator {
   const AppNavigator._();
@@ -19,22 +20,34 @@ class AppNavigator {
   Future<void> navigateToPage({
     required String thePageRouteName,
     required BuildContext context,
+    Object? arguments,
   }) =>
-      Navigator.of(context).pushNamed(thePageRouteName);
+      Navigator.of(context).pushNamed(
+        thePageRouteName,
+        arguments: arguments,
+      );
 
   //! NAVIGATE TO A PAGE AND REPLACE THE PREVIOUS PAGE
   Future<void> navigateToReplacementPage({
     required String thePageRouteName,
     required BuildContext context,
+    Object? arguments,
   }) =>
-      Navigator.of(context).pushReplacementNamed(thePageRouteName);
+      Navigator.of(context).pushReplacementNamed(
+        thePageRouteName,
+        arguments: arguments,
+      );
 
   Future<void> pushNamedAndRemoveUntil({
     required String thePageRouteName,
     required BuildContext context,
+    Object? arguments,
   }) =>
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(thePageRouteName, (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        thePageRouteName,
+        (route) => false,
+        arguments: arguments,
+      );
 
   //! ROUTE GENERATOR
   Route<dynamic> generateRoute({required RouteSettings routeSettings}) {
@@ -113,6 +126,25 @@ class AppNavigator {
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const ChangePasswordScreen(),
+        );
+
+      case AppRoutes.successScreen:
+        final arguments = routeSettings.arguments as Map<String, dynamic>?;
+
+        if (arguments != null && arguments.containsKey("meetingOwner")) {
+          final meetingOwner = arguments["meetingOwner"] as String;
+
+          return GetPageRoute.instance.getPageRoute(
+            routeName: routeSettings.name,
+            args: routeSettings.arguments,
+            view: SuccessScreen(meetingOwner: meetingOwner),
+          );
+        }
+
+        return GetPageRoute.instance.getPageRoute(
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: const SuccessScreen(),
         );
 
       default:

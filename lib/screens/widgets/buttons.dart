@@ -49,6 +49,7 @@ class RegularButton extends ConsumerWidget {
   final Color? borderColour;
   final Color? bgColour;
   final Color? textColour;
+  final bool? isLogoutDialogue;
   final bool isLoading;
   const RegularButton({
     super.key,
@@ -62,6 +63,7 @@ class RegularButton extends ConsumerWidget {
     this.borderColour,
     this.bgColour,
     this.textColour,
+    this.isLogoutDialogue,
   });
 
   @override
@@ -83,7 +85,7 @@ class RegularButton extends ConsumerWidget {
             color: borderColour ?? AppColours.buttonBlue,
           )),
       child: isLoading
-          ? const AppLoader()
+          ? AppLoader(isLogoutDialogue: isLogoutDialogue)
           : buttonText!
               .txt16(
                 color: textColour ?? AppColours.white,

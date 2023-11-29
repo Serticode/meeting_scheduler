@@ -51,13 +51,13 @@ class CalenderScreen extends ConsumerWidget {
                   "${AppUtils.listOfDays.elementAt(dateTime.weekday - 1)} "
                       .txt14(
                     fontWeight: FontWeight.w500,
-                    color: AppColours.wormGrey,
+                    color: AppColours.warmGrey,
                   ),
                   6.0.sizedBoxHeight,
                   "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.year}"
                       .txt14(
                     fontWeight: FontWeight.w500,
-                    color: AppColours.wormGrey,
+                    color: AppColours.warmGrey,
                   ),
                 ],
               ),

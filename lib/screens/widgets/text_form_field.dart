@@ -54,7 +54,7 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
         suffixIconColor:
             widget.isPasswordVisible != null && !widget.isPasswordVisible!
                 ? AppColours.deepBlue
-                : AppColours.wormGrey,
+                : AppColours.warmGrey,
         prefixIconColor: AppColours.black50,
 
         //! BORDERS

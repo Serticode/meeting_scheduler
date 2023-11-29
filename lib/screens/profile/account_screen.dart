@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/account_settings_item.dart';
-import 'package:meeting_scheduler/screens/widgets/buttons.dart';
+import 'package:meeting_scheduler/screens/widgets/logout_dialogue.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
-import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
@@ -126,76 +124,14 @@ class AccountScreen extends ConsumerWidget {
                 case 1:
                   // ignore: use_build_context_synchronously
                   await showAdaptiveDialog(
-                    context: context,
-                    builder: (context) {
-                      return Scaffold(
-                        body: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColours.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              //! ICON
-                              CircleAvatar(
-                                backgroundColor:
-                                    AppColours.buttonBlue.withOpacity(0.2),
-                                child: SvgPicture.asset(AppImages.logout),
-                              ),
-
-                              8.0.sizedBoxHeight,
-
-                              //!
-                              "Log Out".txt16(
-                                fontWeight: FontWeight.w600,
-                              ),
-
-                              12.0.sizedBoxHeight,
-
-                              //!
-                              "Oh no you’re leaving, are you sure?".txt14(),
-
-                              21.0.sizedBoxHeight,
-
-                              RegularButton(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                buttonText: "No, cancel",
-                                isLoading: false,
-                              ),
-
-                              14.0.sizedBoxHeight,
-
-                              RegularButton(
-                                onTap: () async {
-                                  "Log out button pressed".log();
-
-                                  await ref
-                                      .read(authControllerProvider.notifier)
-                                      .logOut()
-                                      .whenComplete(
-                                        () => Navigator.of(context).pop(),
-                                      );
-                                },
-                                buttonText: "Yes, log me out",
-                                bgColour: AppColours.white,
-                                isLoading: false,
-                                child: "Yes, log me out"
-                                    .txt16(
-                                      color: AppColours.deepBlue,
-                                      fontWeight: FontWeight.w400,
-                                    )
-                                    .alignCenter(),
-                              ),
-                            ],
-                          ),
-                        ).generalPadding,
-                      );
-                    },
-                  );
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog.adaptive(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          content: const LogoutDialogue(),
+                        );
+                      });
 
                 default:
                   "Account Setting Item Tapped".log();

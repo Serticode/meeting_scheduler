@@ -9,7 +9,7 @@ abstract class AppColours {
   static const white = Colors.white;
   static const scaffoldBGColour = Colors.white;
   static const appBarColour = Colors.white;
-  static final wormGrey = const Color(0xFF020167).withOpacity(0.15);
+  static final warmGrey = const Color(0xFF020167).withOpacity(0.15);
   static final red = Colors.red.shade900;
   static const profileImageBGColour = Color(0xFFD9D9D9);
   static const purple = Color(0xFF6F6EFE);

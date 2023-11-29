@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_date_selector.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_time_selector.dart';
@@ -293,8 +295,19 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
               .read(meetingsControllerProvider.notifier)
               .addMeeting(meeting: scheduledMeeting)
               .whenComplete(
-                () => Navigator.of(context).pop(),
+            () {
+              ref.invalidate(meetingDateControllerProvider);
+              ref.invalidate(meetingStartTimeControllerProvider);
+              ref.invalidate(meetingEndTimeControllerProvider);
+              ref.invalidate(meetingVenueControllerProvider);
+
+              AppNavigator.instance.navigateToPage(
+                thePageRouteName: AppRoutes.successScreen,
+                context: context,
+                arguments: {"meetingOwner": scheduledMeeting.fullName},
               );
+            },
+          );
         }
       }
     }
