@@ -13,10 +13,11 @@ import 'package:meeting_scheduler/services/controllers/create_meeting_controller
 import 'package:meeting_scheduler/services/controllers/meetings_controllers/meetings_controller.dart';
 import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
+import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:meeting_scheduler/shared/utils/errors/meeting_venue_error.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
-import 'package:meeting_scheduler/shared/utils/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateMeeting extends ConsumerStatefulWidget {
@@ -38,6 +39,8 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
   final TextEditingController _purpose = TextEditingController();
   final TextEditingController _attenders = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+  MeetingVenueError venueError = MeetingVenueError(message: "");
+  ValueNotifier<bool> showVenueError = false.toValueNotifier;
 
   @override
   void initState() {
@@ -182,6 +185,20 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
               //! MEETING VENUE
               const MeetingVenueSelector(),
 
+              //!
+              18.0.sizedBoxHeight,
+
+              showVenueError.toValueListenable(
+                builder: (context, value, child) {
+                  if (value) {
+                    return venueError.message.txt14(
+                        color: AppColours.red, fontWeight: FontWeight.w500);
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+
               32.0.sizedBoxHeight,
 
               Builder(builder: (context) {
@@ -233,15 +250,16 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
   Future<void> validateInputFields() async {
     //! USER HAS NOT SELECTED A VENUE
     if (ref.read(meetingVenueControllerProvider.notifier).getSelectedVenue ==
-            null ||
-        ref.read(meetingVenueControllerProvider.notifier).getSelectedVenue ==
-            MeetingVenue.venue) {
-      AppUtils.showAppBanner(
-        message: "Select a venue",
-        context: context,
-      );
-    } else if (_formKey.currentState!.validate()) {
+        MeetingVenue.venue) {
+      venueError = MeetingVenueError(message: "No venue selected");
+      showVenueError.value = true;
+    }
+
+    //! VENUE IS SELECTED - VALIDATE INPUT
+    else if (_formKey.currentState!.validate()) {
       bool meetingExists = false;
+      showVenueError.value = false;
+      late ScheduledMeetingModel? alreadyScheduledMeeting;
 
       ScheduledMeetingModel scheduledMeeting = ScheduledMeetingModel()
         ..ownerID = widget.isEditMeeting != null && widget.isEditMeeting == true
@@ -264,7 +282,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
         ..selectedVenue = ref
             .read(meetingVenueControllerProvider.notifier)
             .getSelectedVenue
-            ?.hallName;
+            .hallName;
 
       if (widget.isEditMeeting!) {
         await ref
@@ -280,15 +298,18 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
               scheduledMeeting.meetingStartTime == element?.meetingStartTime &&
               scheduledMeeting.selectedVenue == element?.selectedVenue) {
             meetingExists = true;
+            alreadyScheduledMeeting = element;
             break;
           }
         }
 
         if (meetingExists) {
-          AppUtils.showAppBanner(
-              message: "This venue is unavailable on this day and time",
-              context: context);
+          venueError = MeetingVenueError(
+              message:
+                  "NOT Available - In use from ${alreadyScheduledMeeting?.meetingStartTime} - ${alreadyScheduledMeeting?.meetingEndTime}");
+          showVenueError.value = true;
         } else {
+          showVenueError.value = false;
           const uuid = Uuid();
           scheduledMeeting = scheduledMeeting..meetingID = uuid.v4();
           await ref
@@ -310,6 +331,8 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
           );
         }
       }
+    } else {
+      showVenueError.value = false;
     }
   }
 }

@@ -11,7 +11,7 @@ class MeetingVenueController extends AsyncNotifier<MeetingVenue> {
   @override
   FutureOr<MeetingVenue> build() => MeetingVenue.venue;
 
-  MeetingVenue? get getSelectedVenue => state.value;
+  MeetingVenue get getSelectedVenue => state.value!;
 
   setMeetingVenue({required MeetingVenue meetingVenue}) =>
       state = AsyncValue.data(meetingVenue);
