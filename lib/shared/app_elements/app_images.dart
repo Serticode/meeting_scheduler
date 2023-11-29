@@ -38,4 +38,8 @@ class AppImages {
   //! NOTIFICATIONS - SVG
   static const notifications = "assets/svgs/notification.svg";
   static const noNotifications = "assets/svgs/noNotifications.svg";
+
+  //!
+  //! SPLASH - PNG
+  static const splashScreen = "assets/png/splashLogo.png";
 }
