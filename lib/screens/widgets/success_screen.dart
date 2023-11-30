@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
@@ -11,9 +12,13 @@ import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
 class SuccessScreen extends ConsumerWidget {
   final String? meetingOwner;
+  final String? meetingID;
+  final bool? showMeetingOwner;
   const SuccessScreen({
     super.key,
     this.meetingOwner,
+    this.showMeetingOwner,
+    this.meetingID,
   });
 
   @override
@@ -60,26 +65,31 @@ class SuccessScreen extends ConsumerWidget {
 
           32.0.sizedBoxHeight,
 
-          Container(
-            width: double.infinity,
-            height: 56,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColours.warmGrey),
-              borderRadius: BorderRadius.circular(10),
+          if (showMeetingOwner != null && showMeetingOwner == true)
+            Container(
+              width: double.infinity,
+              height: 56,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColours.warmGrey),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  "$meetingOwner Meeting".txt14(),
+                  const Spacer(),
+                  const Icon(
+                    Icons.copy_rounded,
+                    size: 21,
+                  ).onTap(
+                    onTap: () => Clipboard.setData(
+                      ClipboardData(
+                        text: meetingID ?? "",
+                      ),
+                    ),
+                  ),
+                ],
+              ).generalPadding,
             ),
-            child: Row(
-              children: [
-                meetingOwner != null
-                    ? "$meetingOwner Meeting".txt14()
-                    : "Dr. John Ayodeji’s Meeting".txt14(),
-                const Spacer(),
-                const Icon(
-                  Icons.copy_rounded,
-                  size: 21,
-                ),
-              ],
-            ).generalPadding,
-          ),
 
           75.0.sizedBoxHeight,
 

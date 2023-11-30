@@ -5,12 +5,14 @@ import 'package:meeting_scheduler/screens/auth/otp_verification.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verified.dart';
 import 'package:meeting_scheduler/screens/auth/sign_in.dart';
 import 'package:meeting_scheduler/screens/auth/sign_up.dart';
-import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
+import 'package:meeting_scheduler/screens/meeting_screens/create_meeting.dart';
 import 'package:meeting_scheduler/screens/home/home_screen_wrapper.dart';
+import 'package:meeting_scheduler/screens/meeting_screens/view_meeting_screen.dart';
 import 'package:meeting_scheduler/screens/notifications/notifications.dart';
 import 'package:meeting_scheduler/screens/onboarding/onboarding_screen_wrapper.dart';
 import 'package:meeting_scheduler/screens/profile/edit_profile.dart';
 import 'package:meeting_scheduler/screens/widgets/success_screen.dart';
+import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 
 class AppNavigator {
   const AppNavigator._();
@@ -98,12 +100,39 @@ class AppNavigator {
         );
 
       case AppRoutes.createMeeting:
+        final arguments = routeSettings.arguments as Map<String, dynamic>?;
+
+        if (arguments != null) {
+          final isEditMeeting = arguments["isEditMeeting"] as bool;
+          final meetingModel =
+              arguments["meetingModel"] as ScheduledMeetingModel;
+
+          return GetPageRoute.instance.getPageRoute(
+            routeName: routeSettings.name,
+            args: routeSettings.arguments,
+            view: CreateMeeting(
+              isEditMeeting: isEditMeeting,
+              meetingModel: meetingModel,
+            ),
+          );
+        }
+
         return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
           view: const CreateMeeting(
             isEditMeeting: false,
           ),
+        );
+
+      case AppRoutes.viewMeeting:
+        final arguments = routeSettings.arguments as Map<String, dynamic>?;
+        final meeting = arguments?["meeting"] as ScheduledMeetingModel;
+
+        return GetPageRoute.instance.getPageRoute(
+          routeName: routeSettings.name,
+          args: routeSettings.arguments,
+          view: ViewMeetingScreen(meeting: meeting),
         );
 
       case AppRoutes.notificationsScreen:
@@ -131,13 +160,19 @@ class AppNavigator {
       case AppRoutes.successScreen:
         final arguments = routeSettings.arguments as Map<String, dynamic>?;
 
-        if (arguments != null && arguments.containsKey("meetingOwner")) {
+        if (arguments != null) {
           final meetingOwner = arguments["meetingOwner"] as String;
+          final meetingID = arguments["meetingID"] as String;
+          final showMeetingOwner = arguments["showMeetingOwner"] as bool;
 
           return GetPageRoute.instance.getPageRoute(
             routeName: routeSettings.name,
             args: routeSettings.arguments,
-            view: SuccessScreen(meetingOwner: meetingOwner),
+            view: SuccessScreen(
+              meetingOwner: meetingOwner,
+              showMeetingOwner: showMeetingOwner,
+              meetingID: meetingID,
+            ),
           );
         }
 

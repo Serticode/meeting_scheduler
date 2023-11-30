@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
@@ -199,6 +200,35 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                 },
               ),
 
+              //!
+              18.0.sizedBoxHeight,
+
+              if (widget.isEditMeeting != null && widget.isEditMeeting == true)
+                Container(
+                  width: double.infinity,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColours.warmGrey),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      "${widget.meetingModel?.fullName} Meeting".txt14(),
+                      const Spacer(),
+                      const Icon(
+                        Icons.copy_rounded,
+                        size: 21,
+                      ).onTap(
+                        onTap: () => Clipboard.setData(
+                          ClipboardData(
+                            text: widget.meetingModel?.meetingID ?? "",
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).generalPadding,
+                ),
+
               32.0.sizedBoxHeight,
 
               Builder(builder: (context) {
@@ -325,7 +355,11 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
               AppNavigator.instance.navigateToPage(
                 thePageRouteName: AppRoutes.successScreen,
                 context: context,
-                arguments: {"meetingOwner": scheduledMeeting.fullName},
+                arguments: {
+                  "meetingOwner": scheduledMeeting.fullName,
+                  "showMeetingOwner": true,
+                  "meetingID": scheduledMeeting.meetingID,
+                },
               );
             },
           );

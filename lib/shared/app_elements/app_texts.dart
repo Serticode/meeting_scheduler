@@ -37,9 +37,10 @@ class AppTexts {
   static const String sendCode = "Send code";
   static const String goBack = "Go back";
 
-  //! HOME
+  //! GENERAL
   static const String createMeeting = "Create Meeting";
   static const String editMeeting = "Edit Meeting";
+  static const String viewMeeting = "View Meeting";
   static const String saveMeeting = "Save Meeting";
 
   //! CALENDER

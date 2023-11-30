@@ -8,9 +8,10 @@ class AppRoutes {
   static const String otpVerification = "otpVerification";
   static const String otpVerified = "otpVerified";
 
-  //! HOME
+  //! GENERAL
   static const String homeScreen = "homeScreen";
   static const String createMeeting = "createMeeting";
+  static const String viewMeeting = "viewMeeting";
   static const String notificationsScreen = "notificationScreen";
 
   //! PROFILE

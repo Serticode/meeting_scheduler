@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:meeting_scheduler/services/controllers/home_wrapper/home_wrapper_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
@@ -40,20 +41,30 @@ class MeetingCard extends ConsumerWidget {
           alignment: Alignment.topRight,
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Icon(
-                  Icons.add,
-                  color: AppColours.buttonBlue,
-                ),
-                6.0.sizedBoxWidth,
-                "Edit".txt14(
-                  fontWeight: FontWeight.w500,
-                  color: AppColours.buttonBlue,
-                ),
-              ],
-            ).generalPadding,
+            child: ref
+                        .read(homeWrapperControllerProvider.notifier)
+                        .currentPageIndex ==
+                    0
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Icon(
+                        Icons.add,
+                        color: AppColours.buttonBlue,
+                      ),
+                      6.0.sizedBoxWidth,
+                      "Edit".txt14(
+                        fontWeight: FontWeight.w500,
+                        color: AppColours.buttonBlue,
+                      ),
+                    ],
+                  ).generalPadding
+                : "View"
+                    .txt14(
+                      fontWeight: FontWeight.w500,
+                      color: AppColours.buttonBlue,
+                    )
+                    .generalPadding,
           ),
         ),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_calender.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_header.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_no_meetings.dart';
@@ -109,15 +110,17 @@ class HomeScreen extends ConsumerWidget {
                                         ],
                                       )
                                     : null,
-                                child:
-                                    MeetingCard(meetingDetails: meeting!).onTap(
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateMeeting(
-                                        meetingModel: meeting,
-                                        isEditMeeting: true,
-                                      ),
-                                    ),
+                                child: MeetingCard(
+                                  meetingDetails: meeting!,
+                                ).onTap(
+                                  onTap: () =>
+                                      AppNavigator.instance.navigateToPage(
+                                    thePageRouteName: AppRoutes.createMeeting,
+                                    context: context,
+                                    arguments: {
+                                      "isEditMeeting": true,
+                                      "meetingModel": meeting,
+                                    },
                                   ),
                                 ),
                               ),

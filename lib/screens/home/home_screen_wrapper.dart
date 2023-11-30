@@ -31,13 +31,10 @@ class HomeScreenWrapper extends ConsumerWidget {
       //! FAB
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          "Create meeting".log();
-          AppNavigator.instance.navigateToPage(
-            thePageRouteName: AppRoutes.createMeeting,
-            context: context,
-          );
-        },
+        onPressed: () => AppNavigator.instance.navigateToPage(
+          thePageRouteName: AppRoutes.createMeeting,
+          context: context,
+        ),
         backgroundColor: AppColours.deepBlue,
         child: const Icon(
           Icons.add,

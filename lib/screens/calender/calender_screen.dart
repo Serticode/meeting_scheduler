@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meeting_scheduler/screens/create_meeting/create_meeting.dart';
+import 'package:meeting_scheduler/router/router.dart';
+import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/empty_calender.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_calender.dart';
 import 'package:meeting_scheduler/screens/widgets/home_screen_search_field.dart';
@@ -119,18 +120,14 @@ class CalenderScreen extends ConsumerWidget {
 
                             //! MEETING
                             ...displayedList.map(
-                              (meeting) =>
-                                  MeetingCard(meetingDetails: meeting!).onTap(
-                                onTap: () => Navigator.of(context)
-                                    .push<Future<MaterialPageRoute<Widget>>>(
-                                  MaterialPageRoute(
-                                    builder: (context) => CreateMeeting(
-                                      meetingModel: meeting,
-                                      isEditMeeting: true,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              (meeting) => MeetingCard(meetingDetails: meeting!)
+                                  .onTap(onTap: () {
+                                AppNavigator.instance.navigateToPage(
+                                  thePageRouteName: AppRoutes.viewMeeting,
+                                  context: context,
+                                  arguments: {"meeting": meeting},
+                                );
+                              }),
                             ),
                           ],
                         ),
