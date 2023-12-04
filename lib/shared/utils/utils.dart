@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meeting_scheduler/services/models/model_field_names.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
@@ -79,7 +80,59 @@ class AppUtils {
   }
 
   //!
-//! FETCH MONTH NAME
+  //! FETCH MONTH NAME
+  static String fetchMeetingInfoTitle({required String meetingKey}) {
+    String theTitle = "";
+    List<String> meetingInfoTitles = [
+      "Meeting ID",
+      "Full name",
+      "Profession",
+      "Purpose of meeting",
+      "Number of attendees",
+      "Date",
+      "Start time",
+      "End time",
+      "Venue",
+    ];
+
+    switch (meetingKey) {
+      case ScheduledMeetingFieldNames.meetingID:
+        theTitle = meetingInfoTitles.elementAt(0);
+        return theTitle;
+      case ScheduledMeetingFieldNames.fullName:
+        theTitle = meetingInfoTitles.elementAt(1);
+        return theTitle;
+      case ScheduledMeetingFieldNames.professionOfVenueBooker:
+        theTitle = meetingInfoTitles.elementAt(2);
+        return theTitle;
+      case ScheduledMeetingFieldNames.purposeOfMeeting:
+        theTitle = meetingInfoTitles.elementAt(3);
+        return theTitle;
+      case ScheduledMeetingFieldNames.numberOfExpectedParticipants:
+        theTitle = meetingInfoTitles.elementAt(4);
+        return theTitle;
+      case ScheduledMeetingFieldNames.dateOfMeeting:
+        theTitle = meetingInfoTitles.elementAt(5);
+        return theTitle;
+      case ScheduledMeetingFieldNames.meetingStartTime:
+        theTitle = meetingInfoTitles.elementAt(6);
+        return theTitle;
+      case ScheduledMeetingFieldNames.meetingEndTime:
+        theTitle = meetingInfoTitles.elementAt(7);
+        return theTitle;
+      case ScheduledMeetingFieldNames.selectedVenue:
+        theTitle = meetingInfoTitles.elementAt(8);
+        return theTitle;
+
+      //! DEFAULT VALUES
+      default:
+        theTitle = "Could not fetch title";
+        return theTitle;
+    }
+  }
+
+  //!
+  //! FETCH MONTH NAME
   static int getMonthNumber({required String monthName}) {
     int monthNumber = 0;
     switch (monthName) {
