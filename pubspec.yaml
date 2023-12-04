@@ -60,6 +60,7 @@ dependencies:
   firebase_storage: ^11.5.2
   flutter_slidable: ^3.0.1
   another_flutter_splash_screen: ^1.2.0
+  stacked_listview: ^1.0.4
 
 dev_dependencies:
   flutter_test:

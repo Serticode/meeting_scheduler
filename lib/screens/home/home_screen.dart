@@ -15,6 +15,7 @@ import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_mode
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:stacked_listview/stacked_listview.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -60,73 +61,83 @@ class HomeScreen extends ConsumerWidget {
               return displayedList.isEmpty
                   ? const NoMeetings()
                   : Expanded(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Divider(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Divider(),
 
-                            12.0.sizedBoxHeight,
+                          12.0.sizedBoxHeight,
 
-                            "Your Schedule".txt16(fontWeight: FontWeight.w600),
+                          "Your Schedule".txt16(fontWeight: FontWeight.w600),
 
-                            6.0.sizedBoxHeight,
+                          6.0.sizedBoxHeight,
 
-                            "All your scheduled meetings or classes".txt12(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black54,
-                            ),
+                          "All your scheduled meetings or classes".txt12(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black54,
+                          ),
 
-                            12.0.sizedBoxHeight,
+                          12.0.sizedBoxHeight,
 
-                            //! MEETING
-                            ...displayedList.map(
-                              (meeting) => Slidable(
-                                key: ValueKey(displayedList.indexOf(meeting)),
-                                endActionPane: meeting?.ownerID ==
-                                        ref.read(userIdProvider)
-                                    ? ActionPane(
-                                        motion: const DrawerMotion(),
-                                        children: [
-                                          SlidableAction(
-                                            onPressed: (context) {
-                                              "Slidable Tapped".log();
+                          //! MEETING
+                          Expanded(
+                            child: StackedListView(
+                              padding: EdgeInsets.zero,
+                              itemCount: displayedList.length,
+                              reverse: true,
+                              itemExtent: 200,
+                              heightFactor: 0.98,
+                              fadeOutFrom: 0.01,
+                              physics: const BouncingScrollPhysics(),
+                              builder: (context, index) {
+                                final meeting = displayedList.elementAt(index);
 
-                                              meeting?.log();
+                                return Slidable(
+                                  key: ValueKey(displayedList.indexOf(meeting)),
+                                  endActionPane: meeting?.ownerID ==
+                                          ref.read(userIdProvider)
+                                      ? ActionPane(
+                                          motion: const DrawerMotion(),
+                                          children: [
+                                            SlidableAction(
+                                              onPressed: (context) {
+                                                "Slidable Tapped".log();
 
-                                              if (meeting?.ownerID !=
-                                                  ref.read(userIdProvider)) {}
-                                            },
-                                            spacing: 12.0,
-                                            borderRadius:
-                                                BorderRadius.circular(14),
-                                            backgroundColor:
-                                                AppColours.red.withOpacity(0.2),
-                                            foregroundColor: AppColours.red,
-                                            icon: Icons.delete,
-                                            label: 'Delete',
-                                          ),
-                                        ],
-                                      )
-                                    : null,
-                                child: MeetingCard(
-                                  meetingDetails: meeting!,
-                                ).onTap(
-                                  onTap: () =>
-                                      AppNavigator.instance.navigateToPage(
-                                    thePageRouteName: AppRoutes.createMeeting,
-                                    context: context,
-                                    arguments: {
-                                      "isEditMeeting": true,
-                                      "meetingModel": meeting,
-                                    },
+                                                meeting?.log();
+
+                                                if (meeting?.ownerID !=
+                                                    ref.read(userIdProvider)) {}
+                                              },
+                                              spacing: 12.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                              backgroundColor: AppColours.red
+                                                  .withOpacity(0.2),
+                                              foregroundColor: AppColours.red,
+                                              icon: Icons.delete,
+                                              label: 'Delete',
+                                            ),
+                                          ],
+                                        )
+                                      : null,
+                                  child: MeetingCard(
+                                    meetingDetails: meeting!,
+                                  ).onTap(
+                                    onTap: () =>
+                                        AppNavigator.instance.navigateToPage(
+                                      thePageRouteName: AppRoutes.createMeeting,
+                                      context: context,
+                                      arguments: {
+                                        "isEditMeeting": true,
+                                        "meetingModel": meeting,
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     );
             },
