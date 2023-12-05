@@ -180,6 +180,44 @@ class AuthController extends StateNotifier<AuthState> {
     );
   }
 
+  Future<bool> sendVerificationCode({
+    required String phoneNumber,
+    required BuildContext context,
+  }) async {
+    bool codeSent = false;
+    state = state.copiedWithIsLoading(isLoading: true);
+
+    final Either<Failure, bool> result = await _authControllerRef!
+        .read(authRepositoryProvider)
+        .sendVerificationCode(phoneNumber: phoneNumber);
+
+    result.fold(
+      (Failure failure) {
+        failure.failureMessage?.log();
+
+        AppUtils.showAppBanner(
+          message: failure.failureMessage ?? "Sign up failed, please try again",
+          context: context,
+        );
+
+        Future.delayed(
+          const Duration(seconds: 4),
+        );
+
+        AppUtils.closeAppBanner(context: context);
+
+        state = state.copiedWithIsLoading(isLoading: false);
+      },
+      (bool result) {
+        "Phone verification result: $result".log();
+
+        codeSent = false;
+      },
+    );
+
+    return codeSent;
+  }
+
   Future<void> updateUserInfo({
     required String email,
     required String fullName,

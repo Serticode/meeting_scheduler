@@ -7,7 +7,7 @@ import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_date_selector.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_time_selector.dart';
 import 'package:meeting_scheduler/screens/widgets/meeting_venue_selector.dart';
-import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
+import 'package:meeting_scheduler/screens/widgets/text_form_fields.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_date_controller.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_time_controller.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_venue_controller.dart';

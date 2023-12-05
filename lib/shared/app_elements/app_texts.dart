@@ -20,6 +20,8 @@ class AppTexts {
   static const String otpVerification = "OTP Verification";
   static const String otpVerificationRider =
       "Enter the verification code we just sent on your email address.";
+  static const String otpVerificationRiderPhone =
+      "Enter your phone number for a verification code";
   static const String verified = "Verified!";
   static const String verifiedRider =
       "Your account has been verified successfully";
@@ -35,6 +37,7 @@ class AppTexts {
   static const String showPassword = "Show password";
   static const String forgotPassword = "Forgot password?";
   static const String sendCode = "Send code";
+  static const String verifyCode = "Verify code";
   static const String goBack = "Go back";
 
   //! GENERAL

@@ -332,6 +332,7 @@ extension StyledTextExtension on String {
       overflow: overflow,
       textAlign: textAlign,
       maxLines: maxLines,
+      softWrap: true,
       style: TextStyle(
         fontSize: fontSize ?? 12,
         height: height,

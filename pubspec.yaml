@@ -61,6 +61,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   another_flutter_splash_screen: ^1.2.0
   stacked_listview: ^1.0.4
+  country_code_picker: ^3.0.0
 
 dev_dependencies:
   flutter_test:

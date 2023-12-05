@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:meeting_scheduler/shared/utils/utils.dart';
 import 'package:meeting_scheduler/theme/theme.dart';
 
 Future<void> main() async {
@@ -50,6 +52,8 @@ class MeetingScheduler extends ConsumerWidget {
       title: AppTexts.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appThemeLight,
+      supportedLocales: AppUtils.appLocales,
+      localizationsDelegates: const [CountryLocalizations.delegate],
 
       //! NAVIGATION
       onGenerateRoute: (settings) =>
@@ -63,8 +67,8 @@ class MeetingScheduler extends ConsumerWidget {
           width: 200,
           child: Image.asset(AppImages.splashScreen).fadeInFromBottom(),
         ),
-        duration: const Duration(seconds: 3),
-        animationDuration: const Duration(milliseconds: 1200),
+        duration: const Duration(seconds: 2),
+        animationDuration: const Duration(milliseconds: 700),
         animationCurve: Curves.easeIn,
         nextScreen: Consumer(
           builder: (context, ref, child) {

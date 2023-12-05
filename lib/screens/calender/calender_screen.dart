@@ -123,7 +123,7 @@ class CalenderScreen extends ConsumerWidget {
                               padding: EdgeInsets.zero,
                               itemCount: displayedList.length,
                               reverse: true,
-                              itemExtent: 200,
+                              itemExtent: 220,
                               heightFactor: 0.98,
                               fadeOutFrom: 0.01,
                               physics: const BouncingScrollPhysics(),

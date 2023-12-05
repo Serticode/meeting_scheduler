@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
-import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
+import 'package:meeting_scheduler/screens/widgets/text_form_fields.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';

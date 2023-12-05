@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
-import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
+import 'package:meeting_scheduler/screens/widgets/text_form_fields.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';

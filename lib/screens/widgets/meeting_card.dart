@@ -76,10 +76,13 @@ class MeetingCard extends ConsumerWidget {
             8.0.sizedBoxHeight,
 
             //! VENUE - HEADER
-            meetingDetails.purposeOfMeeting!.txt(
-              fontWeight: FontWeight.w600,
-              color: AppColours.white,
-              fontSize: 22,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: meetingDetails.purposeOfMeeting!.txt(
+                fontWeight: FontWeight.w600,
+                color: AppColours.white,
+                fontSize: 22,
+              ),
             ),
 
             24.0.sizedBoxHeight,

@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
-import 'package:meeting_scheduler/screens/widgets/text_form_field.dart';
+import 'package:meeting_scheduler/screens/widgets/text_form_fields.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/services/controllers/onboarding_screen/onboarding_screen_controller.dart';
 import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
@@ -253,8 +253,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     final user = ref.read(userIdProvider);
                     if (user != null && user.isNotEmpty) {
                       AppNavigator.instance.pushNamedAndRemoveUntil(
-                          thePageRouteName: AppRoutes.homeScreen,
-                          context: context);
+                        thePageRouteName: AppRoutes.otpVerification,
+                        context: context,
+                      );
                     }
                   }),
                   buttonText: AppTexts.createAccount,

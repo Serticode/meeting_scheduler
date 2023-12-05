@@ -106,6 +106,43 @@ class AuthRepository {
     }
   }
 
+  //! SEND OTP
+  FutureEither<bool> sendVerificationCode({
+    required String phoneNumber,
+  }) async {
+    try {
+      bool verificationSent = false;
+
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) {
+          "Verification completed: ${credential.smsCode} $credential".log();
+        },
+        verificationFailed: (FirebaseAuthException exception) {
+          "Verification failed: ${exception.message} $exception".log();
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          "Code Sent: VerificationID: $verificationId ResendToken: $resendToken"
+              .log();
+
+          verificationSent = true;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+        timeout: const Duration(seconds: 90),
+        //forceResendingToken: null,
+        //verificationCompletedForTesting: null, // for testing
+      );
+
+      return right(verificationSent);
+    } on FirebaseAuthException catch (error) {
+      "Firebase Auth Error: $error".log();
+
+      return left(
+        Failure(failureMessage: "Failed to send verification code"),
+      );
+    }
+  }
+
   //!
   //! LOGOUT
   Future<void> logOut() async => await FirebaseAuth.instance.signOut();
