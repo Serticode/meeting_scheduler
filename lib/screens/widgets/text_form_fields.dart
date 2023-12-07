@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 
 class OTPContactFormField extends ConsumerStatefulWidget {
@@ -39,14 +40,14 @@ class _OTPContactFormFieldState extends ConsumerState<OTPContactFormField> {
       decoration: InputDecoration(
         hintText: widget.hint,
 
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           fontWeight: FontWeight.w400,
-          fontSize: 14.0,
+          fontSize: 14.0.sp,
           color: Colors.black38,
         ),
         errorStyle: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 14.0,
+          fontSize: 14.0.sp,
           color: AppColours.red,
         ),
         prefixIcon: widget.prefixIcon,
@@ -59,32 +60,32 @@ class _OTPContactFormFieldState extends ConsumerState<OTPContactFormField> {
 
         //! BORDERS
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            width: 1.2,
+          borderSide: BorderSide(
+            width: 1.2.w,
             color: Colors.black12,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            width: 1.6,
+          borderSide: BorderSide(
+            width: 1.6.w,
             color: AppColours.primaryBlue,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1.6,
+            width: 1.6.w,
             color: AppColours.red,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1.6,
+            width: 1.6.w,
             color: AppColours.red,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
       ),
       validator: widget.validator,
@@ -129,14 +130,14 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
       decoration: InputDecoration(
         hintText: widget.hint,
 
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           fontWeight: FontWeight.w400,
-          fontSize: 14.0,
+          fontSize: 14.0.sp,
           color: Colors.black38,
         ),
         errorStyle: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 14.0,
+          fontSize: 14.0.sp,
           color: AppColours.red,
         ),
         prefixIcon: widget.prefixIcon,
@@ -149,32 +150,32 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
 
         //! BORDERS
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            width: 1.2,
+          borderSide: BorderSide(
+            width: 1.2.w,
             color: Colors.black12,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            width: 1.6,
+          borderSide: BorderSide(
+            width: 1.6.w.w,
             color: AppColours.primaryBlue,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1.6,
+            width: 1.6.w.w,
             color: AppColours.red,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1.6,
+            width: 1.6.w.w,
             color: AppColours.red,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.0.r),
         ),
       ),
       validator: widget.validator,

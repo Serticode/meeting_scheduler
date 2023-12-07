@@ -2,6 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
@@ -23,7 +24,7 @@ class UserProfileImage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return imageURL == null || imageURL!.isEmpty
         ? CircleAvatar(
-            radius: radius ?? (isAccountSettingsPage ? 32 : 24),
+            radius: radius?.r ?? (isAccountSettingsPage ? 32.0.r : 24.0.r),
             backgroundColor: AppColours.deepBlue.withOpacity(0.1),
             child: SvgPicture.asset(
               AppImages.accountSolid,
@@ -32,7 +33,7 @@ class UserProfileImage extends ConsumerWidget {
           )
         : //! DISPLAY AWAY !
         CircleAvatar(
-            radius: radius ?? (isAccountSettingsPage ? 32 : 24),
+            radius: radius?.r ?? (isAccountSettingsPage ? 32.0.r : 24.0.r),
             backgroundColor: AppColours.deepBlue.withOpacity(0.1),
             backgroundImage: CachedNetworkImageProvider(imageURL!));
   }

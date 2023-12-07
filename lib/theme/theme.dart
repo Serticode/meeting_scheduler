@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 
 class AppTheme {
@@ -24,11 +25,11 @@ class AppTheme {
         useMaterial3: false,
 
         scaffoldBackgroundColor: AppColours.scaffoldBGColour,
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: AppColours.scaffoldBGColour,
           elevation: 0.0,
           iconTheme: IconThemeData(
-            size: 18.0,
+            size: 18.0.sp,
           ),
         ),
       );

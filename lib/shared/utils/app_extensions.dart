@@ -4,6 +4,7 @@ import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_animate/flutter_animate.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:intl/intl.dart";
 import "package:meeting_scheduler/shared/app_elements/app_colours.dart";
 import "package:meeting_scheduler/shared/utils/type_def.dart";
@@ -116,40 +117,39 @@ extension IgnorePointerExtension on Widget {
 //! EXTENSIONS ON NUMBER
 extension WidgetExtensions on double {
   Widget get sizedBoxHeight => SizedBox(
-        height: this,
+        height: h,
       );
 
   Widget get sizedBoxWidth => SizedBox(
-        width: this,
+        width: w,
       );
 
-  EdgeInsetsGeometry get verticalPadding =>
-      EdgeInsets.symmetric(vertical: this);
+  EdgeInsetsGeometry get verticalPadding => EdgeInsets.symmetric(vertical: h);
 
   EdgeInsetsGeometry get horizontalPadding =>
-      EdgeInsets.symmetric(horizontal: this);
+      EdgeInsets.symmetric(horizontal: w);
 
   EdgeInsetsGeometry get symmetricPadding =>
-      EdgeInsets.symmetric(vertical: this, horizontal: this);
+      EdgeInsets.symmetric(vertical: h, horizontal: w);
 }
 
 //!
 //! PADDING EXTENSION ON WIDGET
 extension PaddingExtension on Widget {
   Widget get generalHorizontalPadding => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 21),
+        padding: EdgeInsets.symmetric(horizontal: 21.0.w),
         child: this,
       );
 
   Widget get generalVerticalPadding => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(vertical: 12.h),
         child: this,
       );
 
   Widget get generalPadding => Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 21,
+        padding: EdgeInsets.symmetric(
+          vertical: 12.0.h,
+          horizontal: 21.0.w,
         ),
         child: this,
       );
@@ -277,7 +277,7 @@ extension StyledTextExtension on String {
       maxLines: maxLines,
       style: TextStyle(
         height: height,
-        fontSize: 30,
+        fontSize: 30.0.sp,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight ?? FontWeight.w700,
         fontFamily: fontFamily,
@@ -305,7 +305,7 @@ extension StyledTextExtension on String {
       maxLines: maxLines,
       style: TextStyle(
         height: height,
-        fontSize: 16,
+        fontSize: 16.0.sp,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight ?? FontWeight.w400,
         fontFamily: fontFamily,
@@ -334,7 +334,7 @@ extension StyledTextExtension on String {
       maxLines: maxLines,
       softWrap: true,
       style: TextStyle(
-        fontSize: fontSize ?? 12,
+        fontSize: fontSize?.sp ?? 12.0.sp,
         height: height,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
@@ -362,7 +362,7 @@ extension StyledTextExtension on String {
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
-        fontSize: 12,
+        fontSize: 12.0.sp,
         height: height,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
@@ -391,7 +391,7 @@ extension StyledTextExtension on String {
       maxLines: maxLines,
       style: TextStyle(
         height: height,
-        fontSize: 14,
+        fontSize: 14.0.sp,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
         fontFamily: fontFamily,
@@ -418,7 +418,7 @@ extension StyledTextExtension on String {
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
-        fontSize: 16,
+        fontSize: 16.0.sp,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
         fontFamily: fontFamily,
@@ -445,7 +445,7 @@ extension StyledTextExtension on String {
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
-        fontSize: 24,
+        fontSize: 24.0.sp,
         color: color ?? AppColours.greyBlack,
         fontWeight: fontWeight,
         fontFamily: fontFamily,

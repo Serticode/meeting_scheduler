@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/screens/widgets/app_loader.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
@@ -22,7 +23,7 @@ class CircleButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CircleAvatar(
       backgroundColor: AppColours.primaryBlue,
-      radius: 28,
+      radius: 28.0.r,
       child: SvgPicture.asset(
         AppImages.arrowRight,
       ).transformToScale(
@@ -70,16 +71,16 @@ class RegularButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: isLoading ? 75 : 400,
-      height: isLoading ? 75 : 60,
+      width: isLoading ? 75.0.w : (MediaQuery.of(context).size.width * 0.85).w,
+      height: isLoading ? 75.0.h : 55.0.h,
       padding: EdgeInsets.symmetric(
-        vertical: isLoading ? 8.0 : 16.0,
-        horizontal: isLoading ? 10.5 : 21.0,
+        vertical: isLoading ? 8.0.h : 16.0.h,
+        horizontal: isLoading ? 10.5.w : 21.0.w,
       ),
       decoration: BoxDecoration(
           borderRadius: isLoading
-              ? BorderRadius.circular(75)
-              : BorderRadius.circular(radius ?? 10),
+              ? BorderRadius.circular(75.0.r)
+              : BorderRadius.circular(radius?.r ?? 10.0.r),
           color: bgColour ?? AppColours.buttonBlue,
           border: Border.all(
             color: borderColour ?? AppColours.buttonBlue,
@@ -87,7 +88,7 @@ class RegularButton extends ConsumerWidget {
       child: isLoading
           ? AppLoader(isLogoutDialogue: isLogoutDialogue)
           : buttonText!
-              .txt16(
+              .txt14(
                 color: textColour ?? AppColours.white,
                 fontWeight: FontWeight.w600,
               )

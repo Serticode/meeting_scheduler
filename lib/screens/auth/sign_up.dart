@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
@@ -63,8 +64,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             children: [
               //! LOGO
               SizedBox(
-                height: 120,
-                width: 130,
+                height: 120.0.h,
+                width: 130.0.w,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -86,7 +87,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               12.0.sizedBoxHeight,
 
               AppTexts.createAccount.txt(
-                fontSize: 18,
+                fontSize: 18.0.sp,
                 fontWeight: FontWeight.w500,
               ),
 
@@ -97,9 +98,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 isForPassword: false,
                 hint: "Full name",
                 controller: _fullName,
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.person,
-                  size: 18,
+                  size: 18.0.sp.sp,
                 ),
                 keyboardType: TextInputType.name,
                 validator: (value) {
@@ -118,9 +119,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 isForPassword: false,
                 hint: "Enter your email",
                 controller: _email,
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.email_rounded,
-                  size: 18,
+                  size: 18.0.sp,
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -142,9 +143,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     isPasswordVisible: !value,
                     hint: "Enter your password",
                     controller: _password,
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.lock,
-                      size: 18,
+                      size: 18.0.sp,
                     ),
                     suffixIcon: value
                         ? const Icon(Icons.visibility)
@@ -173,9 +174,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     isPasswordVisible: !value,
                     hint: "Confirm your password",
                     controller: _confirmPassword,
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.lock,
-                      size: 18,
+                      size: 18.0.sp,
                     ),
                     suffixIcon: value
                         ? const Icon(Icons.visibility)
@@ -267,11 +268,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
               RichText(
                 text: TextSpan(children: [
-                  const TextSpan(
+                  TextSpan(
                       text: "Already have an account? ",
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 16.0.sp,
                         color: AppColours.greyBlack,
                       )),
                   TextSpan(

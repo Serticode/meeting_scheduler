@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
@@ -50,8 +51,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             children: [
               //! LOGO
               SizedBox(
-                height: 120,
-                width: 130,
+                height: 120.0.h,
+                width: 130.0.w,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [

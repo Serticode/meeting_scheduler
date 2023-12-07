@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
@@ -15,17 +16,16 @@ class AuthBackButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: 35.0,
-      width: 35.0,
-      padding: const EdgeInsets.all(8.0),
+      height: 35.0.h,
+      width: 35.0.w,
+      padding: EdgeInsets.all(8.0.sp),
       decoration: BoxDecoration(
         color: AppColours.deepBlue,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(4.0.r),
       ),
       child: const Icon(
         Icons.arrow_back_ios,
         color: AppColours.white,
-        size: 16.0,
       ).alignCenter(),
     ).onTap(
       onTap: onTap,
@@ -45,15 +45,14 @@ class RegularBackButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(12.0.sp),
       decoration: BoxDecoration(
         color: AppColours.deepBlue,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(4.0.r),
       ),
       child: const Icon(
         Icons.arrow_back_ios,
         color: AppColours.white,
-        size: 16.0,
       ).alignCenter(),
     ).onTap(
       onTap: onTap,

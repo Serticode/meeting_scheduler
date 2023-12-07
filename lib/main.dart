@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meeting_scheduler/firebase_options.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/screens/auth/sign_in.dart';
@@ -48,40 +49,46 @@ class MeetingScheduler extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      title: AppTexts.appName,
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.appThemeLight,
-      supportedLocales: AppUtils.appLocales,
-      localizationsDelegates: const [CountryLocalizations.delegate],
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: false,
+      ensureScreenSize: true,
+      builder: (context, child) => MaterialApp(
+        title: AppTexts.appName,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.appThemeLight,
+        supportedLocales: AppUtils.appLocales,
+        localizationsDelegates: const [CountryLocalizations.delegate],
 
-      //! NAVIGATION
-      onGenerateRoute: (settings) =>
-          AppNavigator.instance.generateRoute(routeSettings: settings),
+        //! NAVIGATION
+        onGenerateRoute: (settings) =>
+            AppNavigator.instance.generateRoute(routeSettings: settings),
 
-      home: FlutterSplashScreen.fadeIn(
-        useImmersiveMode: true,
-        backgroundColor: AppColours.splashScreen,
-        childWidget: SizedBox(
-          height: 200,
-          width: 200,
-          child: Image.asset(AppImages.splashScreen).fadeInFromBottom(),
-        ),
-        duration: const Duration(seconds: 2),
-        animationDuration: const Duration(milliseconds: 700),
-        animationCurve: Curves.easeIn,
-        nextScreen: Consumer(
-          builder: (context, ref, child) {
-            final authState = ref.watch(authControllerProvider);
+        home: FlutterSplashScreen.fadeIn(
+          useImmersiveMode: true,
+          backgroundColor: AppColours.splashScreen,
+          childWidget: SizedBox(
+            height: 200.0.h,
+            width: 200.0.w,
+            child: Image.asset(AppImages.splashScreen).fadeInFromBottom(),
+          ),
+          duration: const Duration(seconds: 2),
+          animationDuration: const Duration(milliseconds: 700),
+          animationCurve: Curves.easeIn,
+          nextScreen: Consumer(
+            builder: (context, ref, child) {
+              final authState = ref.watch(authControllerProvider);
 
-            if (authState.isLoggedIn) {
-              return const HomeScreenWrapper();
-            } else if (showHome) {
-              return const SignInScreen();
-            } else {
-              return const OnboardingScreenWrapper();
-            }
-          },
+              if (authState.isLoggedIn) {
+                return const HomeScreenWrapper();
+              } else if (showHome) {
+                return const SignInScreen();
+              } else {
+                return const OnboardingScreenWrapper();
+              }
+            },
+          ),
         ),
       ),
     );

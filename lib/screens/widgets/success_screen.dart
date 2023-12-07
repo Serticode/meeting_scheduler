@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
@@ -71,15 +72,15 @@ class SuccessScreen extends ConsumerWidget {
               height: 56,
               decoration: BoxDecoration(
                 border: Border.all(color: AppColours.warmGrey),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
               ),
               child: Row(
                 children: [
                   "$meetingOwner Meeting".txt14(),
                   const Spacer(),
-                  const Icon(
+                  Icon(
                     Icons.copy_rounded,
-                    size: 21,
+                    size: 21.sp,
                   ).onTap(
                     onTap: () => Clipboard.setData(
                       ClipboardData(
