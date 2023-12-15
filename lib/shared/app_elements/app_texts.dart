@@ -8,14 +8,14 @@ class AppTexts {
       "Manage your event booking very easily.";
   static const String onboardingScreenEasyVenue = "Easy Venue Booking";
   static const String onboardingScreenEasyVenueRider =
-      "Lorem ipsum dolor sit amet consectetur. At non pretium elit faucibus quam.";
+      "Your Venue. Your Meeting. Easy.";
   static const String onboardingScreenMeetingScheduler =
       "Your Meeting Scheduler";
   static const String onboardingScreenMeetingSchedulerRider =
-      "Lorem ipsum dolor sit amet consectetur. At non pretium elit faucibus quam.";
+      "Effortless Scheduling, Impactful Meetings.";
   static const String joinUs = "Join Us Today!";
   static const String joinUsRider =
-      "Lorem ipsum dolor sit amet consectetur. At non pretium elit faucibus quam.";
+      "Join the Movement for Productive Meetings.";
   static const String skip = "Skip";
   static const String otpVerification = "OTP Verification";
   static const String otpVerificationRider =

@@ -76,6 +76,35 @@ class AuthRepository {
     }
   }
 
+  //! CHANGE PASSWORD
+  FutureEither<bool> changePassword({
+    required String newPassword,
+    required String currentPassword,
+  }) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    AuthCredential? userCredential;
+
+    "USER: $user : New password: $newPassword".log();
+
+    if (user != null) {
+      userCredential = EmailAuthProvider.credential(
+          email: user.email!, password: currentPassword);
+
+      user.reauthenticateWithCredential(userCredential).then((value) {
+        "User Credential: $value".log();
+        user.updatePassword(newPassword).then((_) {}).catchError((error) {
+          "User update password error: $error".log();
+        });
+      }).catchError((err) {
+        "User error from update password: $err".log();
+      });
+
+      return right(true);
+    } else {
+      return left(Failure(failureMessage: "Change password failed"));
+    }
+  }
+
   //!  UPDATE USER PROFILE
   FutureEither<bool> updateUserProfile({
     required String email,

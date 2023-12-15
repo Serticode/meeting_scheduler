@@ -100,14 +100,17 @@ class HomeScreen extends ConsumerWidget {
                                           motion: const DrawerMotion(),
                                           children: [
                                             SlidableAction(
-                                              onPressed: (context) {
-                                                "Slidable Tapped".log();
-
-                                                meeting?.log();
-
-                                                if (meeting?.ownerID !=
-                                                    ref.read(userIdProvider)) {}
-                                              },
+                                              onPressed: (context) async =>
+                                                  await ref
+                                                      .read(
+                                                          meetingsControllerProvider
+                                                              .notifier)
+                                                      .deleteMeeting(
+                                                          meetingID: meeting!
+                                                              .meetingID!,
+                                                          ownerID:
+                                                              meeting.ownerID!,
+                                                          context: context),
                                               spacing: 12.0,
                                               borderRadius:
                                                   BorderRadius.circular(14),

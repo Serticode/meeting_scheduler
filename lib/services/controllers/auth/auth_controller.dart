@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,6 +66,21 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
+  Future<void> validateChangePassword({
+    required bool isValidated,
+    required String currentPassword,
+    required String newPassword,
+    required BuildContext context,
+  }) async {
+    if (isValidated) {
+      await changePassword(
+        newPassword: newPassword,
+        currentPassword: currentPassword,
+        context: context,
+      );
+    }
+  }
+
   Future<void> validateProfileUpdate({
     required bool isValidated,
     required String email,
@@ -100,19 +116,13 @@ class AuthController extends StateNotifier<AuthState> {
             );
 
     result.fold(
-      (Failure failure) {
-        failure.failureMessage?.log();
-
-        AppUtils.showAppBanner(
+      (Failure failure) async {
+        await AppUtils.showAppBanner(
+          title: "Error",
           message: failure.failureMessage ?? "Sign up failed, please try again",
-          context: context,
+          callerContext: context,
+          contentType: ContentType.failure,
         );
-
-        Future.delayed(
-          const Duration(seconds: 4),
-        );
-
-        AppUtils.closeAppBanner(context: context);
 
         state = state.copiedWithIsLoading(isLoading: false);
       },
@@ -147,19 +157,15 @@ class AuthController extends StateNotifier<AuthState> {
             );
 
     result.fold(
-      (Failure failure) {
-        failure.failureMessage?.log();
+      (Failure failure) async {
+        "Auth Controller ${failure.failureMessage}".log();
 
-        AppUtils.showAppBanner(
-          message: failure.failureMessage ?? "Sign up failed, please try again",
-          context: context,
+        await AppUtils.showAppBanner(
+          title: "Error",
+          message: failure.failureMessage ?? "Sign in failed, please try again",
+          callerContext: context,
+          contentType: ContentType.failure,
         );
-
-        Future.delayed(
-          const Duration(seconds: 4),
-        );
-
-        AppUtils.closeAppBanner(context: context);
 
         state = state.copiedWithIsLoading(isLoading: false);
       },
@@ -180,6 +186,38 @@ class AuthController extends StateNotifier<AuthState> {
     );
   }
 
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required BuildContext context,
+  }) async {
+    state = state.copiedWithIsLoading(isLoading: true);
+
+    final Either<Failure, bool> result = await _authControllerRef!
+        .read(authRepositoryProvider)
+        .changePassword(
+            newPassword: newPassword, currentPassword: currentPassword);
+
+    result.fold(
+      (Failure failure) async {
+        await AppUtils.showAppBanner(
+          title: "Error",
+          message: failure.failureMessage ??
+              "Failed to change password, please try again",
+          callerContext: context,
+          contentType: ContentType.failure,
+        );
+
+        state = state.copiedWithIsLoading(isLoading: false);
+      },
+      (bool result) {
+        if (result) true.withHapticFeedback();
+
+        state = state.copiedWithIsLoading(isLoading: true);
+      },
+    );
+  }
+
   Future<bool> sendVerificationCode({
     required String phoneNumber,
     required BuildContext context,
@@ -192,19 +230,14 @@ class AuthController extends StateNotifier<AuthState> {
         .sendVerificationCode(phoneNumber: phoneNumber);
 
     result.fold(
-      (Failure failure) {
-        failure.failureMessage?.log();
-
-        AppUtils.showAppBanner(
-          message: failure.failureMessage ?? "Sign up failed, please try again",
-          context: context,
+      (Failure failure) async {
+        await AppUtils.showAppBanner(
+          title: "Error",
+          message: failure.failureMessage ??
+              "Failed to send verification code, please try again",
+          callerContext: context,
+          contentType: ContentType.failure,
         );
-
-        Future.delayed(
-          const Duration(seconds: 4),
-        );
-
-        AppUtils.closeAppBanner(context: context);
 
         state = state.copiedWithIsLoading(isLoading: false);
       },
@@ -237,19 +270,16 @@ class AuthController extends StateNotifier<AuthState> {
         );
 
     result.fold(
-      (Failure failure) {
+      (Failure failure) async {
         failure.failureMessage?.log();
 
-        AppUtils.showAppBanner(
-          message: failure.failureMessage ?? "Sign up failed, please try again",
-          context: context,
+        await AppUtils.showAppBanner(
+          title: "Error",
+          message: failure.failureMessage ??
+              "Failed to update your info, please try again",
+          callerContext: context,
+          contentType: ContentType.failure,
         );
-
-        Future.delayed(
-          const Duration(seconds: 4),
-        );
-
-        AppUtils.closeAppBanner(context: context);
 
         state = state.copiedWithIsLoading(isLoading: false);
       },

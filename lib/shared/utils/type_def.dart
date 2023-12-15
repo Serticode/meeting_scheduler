@@ -59,3 +59,12 @@ enum MeetingVenue {
 }
 
 enum FileType { image }
+
+//! SENTRY CONSTANTS
+enum SentryDSN {
+  dsn(tag: "SENTRY_DSN");
+
+  final String tag;
+
+  const SentryDSN({required this.tag});
+}

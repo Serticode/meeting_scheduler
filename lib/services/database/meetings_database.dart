@@ -89,16 +89,21 @@ class MeetingsDatabase {
     required String ownerID,
   }) async {
     try {
-      await meetingCollection
-          .where(
-            ScheduledMeetingFieldNames.meetingID,
-            isEqualTo: meetingID,
-          )
+      QuerySnapshot meetingInfo = await meetingCollection
+          .where(ScheduledMeetingFieldNames.meetingID, isEqualTo: meetingID)
+          .where(ScheduledMeetingFieldNames.ownerID, isEqualTo: ownerID)
           .limit(1)
-          .get()
-          .then((meetingInfo) async {});
+          .get();
 
-      return true;
+      if (meetingInfo.docs.isNotEmpty) {
+        DocumentReference documentReference = meetingInfo.docs.first.reference;
+
+        await documentReference.delete();
+
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       error.toString().log();
 

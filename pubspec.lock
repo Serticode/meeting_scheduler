@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  awesome_snackbar_content:
+    dependency: "direct main"
+    description:
+      name: awesome_snackbar_content
+      sha256: dc63adf86eadb0a4e9e1d9994c3fe09a7b0552076e87152fc292705ec506c80e
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -422,6 +430,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      sha256: "9357883bdd153ab78cbf9ffa07656e336b8bbb2b5a3ca596b0b27e119f7c7d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0"
   flutter_fadein:
     dependency: "direct main"
     description:
@@ -490,10 +506,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_svg
-      sha256: d39e7f95621fc84376bc0f7d504f05c3a41488c562f4a8ad410569127507402c
+      sha256: "6ff9fa12892ae074092de2fa6a9938fb21dbabfdaa2ff57dc697ff912fc8d4b2"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.9"
+    version: "1.1.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -736,6 +752,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  package_info_plus:
+    dependency: transitive
+    description:
+      name: package_info_plus
+      sha256: "7e76fad405b3e4016cd39d08f455a4eb5199723cf594cd1b8916d47140d93017"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
+  package_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: package_info_plus_platform_interface
+      sha256: "9bc8ba46813a4cc42c66ab781470711781940780fd8beddd0c3da62506d3a6c6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   path:
     dependency: transitive
     description:
@@ -744,6 +776,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      sha256: bbb1934c0cbb03091af082a6389ca2080345291ef07a5fa6d6e078ba8682f977
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   path_parsing:
     dependency: transitive
     description:
@@ -928,6 +968,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.8.7"
+  sentry:
+    dependency: transitive
+    description:
+      name: sentry
+      sha256: e7ded42974bac5f69e4ca4ddc57d30499dd79381838f24b7e8fd9aa4139e7b79
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.13.2"
+  sentry_flutter:
+    dependency: "direct main"
+    description:
+      name: sentry_flutter
+      sha256: d6f55ec7a1f681784165021f749007712a72ff57eadf91e963331b6ae326f089
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.13.2"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1133,30 +1189,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
-  vector_graphics:
-    dependency: transitive
-    description:
-      name: vector_graphics
-      sha256: "0f0c746dd2d6254a0057218ff980fc7f5670fd0fcf5e4db38a490d31eed4ad43"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.9+1"
-  vector_graphics_codec:
-    dependency: transitive
-    description:
-      name: vector_graphics_codec
-      sha256: "0edf6d630d1bfd5589114138ed8fada3234deacc37966bec033d3047c29248b7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.9+1"
-  vector_graphics_compiler:
-    dependency: transitive
-    description:
-      name: vector_graphics_compiler
-      sha256: d24333727332d9bd20990f1483af4e09abdb9b1fc7c3db940b56ab5c42790c26
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.9+1"
   vector_math:
     dependency: transitive
     description:

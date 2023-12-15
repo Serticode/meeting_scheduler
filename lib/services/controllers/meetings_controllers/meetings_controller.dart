@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
@@ -8,6 +10,7 @@ import 'package:meeting_scheduler/services/repositories/meetings/meetings_reposi
 import 'package:meeting_scheduler/shared/utils/failure.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:meeting_scheduler/shared/utils/utils.dart';
 
 final meetingsControllerProvider =
     StateNotifierProvider<MeetingsController, IsLoading>(
@@ -25,12 +28,12 @@ class MeetingsController extends StateNotifier<IsLoading> {
 
   //!
   //!
-  Future<void> validateMeetingDetails({
-    required bool isValidated,
-    required ScheduledMeetingModel meeting,
-  }) async {
+  Future<void> validateMeetingDetails(
+      {required bool isValidated,
+      required ScheduledMeetingModel meeting,
+      required BuildContext context}) async {
     if (isValidated) {
-      await addMeeting(meeting: meeting);
+      await addMeeting(meeting: meeting, context: context);
     }
   }
 
@@ -38,6 +41,7 @@ class MeetingsController extends StateNotifier<IsLoading> {
   //!
   Future<void> addMeeting({
     required ScheduledMeetingModel meeting,
+    required BuildContext context,
   }) async {
     state = true;
 
@@ -48,8 +52,14 @@ class MeetingsController extends StateNotifier<IsLoading> {
         );
 
     result.fold(
-      (Failure failure) {
-        failure.failureMessage?.log();
+      (Failure failure) async {
+        await AppUtils.showAppBanner(
+          title: "Error",
+          message: failure.failureMessage ??
+              "Could not add meeting, please try again",
+          callerContext: context,
+          contentType: ContentType.failure,
+        );
 
         state = false;
       },
@@ -65,6 +75,7 @@ class MeetingsController extends StateNotifier<IsLoading> {
   //!
   Future<void> updateMeeting({
     required ScheduledMeetingModel meeting,
+    required BuildContext context,
   }) async {
     state = true;
 
@@ -75,8 +86,14 @@ class MeetingsController extends StateNotifier<IsLoading> {
         );
 
     result.fold(
-      (Failure failure) {
-        failure.failureMessage?.log();
+      (Failure failure) async {
+        await AppUtils.showAppBanner(
+          title: "Error",
+          message: failure.failureMessage ??
+              "Failed to update meeting info, please try again",
+          callerContext: context,
+          contentType: ContentType.failure,
+        );
 
         state = false;
       },
@@ -93,6 +110,7 @@ class MeetingsController extends StateNotifier<IsLoading> {
   Future<void> deleteMeeting({
     required String meetingID,
     required String ownerID,
+    required BuildContext context,
   }) async {
     state = true;
 
@@ -104,8 +122,14 @@ class MeetingsController extends StateNotifier<IsLoading> {
         );
 
     result.fold(
-      (Failure failure) {
-        failure.failureMessage?.log();
+      (Failure failure) async {
+        await AppUtils.showAppBanner(
+          title: "Error",
+          message: failure.failureMessage ??
+              "Could not delete meeting, please try again",
+          callerContext: context,
+          contentType: ContentType.failure,
+        );
 
         state = false;
       },
@@ -162,6 +186,8 @@ final AutoDisposeStreamProvider<List<ScheduledMeetingModel?>> meetingsProvider =
         .snapshots(includeMetadataChanges: true)
         .listen((snapshot) {
       List<ScheduledMeetingModel?> meetings = [];
+      final theDate = DateTime.now();
+      DateTime currentDate = DateTime(theDate.year, theDate.month, theDate.day);
 
       for (QueryDocumentSnapshot<Map<String, dynamic>> element
           in snapshot.docs) {
@@ -169,7 +195,18 @@ final AutoDisposeStreamProvider<List<ScheduledMeetingModel?>> meetingsProvider =
           json: element.data(),
         );
 
-        meetings.add(meeting);
+        List meetingDateDetails = meeting.dateOfMeeting!.split("/").toList();
+        final meetingDate = DateTime(
+          int.parse(meetingDateDetails.elementAt(2).trim()),
+          AppUtils.getMonthNumber(
+              monthName: meetingDateDetails.elementAt(1).trim()),
+          int.parse(meetingDateDetails.elementAt(0).trim()),
+        );
+
+        if (meetingDate.isAfter(currentDate) ||
+            meetingDate.compareTo(currentDate) == 0) {
+          meetings.add(meeting);
+        }
       }
 
       controller.sink.add(meetings);

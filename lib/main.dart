@@ -2,6 +2,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meeting_scheduler/firebase_options.dart';
@@ -16,28 +17,34 @@ import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
+import 'package:meeting_scheduler/shared/utils/type_def.dart';
 import 'package:meeting_scheduler/shared/utils/utils.dart';
 import 'package:meeting_scheduler/theme/theme.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final bool showHome = await AppPreferences.instance.getShowHome() ?? false;
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then(
-    (_) => runApp(
-      ProviderScope(
-        child: MeetingScheduler(showHome: showHome).darkStatusBar(),
-      ),
-    ),
-  );
+  await dotenv.load(fileName: ".env");
+
+  await SentryFlutter.init((options) {
+    options.dsn = dotenv.env[SentryDSN.dsn.tag];
+    options.tracesSampleRate = 1.0;
+  },
+      appRunner: () async => await SystemChrome.setPreferredOrientations([
+            DeviceOrientation.portraitUp,
+            DeviceOrientation.portraitDown,
+          ]).then(
+            (_) => runApp(
+              ProviderScope(
+                child: MeetingScheduler(showHome: showHome).darkStatusBar(),
+              ),
+            ),
+          ));
 }
 
 class MeetingScheduler extends ConsumerWidget {

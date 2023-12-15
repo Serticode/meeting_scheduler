@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
@@ -22,7 +23,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        toolbarHeight: 10,
+        toolbarHeight: 0,
       ),
       //! BODY
       body: Column(
@@ -30,7 +31,6 @@ class OnboardingScreenWrapper extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           //! SKIP AND OTHERS
-
           Row(
             children: [
               if (pageNumber != 0)
@@ -59,7 +59,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
 
           //! WELCOME TEXT
           AnimatedContainer(
-            height: pageNumber == 0 ? 65.0 : 0.0,
+            height: pageNumber == 0 ? 70.0.h : 0.0,
             duration: const Duration(milliseconds: 200),
             child: pageNumber == 0
                 ? SingleChildScrollView(
@@ -83,7 +83,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
 
           //! IMAGE
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.2,
             child: SvgPicture.asset(
               ref
                   .read(onboardingScreenControllerProvider.notifier)
@@ -102,28 +102,31 @@ class OnboardingScreenWrapper extends ConsumerWidget {
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               child: pageNumber != 0
-                  ? Column(
-                      children: [
-                        ref
-                            .read(onboardingScreenControllerProvider.notifier)
-                            .onboardingTextsHeader
-                            .elementAt(pageNumber ?? 0)
-                            .txt24(
-                              fontWeight: FontWeight.w700,
-                            ),
+                  ? Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ref
+                              .read(onboardingScreenControllerProvider.notifier)
+                              .onboardingTextsHeader
+                              .elementAt(pageNumber ?? 0)
+                              .txt24(
+                                fontWeight: FontWeight.w700,
+                              ),
 
-                        //! SPACER
-                        12.0.sizedBoxHeight,
+                          //! SPACER
+                          12.0.sizedBoxHeight,
 
-                        ref
-                            .read(onboardingScreenControllerProvider.notifier)
-                            .onboardingTextsRider
-                            .elementAt(pageNumber ?? 0)
-                            .txt16(
-                              textAlign: TextAlign.center,
-                              fontWeight: FontWeight.w400,
-                            ),
-                      ],
+                          ref
+                              .read(onboardingScreenControllerProvider.notifier)
+                              .onboardingTextsRider
+                              .elementAt(pageNumber ?? 0)
+                              .txt16(
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ],
+                      ),
                     )
                   : const SizedBox.shrink(),
             ),
@@ -145,13 +148,9 @@ class OnboardingScreenWrapper extends ConsumerWidget {
 
           pageNumber != 3
               ? CircleButton(
-                  onTap: () {
-                    "Circle Button Tapped".log();
-
-                    ref
-                        .read(onboardingScreenControllerProvider.notifier)
-                        .incrementPageIndex();
-                  },
+                  onTap: () => ref
+                      .read(onboardingScreenControllerProvider.notifier)
+                      .incrementPageIndex(),
                 ).alignCenter()
               : RegularButton(
                   buttonText: AppTexts.getStarted,

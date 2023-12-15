@@ -27,13 +27,13 @@ class MeetingsRepository {
       if (isMeetingUploaded) {
         return right(isMeetingUploaded);
       } else {
-        return left(Failure(failureMessage: "Failed to upload meeting"));
+        return left(Failure(failureMessage: "Failed to add meeting"));
       }
     } on FirebaseAuthException catch (error) {
       error.toString().log();
 
       return left(
-        Failure(failureMessage: "Failed to register user"),
+        Failure(failureMessage: "Failed to add meeting"),
       );
     }
   }
@@ -51,13 +51,13 @@ class MeetingsRepository {
       if (isMeetingUploaded) {
         return right(isMeetingUploaded);
       } else {
-        return left(Failure(failureMessage: "Failed to upload meeting"));
+        return left(Failure(failureMessage: "Failed to update meeting"));
       }
     } on FirebaseAuthException catch (error) {
       error.toString().log();
 
       return left(
-        Failure(failureMessage: "Failed to register user"),
+        Failure(failureMessage: "Failed to update meeting"),
       );
     }
   }
@@ -77,13 +77,13 @@ class MeetingsRepository {
       if (isMeetingDeleted) {
         return right(isMeetingDeleted);
       } else {
-        return left(Failure(failureMessage: "Failed to upload meeting"));
+        return left(Failure(failureMessage: "Failed to delete meeting"));
       }
     } on FirebaseAuthException catch (error) {
       error.toString().log();
 
       return left(
-        Failure(failureMessage: "Failed to register user"),
+        Failure(failureMessage: "Failed to delete meeting"),
       );
     }
   }

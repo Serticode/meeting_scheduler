@@ -1,30 +1,52 @@
+import 'dart:async';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meeting_scheduler/services/models/model_field_names.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
-import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
 class AppUtils {
   const AppUtils._();
 
   //!
   //! MATERIAL BANNERS
-  static showAppBanner(
-          {required String message, required BuildContext context}) =>
-      ScaffoldMessenger.of(context).showMaterialBanner(
-        MaterialBanner(
-          content: message.txt14(
-            fontWeight: FontWeight.w500,
-            color: AppColours.white,
-          ),
-          backgroundColor: AppColours.buttonBlue,
-          actions: [
-            "Close".txt14(color: AppColours.white).onTap(
-                  onTap: () =>
-                      ScaffoldMessenger.of(context).clearMaterialBanners(),
-                )
-          ],
+  static Future<void> showAppBanner({
+    required String title,
+    required String message,
+    required ContentType contentType,
+    required BuildContext callerContext,
+  }) async {
+    ScaffoldMessenger.of(callerContext)
+      ..clearMaterialBanners()
+      ..showMaterialBanner(MaterialBanner(
+        elevation: 12.0.sp,
+        padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 21.0),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        forceActionsBelow: true,
+        content: AwesomeSnackbarContent(
+          title: title,
+          message: message,
+          contentType: contentType,
+          inMaterialBanner: true,
+          bgAsset: contentType == ContentType.failure
+              ? AssetsPath.failure
+              : contentType == ContentType.success
+                  ? AssetsPath.success
+                  : AssetsPath.bubbles,
+          color: contentType == ContentType.failure
+              ? Colors.red.shade900
+              : contentType == ContentType.success
+                  ? Colors.green.shade900
+                  : AppColours.deepBlue,
         ),
-      );
+        actions: const [SizedBox.shrink()],
+      ));
+
+    Timer(const Duration(seconds: 2), () {
+      ScaffoldMessenger.of(callerContext).hideCurrentMaterialBanner();
+    });
+  }
 
   //!
   static closeAppBanner({required BuildContext context}) =>

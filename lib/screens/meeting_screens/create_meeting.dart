@@ -317,7 +317,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
       if (widget.isEditMeeting!) {
         await ref
             .read(meetingsControllerProvider.notifier)
-            .updateMeeting(meeting: scheduledMeeting)
+            .updateMeeting(meeting: scheduledMeeting, context: context)
             .whenComplete(
               () => Navigator.of(context).pop(),
             );
@@ -344,7 +344,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
           scheduledMeeting = scheduledMeeting..meetingID = uuid.v4();
           await ref
               .read(meetingsControllerProvider.notifier)
-              .addMeeting(meeting: scheduledMeeting)
+              .addMeeting(meeting: scheduledMeeting, context: context)
               .whenComplete(
             () {
               ref.invalidate(meetingDateControllerProvider);

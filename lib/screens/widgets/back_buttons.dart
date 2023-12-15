@@ -26,6 +26,7 @@ class AuthBackButton extends ConsumerWidget {
       child: const Icon(
         Icons.arrow_back_ios,
         color: AppColours.white,
+        size: 18,
       ).alignCenter(),
     ).onTap(
       onTap: onTap,
