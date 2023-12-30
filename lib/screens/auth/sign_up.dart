@@ -50,197 +50,205 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLoading = ref.watch(authControllerProvider).isLoading;
+
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        toolbarHeight: 0,
-      ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              //! LOGO
-              SizedBox(
-                height: 120.0.h,
-                width: 130.0.w,
-                child: Stack(
-                  alignment: Alignment.center,
+      appBar: AppBar(toolbarHeight: 0),
+      body: SafeArea(
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                21.0.sizedBoxHeight,
+
+                //! LOGO
+                SizedBox(
+                  height: 120.0.h,
+                  width: 130.0.w,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      //! BG
+                      SvgPicture.asset(
+                        AppImages.logoBG,
+                        semanticsLabel: "Logo",
+                      ),
+
+                      //! LOGO
+                      Image.asset(
+                        AppImages.logo,
+                        scale: 1.2,
+                      ),
+                    ],
+                  ),
+                ).alignCenter(),
+
+                12.0.sizedBoxHeight,
+
+                AppTexts.createAccount.txt(
+                  fontSize: 16.0.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+
+                36.0.sizedBoxHeight,
+
+                //! FULL NAME
+                CustomTextFormField(
+                  isForPassword: false,
+                  hint: "Full name",
+                  controller: _fullName,
+                  prefixSVG: Transform.scale(
+                    scale: 0.3,
+                    child: SvgPicture.asset(
+                      AppImages.user,
+                    ),
+                  ),
+                  keyboardType: TextInputType.name,
+                  validator: (value) {
+                    if (_fullName.value.text.trim().split(" ").length < 2) {
+                      return "Enter a Last and First name";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+
+                21.0.sizedBoxHeight,
+
+                //! EMAIL
+                CustomTextFormField(
+                  isForPassword: false,
+                  hint: "Enter your email",
+                  controller: _email,
+                  prefixSVG: Transform.scale(
+                    scale: 0.3,
+                    child: SvgPicture.asset(
+                      AppImages.email,
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (!_email.value.text.trim().contains("@")) {
+                      return "Enter a valid email";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+
+                21.0.sizedBoxHeight,
+
+                //! PASSWORD
+                isChecked.toValueListenable(
+                  builder: (context, value, child) {
+                    return CustomTextFormField(
+                      isForPassword: false,
+                      isPasswordVisible: !value,
+                      hint: "Enter your password",
+                      controller: _password,
+                      prefixSVG: Transform.scale(
+                        scale: 0.3,
+                        child: SvgPicture.asset(
+                          AppImages.passwordPrefixIcon,
+                        ),
+                      ),
+                      suffixIcon: value
+                          ? const Icon(Icons.visibility)
+                          : const Icon(
+                              Icons.visibility_off,
+                            ),
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (_password.value.text.trim().length < 5) {
+                          return "Password cannot be less than 6 characters";
+                        } else {
+                          return null;
+                        }
+                      },
+                    );
+                  },
+                ),
+
+                21.0.sizedBoxHeight,
+
+                //! CONFIRM PASSWORD
+                isChecked.toValueListenable(
+                  builder: (context, value, child) {
+                    return CustomTextFormField(
+                      isForPassword: false,
+                      isPasswordVisible: !value,
+                      hint: "Confirm your password",
+                      controller: _confirmPassword,
+                      prefixSVG: Transform.scale(
+                        scale: 0.3,
+                        child: SvgPicture.asset(
+                          AppImages.passwordPrefixIcon,
+                        ),
+                      ),
+                      suffixIcon: value
+                          ? const Icon(Icons.visibility)
+                          : const Icon(
+                              Icons.visibility_off,
+                            ),
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (_password.value.text.trim() !=
+                            _confirmPassword.value.text.trim()) {
+                          return "Passwords do not match";
+                        } else {
+                          return null;
+                        }
+                      },
+                    );
+                  },
+                ),
+
+                32.0.sizedBoxHeight,
+
+                //! SHOW PASSWORD && FORGOT PASSWORD
+                Row(
                   children: [
-                    //! BG
-                    SvgPicture.asset(
-                      AppImages.logoBG,
-                      semanticsLabel: "Logo",
+                    //! CHECK BOX
+                    isChecked.toValueListenable(
+                      builder: (context, value, child) {
+                        return Checkbox.adaptive(
+                          activeColor: AppColours.buttonBlue,
+                          side: BorderSide(
+                            color: isChecked.value
+                                ? AppColours.primaryBlue
+                                : AppColours.buttonBlue,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                          semanticLabel: "Show password checkbox",
+                          value: value,
+                          onChanged: (value) {
+                            isChecked.value = value ?? false;
+                          },
+                        );
+                      },
                     ),
 
-                    //! LOGO
-                    Image.asset(
-                      AppImages.logo,
-                      scale: 1.2,
-                    ),
+                    AppTexts.showPassword.txt14(),
+
+                    const Spacer(),
+
+                    AppTexts.forgotPassword
+                        .txt14(color: AppColours.buttonBlue)
+                        .onTap(
+                          onTap: () {},
+                        ),
                   ],
                 ),
-              ).alignCenter(),
 
-              12.0.sizedBoxHeight,
+                32.0.sizedBoxHeight,
 
-              AppTexts.createAccount.txt(
-                fontSize: 18.0.sp,
-                fontWeight: FontWeight.w500,
-              ),
-
-              36.0.sizedBoxHeight,
-
-              //! FULL NAME
-              CustomTextFormField(
-                isForPassword: false,
-                hint: "Full name",
-                controller: _fullName,
-                prefixIcon: Icon(
-                  Icons.person,
-                  size: 18.0.sp.sp,
-                ),
-                keyboardType: TextInputType.name,
-                validator: (value) {
-                  if (_fullName.value.text.trim().split(" ").length < 2) {
-                    return "Enter a Last and First name";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-
-              21.0.sizedBoxHeight,
-
-              //! EMAIL
-              CustomTextFormField(
-                isForPassword: false,
-                hint: "Enter your email",
-                controller: _email,
-                prefixIcon: Icon(
-                  Icons.email_rounded,
-                  size: 18.0.sp,
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (!_email.value.text.trim().contains("@")) {
-                    return "Enter a valid email";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-
-              21.0.sizedBoxHeight,
-
-              //! PASSWORD
-              isChecked.toValueListenable(
-                builder: (context, value, child) {
-                  return CustomTextFormField(
-                    isForPassword: false,
-                    isPasswordVisible: !value,
-                    hint: "Enter your password",
-                    controller: _password,
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      size: 18.0.sp,
-                    ),
-                    suffixIcon: value
-                        ? const Icon(Icons.visibility)
-                        : const Icon(
-                            Icons.visibility_off,
-                          ),
-                    keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (_password.value.text.trim().length < 5) {
-                        return "Password cannot be less than 6 characters";
-                      } else {
-                        return null;
-                      }
-                    },
-                  );
-                },
-              ),
-
-              21.0.sizedBoxHeight,
-
-              //! CONFIRM PASSWORD
-              isChecked.toValueListenable(
-                builder: (context, value, child) {
-                  return CustomTextFormField(
-                    isForPassword: false,
-                    isPasswordVisible: !value,
-                    hint: "Confirm your password",
-                    controller: _confirmPassword,
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      size: 18.0.sp,
-                    ),
-                    suffixIcon: value
-                        ? const Icon(Icons.visibility)
-                        : const Icon(
-                            Icons.visibility_off,
-                          ),
-                    keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (_password.value.text.trim() !=
-                          _confirmPassword.value.text.trim()) {
-                        return "Passwords do not match";
-                      } else {
-                        return null;
-                      }
-                    },
-                  );
-                },
-              ),
-
-              32.0.sizedBoxHeight,
-
-              //! SHOW PASSWORD && FORGOT PASSWORD
-              Row(
-                children: [
-                  //! CHECK BOX
-                  isChecked.toValueListenable(
-                    builder: (context, value, child) {
-                      return Checkbox.adaptive(
-                        activeColor: AppColours.buttonBlue,
-                        side: BorderSide(
-                          color: isChecked.value
-                              ? AppColours.primaryBlue
-                              : AppColours.buttonBlue,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                        semanticLabel: "Show password checkbox",
-                        value: value,
-                        onChanged: (value) {
-                          isChecked.value = value ?? false;
-                        },
-                      );
-                    },
-                  ),
-
-                  AppTexts.showPassword.txt16(),
-
-                  const Spacer(),
-
-                  AppTexts.forgotPassword.txt16().onTap(
-                        onTap: () {},
-                      ),
-                ],
-              ),
-
-              32.0.sizedBoxHeight,
-
-              //! BUTTON
-              Builder(builder: (context) {
-                final bool isLoading =
-                    ref.watch(authControllerProvider).isLoading;
-
-                return RegularButton(
+                //! BUTTON
+                RegularButton(
                   onTap: () async => await ref
                       .read(authControllerProvider.notifier)
                       .validateSignUp(
@@ -261,41 +269,42 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   }),
                   buttonText: AppTexts.createAccount,
                   isLoading: isLoading,
-                );
-              }),
+                ),
 
-              32.0.sizedBoxHeight,
+                32.0.sizedBoxHeight,
 
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: "Already have an account? ",
-                      style: TextStyle(
+                RichText(
+                  text: TextSpan(children: [
+                    const TextSpan(
+                        text: "Already have an account?  ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: AppColours.greyBlack,
+                        )),
+                    TextSpan(
+                      text: "  Login now",
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 16.0.sp,
-                        color: AppColours.greyBlack,
-                      )),
-                  TextSpan(
-                    text: " Login now",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: AppColours.purple,
+                        color: AppColours.purple,
+                        fontSize: 14.0,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => AppNavigator.instance
+                            .navigateToReplacementPage(
+                                thePageRouteName: AppRoutes.signIn,
+                                context: context),
                     ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => AppNavigator.instance
-                          .navigateToReplacementPage(
-                              thePageRouteName: AppRoutes.signIn,
-                              context: context),
-                  ),
-                ]),
-              ).withHapticFeedback(
-                onTap: null,
-                feedbackType: AppHapticFeedbackType.mediumImpact,
-              ),
-            ],
-          ).generalPadding.ignorePointer(
-                isLoading: ref.watch(authControllerProvider).isLoading,
-              ),
+                  ]),
+                ).withHapticFeedback(
+                  onTap: null,
+                  feedbackType: AppHapticFeedbackType.mediumImpact,
+                ),
+              ],
+            ).generalPadding.ignorePointer(
+                  isLoading: ref.watch(authControllerProvider).isLoading,
+                ),
+          ),
         ),
       ),
     );

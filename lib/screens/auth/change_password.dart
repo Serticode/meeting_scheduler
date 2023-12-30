@@ -24,6 +24,8 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isLoading = ref.watch(authControllerProvider).isLoading;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -31,7 +33,7 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
         elevation: 0,
         iconTheme: const IconThemeData(color: AppColours.greyBlack),
         title: "Change Password".txt(
-          fontSize: 21.0,
+          fontSize: 16.0,
           color: AppColours.greyBlack,
           fontWeight: FontWeight.w600,
         ),
@@ -134,28 +136,23 @@ class _ChangePasswordScreenState extends ConsumerState<ChangePasswordScreen> {
 
             const Spacer(),
 
-            Builder(builder: (context) {
-              final bool isLoading =
-                  ref.watch(authControllerProvider).isLoading;
-
-              return RegularButton(
-                onTap: () async {
-                  await ref
-                      .read(authControllerProvider.notifier)
-                      .validateChangePassword(
-                        isValidated: _formKey.currentState!.validate(),
-                        currentPassword: _currentPassword.value.text.trim(),
-                        newPassword: _newPassword.value.text.trim(),
-                        context: context,
-                      )
-                      .whenComplete(() {
-                    Navigator.of(context).pop();
-                  });
-                },
-                buttonText: AppTexts.enter,
-                isLoading: isLoading,
-              );
-            }),
+            RegularButton(
+              onTap: () async {
+                await ref
+                    .read(authControllerProvider.notifier)
+                    .validateChangePassword(
+                      isValidated: _formKey.currentState!.validate(),
+                      currentPassword: _currentPassword.value.text.trim(),
+                      newPassword: _newPassword.value.text.trim(),
+                      context: context,
+                    )
+                    .whenComplete(() {
+                  Navigator.of(context).pop();
+                });
+              },
+              buttonText: AppTexts.enter,
+              isLoading: isLoading,
+            ).alignCenter(),
 
             21.0.sizedBoxHeight,
           ],

@@ -16,8 +16,9 @@ class AuthBackButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: 35.0.h,
-      width: 35.0.w,
+      height: 40.0.h,
+      width: 40.0.w,
+      alignment: Alignment.center,
       padding: EdgeInsets.all(8.0.sp),
       decoration: BoxDecoration(
         color: AppColours.deepBlue,

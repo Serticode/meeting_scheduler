@@ -8,7 +8,7 @@ class AppTexts {
       "Manage your event booking very easily.";
   static const String onboardingScreenEasyVenue = "Easy Venue Booking";
   static const String onboardingScreenEasyVenueRider =
-      "Your Venue. Your Meeting. Easy.";
+      "Your Venue. Your Meeting. \nEasy.";
   static const String onboardingScreenMeetingScheduler =
       "Your Meeting Scheduler";
   static const String onboardingScreenMeetingSchedulerRider =
@@ -29,6 +29,7 @@ class AppTexts {
   static const String successfulRider =
       "You successfully created a meeting, \ncopy invite below";
   static const String enter = "Enter";
+  static const String logIntoYourAccount = "Login to your account";
 
   //! BUTTONS
   static const String getStarted = "Get Started";

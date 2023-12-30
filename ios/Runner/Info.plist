@@ -20,6 +20,12 @@
 		<string>$(FLUTTER_BUILD_NAME)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>For upload of profile pictures</string>
+		<key>NSCameraUsageDescription</key>
+		<string>For capturing user profile pictures</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Used for capturing voice messages where necessary</string>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>

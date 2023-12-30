@@ -11,47 +11,33 @@ class HomeScreenHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userProfileImage = ref.watch(userProfileImageProvider);
+    final userDisplayName = ref.watch(userDisplayNameProvider);
+    final dateTime = DateTime.now();
+
     return Row(
       children: [
         //! IMAGE
-        Builder(builder: (context) {
-          final userProfileImage = ref.watch(userProfileImageProvider);
-          return UserProfileImage(
-            isAccountSettingsPage: false,
-            imageURL: userProfileImage,
-          );
-        }),
+        UserProfileImage(
+          isAccountSettingsPage: false,
+          imageURL: userProfileImage,
+        ),
 
         //!
-        12.0.sizedBoxWidth,
+        8.0.sizedBoxWidth,
 
         //! GREETING
-        Builder(
-          builder: (context) {
-            final userDisplayName = ref.watch(userDisplayNameProvider);
-
-            return userDisplayName != null
-                ? userDisplayName.split(" ").first.txt14(
-                      fontWeight: FontWeight.w700,
-                    )
-                : "Hello!".txt14(
-                    fontWeight: FontWeight.w700,
-                  );
-          },
-        ),
+        userDisplayName != null
+            ? "Hello, ${userDisplayName.split(" ").first}"
+                .txt14(fontWeight: FontWeight.w500)
+            : "Hello!".txt14(fontWeight: FontWeight.w500),
 
         const Spacer(),
 
-        Builder(
-          builder: (context) {
-            final dateTime = DateTime.now();
-
-            return "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.day}, ${dateTime.year}"
-                .txt14(
-              fontWeight: FontWeight.w600,
-              color: AppColours.deepBlue.withOpacity(0.3),
-            );
-          },
+        "${AppUtils.getMonth(dateTime: dateTime)} ${dateTime.day}, ${dateTime.year}"
+            .txt14(
+          fontWeight: FontWeight.w500,
+          color: AppColours.deepBlue.withOpacity(0.3),
         ),
       ],
     );

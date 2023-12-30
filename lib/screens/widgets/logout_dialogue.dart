@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,73 +16,74 @@ class LogoutDialogue extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 300,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColours.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          //! ICON
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: AppColours.buttonBlue.withOpacity(0.2),
-            child: SvgPicture.asset(
-              AppImages.logout,
-              height: 30,
+    return Card(
+      color: Platform.isIOS ? Colors.transparent : Colors.white,
+      elevation: 0,
+      child: SizedBox(
+        height: 300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //! ICON
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: AppColours.buttonBlue.withOpacity(0.2),
+              child: SvgPicture.asset(
+                AppImages.logout,
+                height: 30,
+              ),
             ),
-          ),
 
-          12.0.sizedBoxHeight,
+            12.0.sizedBoxHeight,
 
-          //!
-          "Log Out".txt16(
-            fontWeight: FontWeight.w600,
-          ),
+            //!
+            "Log Out".txt16(
+              fontWeight: FontWeight.w600,
+            ),
 
-          12.0.sizedBoxHeight,
+            12.0.sizedBoxHeight,
 
-          //!
-          "Oh no you’re leaving, are you sure?".txt14(),
+            //!
+            "Oh no you’re leaving, are you sure?"
+                .txt12(textAlign: TextAlign.center),
 
-          21.0.sizedBoxHeight,
+            21.0.sizedBoxHeight,
 
-          RegularButton(
-            onTap: () => Navigator.of(context).pop(),
-            buttonText: "No, cancel",
-            isLoading: false,
-          ),
+            SizedBox(
+              height: 48,
+              child: RegularButton(
+                onTap: () => Navigator.of(context).pop(),
+                buttonText: "No, cancel",
+                isLoading: false,
+              ),
+            ),
 
-          14.0.sizedBoxHeight,
+            14.0.sizedBoxHeight,
 
-          RegularButton(
-            onTap: () async {
-              "Log out button pressed".log();
-
-              await ref
-                  .read(authControllerProvider.notifier)
-                  .logOut()
-                  .whenComplete(
-                    () => AppNavigator.instance.pushNamedAndRemoveUntil(
-                      thePageRouteName: AppRoutes.signIn,
-                      context: context,
-                    ),
-                  );
-            },
-            isLogoutDialogue: true,
-            buttonText: "Yes, log me out",
-            bgColour: AppColours.white,
-            isLoading: ref.watch(authControllerProvider).isLoading,
-            textColour: AppColours.deepBlue,
-            child: "Yes, log me out"
-                .txt16(fontWeight: FontWeight.w400)
-                .alignCenter(),
-          ),
-        ],
+            SizedBox(
+              height: 48,
+              child: RegularButton(
+                onTap: () async {
+                  await ref
+                      .read(authControllerProvider.notifier)
+                      .logOut()
+                      .whenComplete(
+                        () => AppNavigator.instance.pushNamedAndRemoveUntil(
+                          thePageRouteName: AppRoutes.signIn,
+                          context: context,
+                        ),
+                      );
+                },
+                isLogoutDialogue: true,
+                buttonText: "Yes, log me out",
+                bgColour: AppColours.white,
+                isLoading: ref.watch(authControllerProvider).isLoading,
+                textColour: AppColours.deepBlue,
+              ),
+            ),
+          ],
+        ),
       ),
-    ).generalVerticalPadding;
+    );
   }
 }

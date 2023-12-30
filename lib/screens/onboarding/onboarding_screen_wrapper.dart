@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
@@ -22,7 +21,6 @@ class OnboardingScreenWrapper extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         toolbarHeight: 0,
       ),
       //! BODY
@@ -59,7 +57,6 @@ class OnboardingScreenWrapper extends ConsumerWidget {
 
           //! WELCOME TEXT
           AnimatedContainer(
-            height: pageNumber == 0 ? 70.0.h : 0.0,
             duration: const Duration(milliseconds: 200),
             child: pageNumber == 0
                 ? SingleChildScrollView(
@@ -69,7 +66,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                         AppTexts.welcome.onboardingHeaderText(),
 
                         //! SPACER
-                        12.0.sizedBoxHeight,
+                        6.0.sizedBoxHeight,
 
                         AppTexts.onboardingScreenWelcomeRider
                             .onboardingRiderText(),
@@ -82,18 +79,15 @@ class OnboardingScreenWrapper extends ConsumerWidget {
           const Spacer(),
 
           //! IMAGE
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.2,
-            child: SvgPicture.asset(
-              ref
-                  .read(onboardingScreenControllerProvider.notifier)
-                  .onboardingImages
-                  .elementAt(
-                    pageNumber ?? 0,
-                  ),
-              semanticsLabel: "Onboarding image $pageNumber",
-            ).alignCenter(),
-          ),
+          SvgPicture.asset(
+            ref
+                .read(onboardingScreenControllerProvider.notifier)
+                .onboardingImages
+                .elementAt(
+                  pageNumber ?? 0,
+                ),
+            semanticsLabel: "Onboarding image $pageNumber",
+          ).alignCenter(),
 
           32.0.sizedBoxHeight,
 
@@ -115,7 +109,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                               ),
 
                           //! SPACER
-                          12.0.sizedBoxHeight,
+                          4.0.sizedBoxHeight,
 
                           ref
                               .read(onboardingScreenControllerProvider.notifier)
@@ -164,7 +158,7 @@ class OnboardingScreenWrapper extends ConsumerWidget {
                           context: context,
                         ),
                       ),
-                ),
+                ).fadeInFromBottom(),
 
           const Spacer(),
         ],

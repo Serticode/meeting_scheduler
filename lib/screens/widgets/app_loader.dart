@@ -19,13 +19,13 @@ class AppLoader extends ConsumerWidget {
             color: AppColours.deepBlue,
             trackColor: AppColours.deepBlue.withOpacity(0.7),
             waveColor: AppColours.deepBlue.withOpacity(0.5),
-            size: 65.sp,
+            size: 85.sp,
           ).alignCenter()
         : SpinKitWaveSpinner(
             color: AppColours.white,
             trackColor: AppColours.white.withOpacity(0.7),
             waveColor: AppColours.white.withOpacity(0.5),
-            size: 65.sp,
+            size: 85.sp,
           ).alignCenter();
   }
 }

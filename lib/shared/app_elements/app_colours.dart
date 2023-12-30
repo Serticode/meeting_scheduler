@@ -14,6 +14,7 @@ abstract class AppColours {
   static const profileImageBGColour = Color(0xFFD9D9D9);
   static const purple = Color(0xFF6F6EFE);
   static const splashScreen = Color(0xFF020167);
+  static final lightGrey = Colors.grey.shade400;
 
   AppColours._();
 }

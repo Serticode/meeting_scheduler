@@ -16,10 +16,7 @@ class HomeScreenWrapper extends ConsumerWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        elevation: 0,
-        toolbarHeight: 10,
-      ),
+      appBar: AppBar(toolbarHeight: 0),
 
       //! BODY
       body: ref
@@ -44,69 +41,65 @@ class HomeScreenWrapper extends ConsumerWidget {
 
       //!
       //! BOTTOM NAV BAR
-      bottomNavigationBar: BottomAppBar(
-        height: 68,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: ref
-              .read(homeWrapperControllerProvider.notifier)
-              .bottomNavBarItemNames
-              .map(
-                (label) => CustomBottomNavBarItem(
-                  onTap: () {
-                    "Label tapped: $label".log();
+      bottomNavigationBar: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: ref
+            .read(homeWrapperControllerProvider.notifier)
+            .bottomNavBarItemNames
+            .map(
+              (label) => CustomBottomNavBarItem(
+                onTap: () {
+                  ref
+                      .read(homeWrapperControllerProvider.notifier)
+                      .updatePageIndex(
+                        currentPageIndex: ref
+                            .read(homeWrapperControllerProvider.notifier)
+                            .bottomNavBarItemNames
+                            .indexOf(
+                              label,
+                            ),
+                      );
+                },
+                isSelected: currentPageIndex ==
                     ref
                         .read(homeWrapperControllerProvider.notifier)
-                        .updatePageIndex(
-                          currentPageIndex: ref
-                              .read(homeWrapperControllerProvider.notifier)
-                              .bottomNavBarItemNames
-                              .indexOf(
-                                label,
-                              ),
-                        );
-                  },
-                  isSelected: currentPageIndex ==
-                      ref
-                          .read(homeWrapperControllerProvider.notifier)
-                          .bottomNavBarItemNames
-                          .indexOf(
-                            label,
-                          ),
-                  label: label,
-                  itemIcon: currentPageIndex ==
+                        .bottomNavBarItemNames
+                        .indexOf(
+                          label,
+                        ),
+                label: label,
+                itemIcon: currentPageIndex ==
+                        ref
+                            .read(homeWrapperControllerProvider.notifier)
+                            .bottomNavBarItemNames
+                            .indexOf(
+                              label,
+                            )
+                    ? ref
+                        .read(homeWrapperControllerProvider.notifier)
+                        .bottomNavBarItemIconsSolid
+                        .elementAt(
                           ref
                               .read(homeWrapperControllerProvider.notifier)
                               .bottomNavBarItemNames
                               .indexOf(
                                 label,
-                              )
-                      ? ref
-                          .read(homeWrapperControllerProvider.notifier)
-                          .bottomNavBarItemIconsSolid
-                          .elementAt(
-                            ref
-                                .read(homeWrapperControllerProvider.notifier)
-                                .bottomNavBarItemNames
-                                .indexOf(
-                                  label,
-                                ),
-                          )
-                      : ref
-                          .read(homeWrapperControllerProvider.notifier)
-                          .bottomNavBarItemIcons
-                          .elementAt(
-                            ref
-                                .read(homeWrapperControllerProvider.notifier)
-                                .bottomNavBarItemNames
-                                .indexOf(
-                                  label,
-                                ),
-                          ),
-                ),
-              )
-              .toList(),
-        ),
+                              ),
+                        )
+                    : ref
+                        .read(homeWrapperControllerProvider.notifier)
+                        .bottomNavBarItemIcons
+                        .elementAt(
+                          ref
+                              .read(homeWrapperControllerProvider.notifier)
+                              .bottomNavBarItemNames
+                              .indexOf(
+                                label,
+                              ),
+                        ),
+              ),
+            )
+            .toList(),
       ),
     );
   }

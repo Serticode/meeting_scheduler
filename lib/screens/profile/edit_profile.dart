@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -7,6 +9,7 @@ import 'package:meeting_scheduler/screens/widgets/text_form_fields.dart';
 import 'package:meeting_scheduler/screens/widgets/user_profile_image.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
 import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
+import 'package:meeting_scheduler/services/models/auth/user_model.dart';
 import 'package:meeting_scheduler/services/upload_image/helper/upload_image_helper.dart';
 import 'package:meeting_scheduler/services/upload_image/upload_image_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
@@ -30,15 +33,26 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   final TextEditingController _phoneNumber = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
+      (timeStamp) => updateNeededValues(
+          userData: ref.watch(userInfoControllerProvider).value),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final bool isLoading = ref.watch(authControllerProvider).isLoading;
+
     return Scaffold(
       backgroundColor: AppColours.buttonBlue,
       appBar: AppBar(
         backgroundColor: AppColours.buttonBlue,
-        elevation: 0,
         iconTheme: const IconThemeData(color: AppColours.white),
         title: "Profile".txt(
-          fontSize: 21.0,
+          fontSize: 16.0,
           color: AppColours.white,
           fontWeight: FontWeight.w600,
         ),
@@ -63,100 +77,97 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               key: _formKey,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    60.0.sizedBoxHeight,
+                child: SafeArea(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      60.0.sizedBoxHeight,
 
-                    "Name".txt16(),
+                      "Name".txt16(),
 
-                    12.0.sizedBoxHeight,
+                      12.0.sizedBoxHeight,
 
-                    //! FULL NAME
-                    CustomTextFormField(
-                      isForPassword: false,
-                      hint: "Full Name",
-                      controller: _fullName,
-                      keyboardType: TextInputType.name,
-                      validator: (value) {
-                        if (_fullName.value.text.trim().isEmpty) {
-                          return null;
-                        } else if (_fullName.value.text
-                                .trim()
-                                .split(" ")
-                                .length <
-                            2) {
-                          return "Enter a Last and First name";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                      //! FULL NAME
+                      CustomTextFormField(
+                        isForPassword: false,
+                        hint: "Full Name",
+                        controller: _fullName,
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          if (_fullName.value.text.trim().isEmpty) {
+                            return null;
+                          } else if (_fullName.value.text
+                                  .trim()
+                                  .split(" ")
+                                  .length <
+                              2) {
+                            return "Enter a Last and First name";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
 
-                    12.0.sizedBoxHeight,
+                      24.0.sizedBoxHeight,
 
-                    "Profession".txt16(),
+                      "Profession".txt16(),
 
-                    21.0.sizedBoxHeight,
+                      12.0.sizedBoxHeight,
 
-                    //! PROFESSION
-                    CustomTextFormField(
-                      isForPassword: false,
-                      hint: "Profession e.g lecturer, secretary",
-                      controller: _profession,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (_profession.value.text.trim().isEmpty) {
-                          return "Enter a profession";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                      //! PROFESSION
+                      CustomTextFormField(
+                        isForPassword: false,
+                        hint: "Profession e.g lecturer, secretary",
+                        controller: _profession,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (_profession.value.text.trim().isEmpty) {
+                            return "Enter a profession";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
 
-                    21.0.sizedBoxHeight,
+                      24.0.sizedBoxHeight,
 
-                    "Email".txt16(),
+                      "Email".txt16(),
 
-                    12.0.sizedBoxHeight,
+                      12.0.sizedBoxHeight,
 
-                    //! EMAIL
-                    CustomTextFormField(
-                      isForPassword: false,
-                      hint: "Email",
-                      controller: _email,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (!_email.value.text.trim().contains("@")) {
-                          return "Enter a valid email";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                      //! EMAIL
+                      CustomTextFormField(
+                        isForPassword: false,
+                        hint: "Email",
+                        controller: _email,
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (!_email.value.text.trim().contains("@")) {
+                            return "Enter a valid email";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
 
-                    21.0.sizedBoxHeight,
+                      24.0.sizedBoxHeight,
 
-                    "Phone Number".txt16(),
+                      "Phone Number".txt16(),
 
-                    12.0.sizedBoxHeight,
+                      12.0.sizedBoxHeight,
 
-                    //! PROFESSION
-                    CustomTextFormField(
-                      isForPassword: false,
-                      hint: "Phone Number",
-                      controller: _phoneNumber,
-                    ),
+                      //! PROFESSION
+                      CustomTextFormField(
+                        isForPassword: false,
+                        hint: "Phone Number",
+                        controller: _phoneNumber,
+                      ),
 
-                    32.0.sizedBoxHeight,
+                      32.0.sizedBoxHeight,
 
-                    //!
-                    Builder(builder: (context) {
-                      final bool isLoading =
-                          ref.watch(authControllerProvider).isLoading;
-
-                      return RegularButton(
+                      //!
+                      RegularButton(
                         onTap: () async {
                           await ref
                               .read(authControllerProvider.notifier)
@@ -168,21 +179,24 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 phoneNumber: _phoneNumber.value.text.trim(),
                                 context: context,
                               )
-                              .whenComplete(() {
+                              .then((value) {
                             _fullName.clear();
                             _email.clear();
                             _profession.clear();
                             _phoneNumber.clear();
+                          }).whenComplete(() {
+                            updateNeededValues(
+                              userData:
+                                  ref.read(userInfoControllerProvider).value,
+                            );
                           });
                         },
                         buttonText: AppTexts.enter,
                         isLoading: isLoading,
-                      );
-                    }).alignCenter(),
-
-                    12.0.sizedBoxHeight,
-                  ],
-                ).generalPadding,
+                      ).alignCenter(),
+                    ],
+                  ).generalPadding,
+                ),
               ),
             ),
           ).alignBottomCenter(),
@@ -237,7 +251,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           //!
           Positioned(
             bottom: 590,
-            right: 150,
+            right: Platform.isIOS ? 160 : 140,
             child: SvgPicture.asset(
               AppImages.editProfilePicture,
             ),
@@ -247,5 +261,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         isLoading: ref.watch(uploadImageProvider),
       ),
     );
+  }
+
+  void updateNeededValues({required UserModel? userData}) {
+    if (userData != null) {
+      _fullName.value = TextEditingValue(text: userData.fullName ?? "");
+      _profession.value = TextEditingValue(text: userData.profession ?? "");
+      _email.value = TextEditingValue(text: userData.email ?? "");
+      _phoneNumber.value = TextEditingValue(text: userData.phoneNumber ?? "");
+    }
   }
 }

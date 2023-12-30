@@ -13,6 +13,12 @@ class AppImages {
       "assets/svgs/verificationSuccessful.svg";
 
   //!
+  //! AUTH - SVG
+  static const email = "assets/icons/email.svg";
+  static const passwordPrefixIcon = "assets/icons/lock.svg";
+  static const user = "assets/icons/signUpUser.svg";
+
+  //!
   //! HOME - SVG
   static const home = "assets/icons/home.svg";
   static const homeSolid = "assets/icons/homeSolid.svg";

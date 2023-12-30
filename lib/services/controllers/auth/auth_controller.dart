@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:meeting_scheduler/services/controllers/auth/state/auth_state.dart';
+import 'package:meeting_scheduler/services/controllers/home_wrapper/home_wrapper_controller.dart';
 import 'package:meeting_scheduler/services/repositories/auth/auth_repository.dart';
 import 'package:meeting_scheduler/shared/utils/failure.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
@@ -213,7 +214,7 @@ class AuthController extends StateNotifier<AuthState> {
       (bool result) {
         if (result) true.withHapticFeedback();
 
-        state = state.copiedWithIsLoading(isLoading: true);
+        state = state.copiedWithIsLoading(isLoading: false);
       },
     );
   }
@@ -300,6 +301,10 @@ class AuthController extends StateNotifier<AuthState> {
     await Future.delayed(const Duration(seconds: 1));
 
     await _authControllerRef!.read(authRepositoryProvider).logOut();
+
+    _authControllerRef
+        ?.read(homeWrapperControllerProvider.notifier)
+        .updatePageIndex(currentPageIndex: 0);
 
     state = const AuthState.logOut();
   }

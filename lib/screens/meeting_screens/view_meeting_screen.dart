@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,7 @@ class ViewMeetingScreen extends ConsumerWidget {
       appBar: AppBar(
         title: AppTexts.viewMeeting.txt(
           fontWeight: FontWeight.w600,
-          fontSize: 20,
+          fontSize: 16,
         ),
         centerTitle: true,
       ),
@@ -72,14 +73,22 @@ class ViewMeetingScreen extends ConsumerWidget {
             ),
             child: Row(
               children: [
-                "${meeting.fullName} Meeting".txt14(),
+                "${meeting.fullName?.split(" ").take(2).toString()} Meeting"
+                    .txt14(),
                 const Spacer(),
                 const Icon(
                   Icons.copy_rounded,
                   size: 21,
                 ).onTap(
-                  onTap: () => Clipboard.setData(
+                  onTap: () async => await Clipboard.setData(
                     ClipboardData(text: meeting.meetingID ?? ""),
+                  ).then(
+                    (value) => AppUtils.showAppBanner(
+                      title: "Success",
+                      message: "Meeting ID copied successfully",
+                      contentType: ContentType.success,
+                      callerContext: context,
+                    ),
                   ),
                 ),
               ],

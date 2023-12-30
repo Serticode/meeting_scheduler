@@ -22,7 +22,7 @@ class CircleButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CircleAvatar(
-      backgroundColor: AppColours.primaryBlue,
+      backgroundColor: AppColours.buttonBlue,
       radius: 28.0.r,
       child: SvgPicture.asset(
         AppImages.arrowRight,
@@ -71,11 +71,11 @@ class RegularButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      width: isLoading ? 75.0.w : (MediaQuery.of(context).size.width * 0.85).w,
-      height: isLoading ? 75.0.h : 55.0.h,
+      width: isLoading ? 55.0.w : (MediaQuery.of(context).size.width * 0.85).w,
+      height: isLoading ? 55.0.h : 50.0.h,
       padding: EdgeInsets.symmetric(
-        vertical: isLoading ? 8.0.h : 16.0.h,
-        horizontal: isLoading ? 10.5.w : 21.0.w,
+        vertical: isLoading ? 6.0.h : 4.0.h,
+        horizontal: isLoading ? 8.5.w : 6.0.w,
       ),
       decoration: BoxDecoration(
           borderRadius: isLoading
@@ -83,12 +83,14 @@ class RegularButton extends ConsumerWidget {
               : BorderRadius.circular(radius?.r ?? 10.0.r),
           color: bgColour ?? AppColours.buttonBlue,
           border: Border.all(
-            color: borderColour ?? AppColours.buttonBlue,
+            width: isLoading ? 0.0 : 1.0,
+            color: borderColour ??
+                (isLoading ? Colors.transparent : AppColours.buttonBlue),
           )),
       child: isLoading
           ? AppLoader(isLogoutDialogue: isLogoutDialogue)
           : buttonText!
-              .txt14(
+              .txt12(
                 color: textColour ?? AppColours.white,
                 fontWeight: FontWeight.w600,
               )

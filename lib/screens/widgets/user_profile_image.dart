@@ -24,7 +24,7 @@ class UserProfileImage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return imageURL == null || imageURL!.isEmpty
         ? CircleAvatar(
-            radius: radius?.r ?? (isAccountSettingsPage ? 32.0.r : 24.0.r),
+            radius: radius?.r ?? (isAccountSettingsPage ? 26.0.r : 21.0.r),
             backgroundColor: AppColours.deepBlue.withOpacity(0.1),
             child: SvgPicture.asset(
               AppImages.accountSolid,
@@ -33,7 +33,7 @@ class UserProfileImage extends ConsumerWidget {
           )
         : //! DISPLAY AWAY !
         CircleAvatar(
-            radius: radius?.r ?? (isAccountSettingsPage ? 32.0.r : 24.0.r),
+            radius: radius?.r ?? (isAccountSettingsPage ? 26.0.r : 21.0.r),
             backgroundColor: AppColours.deepBlue.withOpacity(0.1),
             backgroundImage: CachedNetworkImageProvider(imageURL!));
   }

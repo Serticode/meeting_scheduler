@@ -17,7 +17,6 @@ class MeetingCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: 200,
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
@@ -75,13 +74,13 @@ class MeetingCard extends ConsumerWidget {
           children: [
             8.0.sizedBoxHeight,
 
-            //! VENUE - HEADER
+            //! PURPOSE - HEADER
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.6,
               child: meetingDetails.purposeOfMeeting!.txt(
                 fontWeight: FontWeight.w600,
                 color: AppColours.white,
-                fontSize: 22,
+                fontSize: 20,
               ),
             ),
 
@@ -109,8 +108,6 @@ class MeetingCard extends ConsumerWidget {
                     .txt14(color: AppColours.white),
               ],
             ),
-
-            8.0.sizedBoxHeight,
           ],
         ).generalPadding.alignCenterLeft()
       ]),

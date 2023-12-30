@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:meeting_scheduler/shared/utils/errors/meeting_venue_error.dart';
 import 'package:meeting_scheduler/shared/utils/type_def.dart';
+import 'package:meeting_scheduler/shared/utils/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateMeeting extends ConsumerStatefulWidget {
@@ -62,6 +64,8 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(meetingsControllerProvider);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
 
@@ -69,11 +73,11 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
         title: widget.isEditMeeting != null && widget.isEditMeeting == false
             ? AppTexts.createMeeting.txt(
                 fontWeight: FontWeight.w600,
-                fontSize: 20,
+                fontSize: 16,
               )
             : AppTexts.editMeeting.txt(
                 fontWeight: FontWeight.w600,
-                fontSize: 20,
+                fontSize: 16,
               ),
         centerTitle: true,
       ),
@@ -109,7 +113,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                 isForPassword: false,
                 hint: "Profession e.g lecturer, secretary",
                 controller: _profession,
-                keyboardType: TextInputType.emailAddress,
+                keyboardType: TextInputType.text,
                 validator: (value) {
                   if (_profession.value.text.trim().isEmpty) {
                     return "Enter a profession";
@@ -126,7 +130,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                 isForPassword: false,
                 hint: "Purpose of Meeting",
                 controller: _purpose,
-                keyboardType: TextInputType.emailAddress,
+                keyboardType: TextInputType.text,
                 validator: (value) {
                   if (_purpose.value.text.trim().isEmpty) {
                     return "Enter a purpose for the meeting";
@@ -223,6 +227,13 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
                           ClipboardData(
                             text: widget.meetingModel?.meetingID ?? "",
                           ),
+                        ).then(
+                          (value) => AppUtils.showAppBanner(
+                            title: "Success",
+                            message: "Meeting ID copied successfully",
+                            contentType: ContentType.success,
+                            callerContext: context,
+                          ),
                         ),
                       ),
                     ],
@@ -231,18 +242,14 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
 
               32.0.sizedBoxHeight,
 
-              Builder(builder: (context) {
-                final isLoading = ref.watch(meetingsControllerProvider);
-
-                return RegularButton(
-                  onTap: () async => await validateInputFields(),
-                  buttonText: widget.isEditMeeting != null &&
-                          widget.isEditMeeting == false
-                      ? AppTexts.createMeeting
-                      : AppTexts.saveMeeting,
-                  isLoading: isLoading,
-                );
-              })
+              RegularButton(
+                onTap: () async => await validateInputFields(),
+                buttonText: widget.isEditMeeting != null &&
+                        widget.isEditMeeting == false
+                    ? AppTexts.createMeeting
+                    : AppTexts.saveMeeting,
+                isLoading: isLoading,
+              ),
             ],
           ),
         ),

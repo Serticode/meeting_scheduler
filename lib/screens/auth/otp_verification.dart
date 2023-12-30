@@ -186,13 +186,6 @@ class _OTPVerificationState extends ConsumerState<OTPVerification> {
                         showVerificationField.value = value;
                       });
                     }
-
-                    /* if (value) {
-                      await AppNavigator.instance.navigateToPage(
-                        thePageRouteName: AppRoutes.otpVerified,
-                        context: context,
-                      );
-                    } */
                   },
                   buttonText:
                       value == false ? AppTexts.sendCode : AppTexts.verifyCode,
@@ -206,21 +199,23 @@ class _OTPVerificationState extends ConsumerState<OTPVerification> {
                     const TextSpan(
                         text: "Didn’t received code? ",
                         style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
                           color: AppColours.greyBlack,
                         )),
                     TextSpan(
                       text: " Resend",
                       style: const TextStyle(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: AppColours.purple,
+                        fontSize: 12,
                       ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => AppNavigator.instance
-                            .navigateToReplacementPage(
-                                thePageRouteName: AppRoutes.signUp,
-                                context: context),
+                        ..onTap = () =>
+                            AppNavigator.instance.navigateToReplacementPage(
+                              thePageRouteName: AppRoutes.signUp,
+                              context: context,
+                            ),
                     ),
                   ]),
                 ).alignCenter().withHapticFeedback(

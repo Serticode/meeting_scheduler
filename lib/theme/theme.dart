@@ -23,6 +23,7 @@ class AppTheme {
         //! ENSURING THAT THE DENSITY OF ELEMENTS ACROSS THE APP, MATCHES THE PLATFORM
         visualDensity: VisualDensity.adaptivePlatformDensity,
         useMaterial3: false,
+        fontFamily: "SFPRODISPLAYMEDIUM",
 
         scaffoldBackgroundColor: AppColours.scaffoldBGColour,
         appBarTheme: AppBarTheme(
@@ -49,7 +50,7 @@ class CustomFadeTransitionBuilder extends PageTransitionsBuilder {
     Widget child,
   ) {
     return FadeTransition(
-      opacity: Tween<double>(begin: 0.0, end: 1.0).animate(animation),
+      opacity: Tween<double>(begin: 0.4, end: 1.0).animate(animation),
       child: child,
     );
   }
@@ -65,7 +66,7 @@ class CustomSlideTransitionBuilder extends PageTransitionsBuilder {
     Widget child,
   ) {
     return SlideTransition(
-      position: Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero)
+      position: Tween<Offset>(begin: const Offset(1.0, 0.5), end: Offset.zero)
           .animate(animation),
       child: child,
     );
@@ -82,7 +83,7 @@ class CustomScaleTransitionBuilder extends PageTransitionsBuilder {
     Widget child,
   ) {
     return ScaleTransition(
-      scale: Tween<double>(begin: 0.0, end: 1.0).animate(animation),
+      scale: Tween<double>(begin: 0.4, end: 1.0).animate(animation),
       child: child,
     );
   }

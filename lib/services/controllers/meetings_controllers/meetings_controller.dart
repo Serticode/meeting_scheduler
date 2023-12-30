@@ -203,6 +203,8 @@ final AutoDisposeStreamProvider<List<ScheduledMeetingModel?>> meetingsProvider =
           int.parse(meetingDateDetails.elementAt(0).trim()),
         );
 
+        meetings.add(meeting);
+
         if (meetingDate.isAfter(currentDate) ||
             meetingDate.compareTo(currentDate) == 0) {
           meetings.add(meeting);

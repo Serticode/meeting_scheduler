@@ -99,6 +99,7 @@ class CustomTextFormField extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final Icon? prefixIcon;
+  final Widget? prefixSVG;
   final Icon? suffixIcon;
   final bool? isPasswordVisible;
   final String? Function(String?)? validator;
@@ -110,6 +111,7 @@ class CustomTextFormField extends ConsumerStatefulWidget {
     this.isPasswordVisible,
     this.keyboardType,
     this.prefixIcon,
+    this.prefixSVG,
     this.suffixIcon,
     this.validator,
   });
@@ -129,7 +131,6 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
       keyboardAppearance: Brightness.dark,
       decoration: InputDecoration(
         hintText: widget.hint,
-
         hintStyle: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 14.0.sp,
@@ -137,10 +138,10 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
         ),
         errorStyle: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 14.0.sp,
+          fontSize: 12.0.sp,
           color: AppColours.red,
         ),
-        prefixIcon: widget.prefixIcon,
+        prefixIcon: widget.prefixSVG ?? widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
         suffixIconColor:
             widget.isPasswordVisible != null && !widget.isPasswordVisible!
@@ -158,21 +159,21 @@ class _CustomTextFormFieldState extends ConsumerState<CustomTextFormField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1.6.w.w,
+            width: 1.6.w,
             color: AppColours.primaryBlue,
           ),
           borderRadius: BorderRadius.circular(10.0.r),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1.6.w.w,
+            width: 1.6.w,
             color: AppColours.red,
           ),
           borderRadius: BorderRadius.circular(10.0.r),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            width: 1.6.w.w,
+            width: 1.6.w,
             color: AppColours.red,
           ),
           borderRadius: BorderRadius.circular(10.0.r),

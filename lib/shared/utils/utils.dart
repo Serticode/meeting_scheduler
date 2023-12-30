@@ -19,7 +19,7 @@ class AppUtils {
     ScaffoldMessenger.of(callerContext)
       ..clearMaterialBanners()
       ..showMaterialBanner(MaterialBanner(
-        elevation: 12.0.sp,
+        elevation: 0.1.sp,
         padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 21.0),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,

@@ -71,7 +71,7 @@ class AuthRepository {
       error.toString().log();
 
       return left(
-        Failure(failureMessage: "Failed to login user"),
+        Failure(failureMessage: "Invalid email or password"),
       );
     }
   }
@@ -84,15 +84,14 @@ class AuthRepository {
     User? user = FirebaseAuth.instance.currentUser;
     AuthCredential? userCredential;
 
-    "USER: $user : New password: $newPassword".log();
-
     if (user != null) {
       userCredential = EmailAuthProvider.credential(
           email: user.email!, password: currentPassword);
 
-      user.reauthenticateWithCredential(userCredential).then((value) {
-        "User Credential: $value".log();
-        user.updatePassword(newPassword).then((_) {}).catchError((error) {
+      await user
+          .reauthenticateWithCredential(userCredential)
+          .then((value) async {
+        await user.updatePassword(newPassword).then((_) {}).catchError((error) {
           "User update password error: $error".log();
         });
       }).catchError((err) {

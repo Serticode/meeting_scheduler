@@ -31,11 +31,14 @@ class AccountScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userFullName = ref.watch(userFullNameProvider);
+    final userProfileImage = ref.watch(userProfileImageProvider);
+
     return Column(
       children: [
         AppTexts.accountSettings
             .txt(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
             )
             .alignCenter(),
@@ -46,37 +49,17 @@ class AccountScreen extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Builder(builder: (context) {
-              final userFullName = ref.watch(userFullNameProvider);
-              final userProfileImage = ref.watch(userProfileImageProvider);
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  UserProfileImage(
-                    isAccountSettingsPage: true,
-                    imageURL: userProfileImage,
-                  ),
-                  12.0.sizedBoxHeight,
-                  userFullName != null
-                      ? userFullName.txt16(
-                          fontWeight: FontWeight.w600,
-                        )
-                      : "Hello there!".txt16(
-                          fontWeight: FontWeight.w600,
-                        ),
-                ],
-              );
-            }),
+            UserProfileImage(
+              isAccountSettingsPage: true,
+              imageURL: userProfileImage,
+            ),
 
             //!
             const Spacer(),
 
             //! EDIT PROFILE BUTTON
             Container(
-              width: 120,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               decoration: ShapeDecoration(
                 color: AppColours.deepBlue,
                 shape: RoundedRectangleBorder(
@@ -99,6 +82,14 @@ class AccountScreen extends ConsumerWidget {
             ),
           ],
         ),
+
+        12.0.sizedBoxHeight,
+
+        userFullName != null
+            ? userFullName.txt14(fontWeight: FontWeight.w500).alignCenterLeft()
+            : "Hello there!"
+                .txt14(fontWeight: FontWeight.w500)
+                .alignCenterLeft(),
 
         //!
         24.0.sizedBoxHeight,
@@ -125,10 +116,13 @@ class AccountScreen extends ConsumerWidget {
                   // ignore: use_build_context_synchronously
                   await showAdaptiveDialog(
                       context: context,
+                      barrierColor: Colors.black12,
                       builder: (context) {
                         return AlertDialog.adaptive(
+                          elevation: 1.0,
+                          shadowColor: Colors.black12,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
+                              borderRadius: BorderRadius.circular(12)),
                           content: const LogoutDialogue(),
                         );
                       });
