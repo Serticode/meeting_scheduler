@@ -4,14 +4,35 @@ import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/bottom_nav_bar_item.dart';
 import 'package:meeting_scheduler/services/controllers/home_wrapper/home_wrapper_controller.dart';
+import 'package:meeting_scheduler/services/controllers/push_notification/push_notification.dart';
+import 'package:meeting_scheduler/services/push_notifications/push_notifications.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 
-class HomeScreenWrapper extends ConsumerWidget {
-  const HomeScreenWrapper({super.key});
+class HomeScreenWrapper extends ConsumerStatefulWidget {
+  const HomeScreenWrapper({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreenWrapper> createState() => _HomeScreenWrapperState();
+}
+
+class _HomeScreenWrapperState extends ConsumerState<HomeScreenWrapper> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final fcmToken = await PushNotifications.getFCMToken();
+      ref.read(fcmProvider.notifier).setFCM(fcm: fcmToken!);
+      /* await ref
+          .read(notificationsControllerProvider.notifier)
+          .setUpPushNotification(); */
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final currentPageIndex = ref.watch(homeWrapperControllerProvider).value;
 
     return Scaffold(

@@ -21,9 +21,10 @@ class ViewMeetingScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: AppColours.greyBlack, size: 18),
         title: AppTexts.viewMeeting.txt(
           fontWeight: FontWeight.w600,
-          fontSize: 16,
+          fontSize: 14,
         ),
         centerTitle: true,
       ),
@@ -33,7 +34,7 @@ class ViewMeetingScreen extends ConsumerWidget {
         padding: 21.0.symmetricPadding,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: AppColours.deepBlue.withOpacity(0.2),
+          color: AppColours.deepBlue.withOpacity(0.15),
         ),
         child: Column(children: [
           ...meeting.entries
@@ -74,11 +75,11 @@ class ViewMeetingScreen extends ConsumerWidget {
             child: Row(
               children: [
                 "${meeting.fullName?.split(" ").take(2).toString()} Meeting"
-                    .txt14(),
+                    .txt12(),
                 const Spacer(),
                 const Icon(
                   Icons.copy_rounded,
-                  size: 21,
+                  size: 18,
                 ).onTap(
                   onTap: () async => await Clipboard.setData(
                     ClipboardData(text: meeting.meetingID ?? ""),

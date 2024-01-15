@@ -64,14 +64,15 @@ class MeetingsRepository {
 
   //!
   //!  UPDATE MEETING
-  FutureEither<MeetingUploaded> deleteMeeting({
-    required String meetingID,
-    required String ownerID,
-  }) async {
+  FutureEither<MeetingUploaded> deleteMeeting(
+      {required String meetingID,
+      required String ownerID,
+      required String meetingName}) async {
     try {
       final isMeetingDeleted = await database.deleteMeeting(
         meetingID: meetingID,
         ownerID: ownerID,
+        meetingName: meetingName,
       );
 
       if (isMeetingDeleted) {

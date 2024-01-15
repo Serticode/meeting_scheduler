@@ -38,7 +38,6 @@ dependencies:
   flutter_spinkit: ^5.2.0
   firebase_storage: ^11.5.2
   flutter_slidable: ^3.0.1
-  another_flutter_splash_screen: ^1.2.0
   stacked_listview: ^1.0.4
   country_code_picker: ^3.0.0
   flutter_screenutil: ^5.5.4
@@ -46,6 +45,9 @@ dependencies:
   flutter_dotenv: ^5.1.0
   awesome_snackbar_content:
   calendar_timeline: ^1.1.2
+  firebase_messaging: ^14.7.10
+  flutter_local_notifications: ^16.3.0
+  http: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +62,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/png/logo.png"
+  remove_alpha_ios: true
   min_sdk_android: 21
 
 flutter:

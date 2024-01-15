@@ -23,6 +23,7 @@ class ScheduledMeetingFieldNames {
 class FirebaseCollectionName {
   static const String users = "Users";
   static const String meetings = "meetings";
+  static const String notifications = "notifications";
   const FirebaseCollectionName._();
 }
 
@@ -42,4 +43,10 @@ class FirebaseUserFieldName {
 class FirestoreFileFieldNames {
   static const profileImage = "profileImage";
   const FirestoreFileFieldNames._();
+}
+
+@immutable
+class NotificationFieldNames {
+  static const notificationID = "notificationID";
+  const NotificationFieldNames._();
 }

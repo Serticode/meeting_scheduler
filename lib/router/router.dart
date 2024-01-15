@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/auth/change_password.dart';
 import 'package:meeting_scheduler/screens/auth/otp_verification.dart';
@@ -136,10 +137,12 @@ class AppNavigator {
         );
 
       case AppRoutes.notificationsScreen:
+        final arguments = routeSettings.arguments as NotificationResponse?;
+
         return GetPageRoute.instance.getPageRoute(
           routeName: routeSettings.name,
           args: routeSettings.arguments,
-          view: const NotificationsScreen(),
+          view: NotificationsScreen(notificationResponse: arguments),
         );
 
       //!

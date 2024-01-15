@@ -67,7 +67,7 @@ class HomeScreen extends ConsumerWidget {
 
                         12.0.sizedBoxHeight,
 
-                        "Your Schedule".txt16(fontWeight: FontWeight.w600),
+                        "Your Schedule".txt14(fontWeight: FontWeight.w600),
 
                         6.0.sizedBoxHeight,
 
@@ -105,11 +105,13 @@ class HomeScreen extends ConsumerWidget {
                                                         meetingsControllerProvider
                                                             .notifier)
                                                     .deleteMeeting(
-                                                        meetingID:
-                                                            meeting!.meetingID!,
-                                                        ownerID:
-                                                            meeting.ownerID!,
-                                                        context: context),
+                                                      meetingID:
+                                                          meeting!.meetingID!,
+                                                      ownerID: meeting.ownerID!,
+                                                      meetingName: meeting
+                                                          .purposeOfMeeting!,
+                                                      context: context,
+                                                    ),
                                             spacing: 12.0,
                                             borderRadius:
                                                 BorderRadius.circular(14),

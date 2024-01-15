@@ -25,6 +25,8 @@ enum UserInfoUpdateType { fullName, profession, email, phoneNumber }
 //! ENUM FOR NOTIFICATION TYPE
 enum NotificationType { success, failure, info }
 
+enum NotificationsType { created, info, deleted }
+
 //! AUTHENTICATION RESULT - USED TO MANAGE APP AUTHENTICATION STATE
 enum AuthResult { success, failure, noResult }
 

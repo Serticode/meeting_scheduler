@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meeting_scheduler/services/models/model_field_names.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
+import 'package:meeting_scheduler/shared/utils/type_def.dart';
 
 class AppUtils {
   const AppUtils._();
@@ -53,6 +54,24 @@ class AppUtils {
       ScaffoldMessenger.of(context).clearMaterialBanners();
 
 //!
+//! FETCH MONTH NAME
+  static NotificationsType getNotificationType({
+    required String notificationsTypeName,
+  }) {
+    switch (notificationsTypeName) {
+      case "created":
+        return NotificationsType.created;
+      case "info":
+        return NotificationsType.info;
+      case "deleted":
+        return NotificationsType.deleted;
+      //! DEFAULT VALUES
+      default:
+        return NotificationsType.info;
+    }
+  }
+
+  //!
 //! FETCH MONTH NAME
   static String getMonth({required DateTime dateTime}) {
     String theMonth = "";

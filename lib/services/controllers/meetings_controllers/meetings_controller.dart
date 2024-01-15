@@ -110,6 +110,7 @@ class MeetingsController extends StateNotifier<IsLoading> {
   Future<void> deleteMeeting({
     required String meetingID,
     required String ownerID,
+    required String meetingName,
     required BuildContext context,
   }) async {
     state = true;
@@ -119,6 +120,7 @@ class MeetingsController extends StateNotifier<IsLoading> {
         .deleteMeeting(
           meetingID: meetingID,
           ownerID: ownerID,
+          meetingName: meetingName,
         );
 
     result.fold(

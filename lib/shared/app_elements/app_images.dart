@@ -48,4 +48,10 @@ class AppImages {
   //!
   //! SPLASH - PNG
   static const splashScreen = "assets/png/splashLogo.png";
+
+  //!
+  //! NOTIFICATIONS
+  static const info = "assets/svgs/info.svg";
+  static const done = "assets/svgs/done.svg";
+  static const cancel = "assets/svgs/cancel.svg";
 }
