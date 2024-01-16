@@ -46,22 +46,24 @@ Future<void> main() async {
 
   await dotenv.load(fileName: ".env");
 
-  await SentryFlutter.init((options) {
-    options.dsn = dotenv.env[SentryDSN.dsn.tag];
-    options.tracesSampleRate = 1.0;
-  },
-      appRunner: () async => await SystemChrome.setPreferredOrientations([
-            DeviceOrientation.portraitUp,
-            DeviceOrientation.portraitDown,
-          ]).then(
-            (_) => runApp(
-              ProviderScope(
-                child: MeetingScheduler(
-                  showHome: showHome,
-                ).darkStatusBar(),
-              ),
-            ),
-          ));
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = dotenv.env[SentryDSN.dsn.tag];
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () async => await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]).then(
+      (_) => runApp(
+        ProviderScope(
+          child: MeetingScheduler(
+            showHome: showHome,
+          ).darkStatusBar(),
+        ),
+      ),
+    ),
+  );
 }
 
 class MeetingScheduler extends ConsumerWidget {
@@ -79,31 +81,32 @@ class MeetingScheduler extends ConsumerWidget {
       splitScreenMode: false,
       ensureScreenSize: true,
       builder: (context, child) => MaterialApp(
-          title: AppTexts.appName,
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.appThemeLight,
-          supportedLocales: AppUtils.appLocales,
-          localizationsDelegates: const [CountryLocalizations.delegate],
+        title: AppTexts.appName,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.appThemeLight,
+        supportedLocales: AppUtils.appLocales,
+        localizationsDelegates: const [CountryLocalizations.delegate],
 
-          //! NAVIGATION
-          routes: {
-            '/notificationScreen': (context) => const NotificationsScreen()
+        //! NAVIGATION
+        routes: {
+          '/notificationScreen': (context) => const NotificationsScreen()
+        },
+        onGenerateRoute: (settings) =>
+            AppNavigator.instance.generateRoute(routeSettings: settings),
+        home: Consumer(
+          builder: (context, ref, child) {
+            final authState = ref.watch(authControllerProvider);
+
+            if (authState.isLoggedIn) {
+              return const HomeScreenWrapper();
+            } else if (showHome) {
+              return const SignInScreen();
+            } else {
+              return const OnboardingScreenWrapper();
+            }
           },
-          onGenerateRoute: (settings) =>
-              AppNavigator.instance.generateRoute(routeSettings: settings),
-          home: Consumer(
-            builder: (context, ref, child) {
-              final authState = ref.watch(authControllerProvider);
-
-              if (authState.isLoggedIn) {
-                return const HomeScreenWrapper();
-              } else if (showHome) {
-                return const SignInScreen();
-              } else {
-                return const OnboardingScreenWrapper();
-              }
-            },
-          )),
+        ),
+      ),
     );
   }
 }

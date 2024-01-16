@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/services/database/notifications_database.dart';
 import 'package:meeting_scheduler/services/models/model_field_names.dart';
-import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 final notificationsControllerProvider =
     AsyncNotifierProvider<NotificationsController, DateTime>(
@@ -15,7 +11,7 @@ final notificationsControllerProvider =
 );
 
 class NotificationsController extends AsyncNotifier<DateTime> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   //!
   @override
@@ -39,13 +35,13 @@ class NotificationsController extends AsyncNotifier<DateTime> {
         );
 
         if (userID! == notification.ownerID) {
-          await sendPushNotification();
+          //await sendPushNotification();
         }
       }
     });
   }
 
-  Future<void> sendPushNotification() async {
+  /* Future<void> sendPushNotification() async {
     "Send Push Notification called".log();
 
     final Map<String, dynamic> payload = {
@@ -83,7 +79,7 @@ class NotificationsController extends AsyncNotifier<DateTime> {
     }
 
     _firebaseMessaging;
-  }
+  } */
 }
 
 //!

@@ -10,30 +10,33 @@ class NotificationsModel extends MapView<String, dynamic> {
   final String notificationID;
   final String ownerID;
   final String meetingID;
+  final String createdAt;
 
-  NotificationsModel(
-      {required this.type,
-      required this.message,
-      required this.notificationID,
-      required this.ownerID,
-      required this.meetingID})
-      : super({
+  NotificationsModel({
+    required this.type,
+    required this.message,
+    required this.notificationID,
+    required this.ownerID,
+    required this.meetingID,
+    required this.createdAt,
+  }) : super({
           "type": type,
           "message": message,
           "notificationID": notificationID,
           "ownerID": ownerID,
           "meetingID": meetingID,
+          "createdAt": createdAt,
         });
 
   NotificationsModel.fromJSON({
     required Map<String, dynamic> json,
   }) : this(
-          type: json["type"] ?? "",
-          message: json["message"] ?? "",
-          notificationID: json["notificationID"] ?? "",
-          ownerID: json["ownerID"] ?? "",
-          meetingID: json["meetingID"] ?? "",
-        );
+            type: json["type"] ?? "",
+            message: json["message"] ?? "",
+            notificationID: json["notificationID"] ?? "",
+            ownerID: json["ownerID"] ?? "",
+            meetingID: json["meetingID"] ?? "",
+            createdAt: json["createdAt"] ?? "");
 }
 
 class NotificationsDatabase {
@@ -56,6 +59,7 @@ class NotificationsDatabase {
       notificationID: notification.notificationID,
       ownerID: notification.ownerID,
       meetingID: notification.meetingID,
+      createdAt: notification.createdAt,
     );
 
     try {

@@ -44,6 +44,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
       //!
       body: notifications.when(
         data: (notificationList) {
+          if (notificationList != null) {
+            notificationList.sortNotification();
+          }
+
           return notificationList == null || notificationList.isEmpty
               ? const NoNotifications().alignCenter().generalPadding
               : StackedListView(

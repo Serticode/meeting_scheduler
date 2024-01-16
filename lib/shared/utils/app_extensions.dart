@@ -51,6 +51,8 @@ extension SortExtension on List {
       .first
       .trim()
       .compareTo(b!.dateOfMeeting!.split("/").first.trim()));
+
+  void sortNotification() => sort((a, b) => a.createdAt.compareTo(b.createdAt));
 }
 
 //!

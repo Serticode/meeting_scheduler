@@ -21,6 +21,7 @@ class MeetingsDatabase {
     required ScheduledMeetingModel meeting,
   }) async {
     const uuid = Uuid();
+    final DateTime notificationCreatedAt = DateTime.now();
 
     final notificationID = uuid.v4();
 
@@ -43,6 +44,7 @@ class MeetingsDatabase {
       notificationID: notificationID,
       ownerID: meetingPayload.ownerID!,
       meetingID: meetingPayload.meetingID!,
+      createdAt: notificationCreatedAt.toString(),
     );
 
     try {
@@ -66,6 +68,7 @@ class MeetingsDatabase {
     required ScheduledMeetingModel meeting,
   }) async {
     const uuid = Uuid();
+    final DateTime notificationCreatedAt = DateTime.now();
 
     final notificationID = uuid.v4();
 
@@ -88,6 +91,7 @@ class MeetingsDatabase {
       notificationID: notificationID,
       ownerID: meetingPayload.ownerID!,
       meetingID: meetingPayload.meetingID!,
+      createdAt: notificationCreatedAt.toString(),
     );
 
     try {
@@ -126,6 +130,7 @@ class MeetingsDatabase {
     required String meetingName,
   }) async {
     const uuid = Uuid();
+    final DateTime notificationCreatedAt = DateTime.now();
 
     final notificationID = uuid.v4();
 
@@ -135,6 +140,7 @@ class MeetingsDatabase {
       notificationID: notificationID,
       ownerID: ownerID,
       meetingID: meetingID,
+      createdAt: notificationCreatedAt.toString(),
     );
 
     try {

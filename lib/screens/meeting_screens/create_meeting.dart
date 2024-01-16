@@ -13,7 +13,6 @@ import 'package:meeting_scheduler/services/controllers/create_meeting_controller
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_time_controller.dart';
 import 'package:meeting_scheduler/services/controllers/create_meeting_controllers/meeting_venue_controller.dart';
 import 'package:meeting_scheduler/services/controllers/meetings_controllers/meetings_controller.dart';
-import 'package:meeting_scheduler/services/controllers/notifications/notifications_controller.dart';
 import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/services/models/meeting/scheduled_meeting_model.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
@@ -246,11 +245,7 @@ class _CreateMeetingState extends ConsumerState<CreateMeeting> {
               32.0.sizedBoxHeight,
 
               RegularButton(
-                onTap: () async => await validateInputFields().whenComplete(
-                  () async => await ref
-                      .read(notificationsControllerProvider.notifier)
-                      .sendPushNotification(),
-                ),
+                onTap: () async => await validateInputFields(),
                 buttonText: widget.isEditMeeting != null &&
                         widget.isEditMeeting == false
                     ? AppTexts.createMeeting

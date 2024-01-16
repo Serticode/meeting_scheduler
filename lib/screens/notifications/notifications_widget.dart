@@ -85,13 +85,13 @@ class NotificationsWidget extends ConsumerWidget {
               switch (notificationsType) {
                 NotificationsType.created => titles[0]
                     .toString()
-                    .txt(fontSize: 14, fontWeight: FontWeight.w500),
+                    .txt(fontSize: 12, fontWeight: FontWeight.w500),
                 NotificationsType.info => titles[1]
                     .toString()
-                    .txt(fontSize: 14, fontWeight: FontWeight.w500),
+                    .txt(fontSize: 12, fontWeight: FontWeight.w500),
                 NotificationsType.deleted => titles[2]
                     .toString()
-                    .txt(fontSize: 14, fontWeight: FontWeight.w500),
+                    .txt(fontSize: 12, fontWeight: FontWeight.w500),
               },
 
               //!
@@ -114,7 +114,7 @@ class NotificationsWidget extends ConsumerWidget {
                           text: notification.message,
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 10,
+                            fontSize: 9,
                             color: AppColours.black50,
                           )),
                       TextSpan(
@@ -127,7 +127,7 @@ class NotificationsWidget extends ConsumerWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: colour,
-                          fontSize: 10,
+                          fontSize: 9,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = notificationsType ==
@@ -154,63 +154,6 @@ class NotificationsWidget extends ConsumerWidget {
                 error: (error, trace) => "$error".txt16().alignCenter(),
                 loading: () => const CircularProgressIndicator().alignCenter(),
               ),
-
-              /* RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: notification.message,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10,
-                        color: AppColours.black50,
-                      )),
-                  TextSpan(
-                    text: notificationsType == NotificationsType.deleted
-                        ? ""
-                        : " For more, view details.",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: colour,
-                      fontSize: 10,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = notificationsType == NotificationsType.deleted
-                          ? () {}
-                          : () {
-                              meetings.when(
-                                data: (listOfMeetings) {
-                                  ScheduledMeetingModel? meeting;
-
-                                  for (var element in listOfMeetings) {
-                                    if (element != null &&
-                                        element.meetingID ==
-                                            notification.meetingID) {
-                                      meeting = element;
-                                    }
-                                  }
-
-                                  if (meeting != null || meeting!.isNotEmpty) {
-                                    AppNavigator.instance.navigateToPage(
-                                      thePageRouteName: AppRoutes.viewMeeting,
-                                      context: context,
-                                      arguments: {"meeting": meeting},
-                                    );
-                                  }
-                                },
-
-                                //!
-                                error: (error, trace) =>
-                                    "$error".txt16().alignCenter(),
-                                loading: () => const CircularProgressIndicator()
-                                    .alignCenter(),
-                              );
-                            },
-                  ),
-                ]),
-              ).withHapticFeedback(
-                onTap: null,
-                feedbackType: AppHapticFeedbackType.mediumImpact,
-              ), */
             ],
           ),
         ],

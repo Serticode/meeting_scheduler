@@ -25,9 +25,6 @@ class _HomeScreenWrapperState extends ConsumerState<HomeScreenWrapper> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final fcmToken = await PushNotifications.getFCMToken();
       ref.read(fcmProvider.notifier).setFCM(fcm: fcmToken!);
-      /* await ref
-          .read(notificationsControllerProvider.notifier)
-          .setUpPushNotification(); */
     });
   }
 

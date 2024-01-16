@@ -11,7 +11,7 @@ final Provider<MeetingsRepository> meetingsRepositoryProvider =
     Provider((ref) => const MeetingsRepository._());
 
 class MeetingsRepository {
-  const MeetingsRepository._() : super();
+  const MeetingsRepository._();
   static const MeetingsDatabase database = MeetingsDatabase.instance;
 
   //!
@@ -64,10 +64,11 @@ class MeetingsRepository {
 
   //!
   //!  UPDATE MEETING
-  FutureEither<MeetingUploaded> deleteMeeting(
-      {required String meetingID,
-      required String ownerID,
-      required String meetingName}) async {
+  FutureEither<MeetingUploaded> deleteMeeting({
+    required String meetingID,
+    required String ownerID,
+    required String meetingName,
+  }) async {
     try {
       final isMeetingDeleted = await database.deleteMeeting(
         meetingID: meetingID,

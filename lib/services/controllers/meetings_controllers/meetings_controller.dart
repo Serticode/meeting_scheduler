@@ -76,6 +76,7 @@ class MeetingsController extends StateNotifier<IsLoading> {
   Future<void> updateMeeting({
     required ScheduledMeetingModel meeting,
     required BuildContext context,
+    String? notificationCreatedAt,
   }) async {
     state = true;
 
@@ -204,8 +205,6 @@ final AutoDisposeStreamProvider<List<ScheduledMeetingModel?>> meetingsProvider =
               monthName: meetingDateDetails.elementAt(1).trim()),
           int.parse(meetingDateDetails.elementAt(0).trim()),
         );
-
-        meetings.add(meeting);
 
         if (meetingDate.isAfter(currentDate) ||
             meetingDate.compareTo(currentDate) == 0) {
