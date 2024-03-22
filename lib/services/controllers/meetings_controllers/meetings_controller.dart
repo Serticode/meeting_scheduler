@@ -206,10 +206,7 @@ final AutoDisposeStreamProvider<List<ScheduledMeetingModel?>> meetingsProvider =
           int.parse(meetingDateDetails.elementAt(0).trim()),
         );
 
-        if (meetingDate.isAfter(currentDate) ||
-            meetingDate.compareTo(currentDate) == 0) {
-          meetings.add(meeting);
-        }
+        meetings.add(meeting);
       }
 
       controller.sink.add(meetings);

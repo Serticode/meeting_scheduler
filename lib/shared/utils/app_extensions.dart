@@ -8,6 +8,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:intl/intl.dart";
 import "package:meeting_scheduler/shared/app_elements/app_colours.dart";
 import "package:meeting_scheduler/shared/utils/type_def.dart";
+import "package:meeting_scheduler/shared/utils/utils.dart";
 
 //!
 //! LOG EXTENSION - THIS HELPS TO CALL A .log() ON ANY OBJECT
@@ -46,11 +47,33 @@ extension CollectionName on FileType {
 }
 
 extension SortExtension on List {
-  void sortList() => sort((a, b) => a!.dateOfMeeting!
-      .split("/")
-      .first
-      .trim()
-      .compareTo(b!.dateOfMeeting!.split("/").first.trim()));
+  void sortList() => sort((a, b) {
+        //! SPLIT CONCERNS
+        List<String> aParts = a.dateOfMeeting.split('/');
+        List<String> bParts = b.dateOfMeeting.split('/');
+
+        //! PARSE DAYS MOTHS AND YEAR
+        int aDay = int.parse(aParts[0]);
+        int aMonth = AppUtils.getMonthNumber(monthName: aParts[1]);
+        int aYear = int.parse(aParts[2]);
+
+        int bDay = int.parse(bParts[0]);
+        int bMonth = AppUtils.getMonthNumber(monthName: bParts[1]);
+        int bYear = int.parse(bParts[2]);
+
+        //! COMPARE YEARS FIRST
+        if (aYear != bYear) {
+          return bYear.compareTo(aYear);
+        }
+
+        //! COMPARE MONTHS IF YEARS ARE THE SAME
+        if (aMonth != bMonth) {
+          return bMonth.compareTo(aMonth);
+        }
+
+        //! IF YEARS AND MONTHS ARE THE SAME, COMPARE DAYS
+        return bDay.compareTo(aDay);
+      });
 
   void sortNotification() => sort((a, b) => a.createdAt.compareTo(b.createdAt));
 }
