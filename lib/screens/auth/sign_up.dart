@@ -261,8 +261,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       .whenComplete(() {
                     final user = ref.read(userIdProvider);
                     if (user != null && user.isNotEmpty) {
-                      AppNavigator.instance.pushNamedAndRemoveUntil(
-                        thePageRouteName: AppRoutes.otpVerification,
+                      AppNavigator.instance.navigateToPage(
+                        thePageRouteName: AppRoutes.homeScreen,
                         context: context,
                       );
                     }

@@ -30,11 +30,11 @@ class AppUtils {
           message: message,
           contentType: contentType,
           inMaterialBanner: true,
-          bgAsset: contentType == ContentType.failure
+          /* bgAsset: contentType == ContentType.failure
               ? AssetsPath.failure
               : contentType == ContentType.success
                   ? AssetsPath.success
-                  : AssetsPath.bubbles,
+                  : AssetsPath.bubbles, */
           color: contentType == ContentType.failure
               ? Colors.red.shade900
               : contentType == ContentType.success
