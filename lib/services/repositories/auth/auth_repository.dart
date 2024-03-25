@@ -143,8 +143,9 @@ class AuthRepository {
 
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        verificationCompleted: (PhoneAuthCredential credential) {
+        verificationCompleted: (PhoneAuthCredential credential) async {
           "Verification completed: ${credential.smsCode} $credential".log();
+          await FirebaseAuth.instance.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException exception) {
           "Verification failed: ${exception.message} $exception".log();
@@ -166,7 +167,7 @@ class AuthRepository {
       "Firebase Auth Error: $error".log();
 
       return left(
-        Failure(failureMessage: "Failed to send verification code"),
+        Failure(failureMessage: error.message),
       );
     }
   }

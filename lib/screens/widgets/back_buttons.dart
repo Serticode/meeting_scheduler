@@ -16,10 +16,10 @@ class AuthBackButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: 40.0.h,
-      width: 40.0.w,
+      height: 30.0.h,
+      width: 30.0.w,
       alignment: Alignment.center,
-      padding: EdgeInsets.all(8.0.sp),
+      padding: EdgeInsets.all(4.0.sp),
       decoration: BoxDecoration(
         color: AppColours.deepBlue,
         borderRadius: BorderRadius.circular(4.0.r),
@@ -27,7 +27,7 @@ class AuthBackButton extends ConsumerWidget {
       child: const Icon(
         Icons.arrow_back_ios,
         color: AppColours.white,
-        size: 18,
+        size: 14,
       ).alignCenter(),
     ).onTap(
       onTap: onTap,

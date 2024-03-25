@@ -8,8 +8,8 @@ import 'package:meeting_scheduler/router/routes.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/text_form_fields.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
+import 'package:meeting_scheduler/services/controllers/auth/create_account_controller.dart';
 import 'package:meeting_scheduler/services/controllers/onboarding_screen/onboarding_screen_controller.dart';
-import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_images.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
@@ -236,12 +236,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     AppTexts.showPassword.txt14(),
 
                     const Spacer(),
-
-                    AppTexts.forgotPassword
-                        .txt14(color: AppColours.buttonBlue)
-                        .onTap(
-                          onTap: () {},
-                        ),
                   ],
                 ),
 
@@ -249,24 +243,22 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                 //! BUTTON
                 RegularButton(
-                  onTap: () async => await ref
-                      .read(authControllerProvider.notifier)
-                      .validateSignUp(
-                        context: context,
-                        isValidated: _formKey.currentState!.validate(),
-                        fullName: _fullName.value.text.trim(),
-                        email: _email.value.text.trim(),
-                        password: _password.value.text.trim(),
-                      )
-                      .whenComplete(() {
-                    final user = ref.read(userIdProvider);
-                    if (user != null && user.isNotEmpty) {
+                  onTap: () async {
+                    if (_formKey.currentState!.validate()) {
+                      ref
+                          .read(createAccountControllerProvider.notifier)
+                          .updateDetails(
+                            fullName: _fullName.value.text.trim(),
+                            email: _email.value.text.trim(),
+                            password: _password.value.text.trim(),
+                          );
+
                       AppNavigator.instance.navigateToPage(
-                        thePageRouteName: AppRoutes.homeScreen,
+                        thePageRouteName: AppRoutes.otpVerification,
                         context: context,
                       );
                     }
-                  }),
+                  },
                   buttonText: AppTexts.createAccount,
                   isLoading: isLoading,
                 ),

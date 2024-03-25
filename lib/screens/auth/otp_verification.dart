@@ -1,13 +1,16 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meeting_scheduler/router/router.dart';
 import 'package:meeting_scheduler/router/routes.dart';
+import 'package:meeting_scheduler/screens/widgets/app_loader.dart';
 import 'package:meeting_scheduler/screens/widgets/back_buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/buttons.dart';
 import 'package:meeting_scheduler/screens/widgets/text_form_fields.dart';
 import 'package:meeting_scheduler/services/controllers/auth/auth_controller.dart';
+import 'package:meeting_scheduler/services/controllers/auth/create_account_controller.dart';
+import 'package:meeting_scheduler/services/controllers/auth/otp_controller.dart';
+import 'package:meeting_scheduler/services/controllers/user_info/user_info_controller.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_colours.dart';
 import 'package:meeting_scheduler/shared/app_elements/app_texts.dart';
 import 'package:meeting_scheduler/shared/utils/app_extensions.dart';
@@ -24,12 +27,23 @@ class OTPVerification extends ConsumerStatefulWidget {
 
 class _OTPVerificationState extends ConsumerState<OTPVerification> {
   final ValueNotifier<bool> showVerificationField = false.toValueNotifier;
-  final TextEditingController _phoneNumber = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   String? selectedCountryCode;
 
   @override
+  void initState() {
+    super.initState();
+    _emailController.value = TextEditingValue(
+      text: ref.read(createAccountControllerProvider).email,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final buttonLoading = ref.watch(otpControllerProvider);
+    final createAccountDetails = ref.read(createAccountControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -47,13 +61,19 @@ class _OTPVerificationState extends ConsumerState<OTPVerification> {
                 12.0.sizedBoxHeight,
 
                 AuthBackButton(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    if (showVerificationField.value == true) {
+                      showVerificationField.value = false;
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
                 ),
 
                 32.0.sizedBoxHeight,
 
                 //! TITLE
-                AppTexts.otpVerification.txt24(
+                AppTexts.otpVerification.txt16(
                   fontWeight: FontWeight.w700,
                 ),
 
@@ -63,78 +83,17 @@ class _OTPVerificationState extends ConsumerState<OTPVerification> {
                 (value == false
                         ? AppTexts.otpVerificationRiderPhone
                         : AppTexts.otpVerificationRider)
-                    .txt14(color: AppColours.black50),
+                    .txt12(color: AppColours.black50),
 
                 32.0.sizedBoxHeight,
 
                 //! PINPUT
                 value == false
-                    ? Row(
-                        children: [
-                          SizedBox(
-                            width: 120,
-                            child: CountryCodePicker(
-                              backgroundColor: AppColours.purple,
-                              searchDecoration: InputDecoration(
-                                //! BORDERS
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    width: 1.2,
-                                    color: Colors.black12,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    width: 1.6,
-                                    color: AppColours.primaryBlue,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1.6,
-                                    color: AppColours.red,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1.6,
-                                    color: AppColours.red,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-
-                              //!
-                              initialSelection: "NG",
-                              favorite: const ["+234", "NG"],
-                              onChanged: (countryCode) =>
-                                  selectedCountryCode = countryCode.dialCode!,
-                              onInit: (countryCode) =>
-                                  selectedCountryCode = countryCode!.dialCode,
-                            ),
-                          ),
-
-                          //!
-                          2.0.sizedBoxWidth,
-
-                          //!
-                          Expanded(
-                            child: OTPContactFormField(
-                              hint: "Enter your phone number",
-                              controller: _phoneNumber,
-                              validator: (value) {
-                                if (value!.length < 11 || value.isEmpty) {
-                                  return "Enter a valid phone number";
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                        ],
+                    ? Expanded(
+                        child: OTPContactFormField(
+                          hint: "Email",
+                          controller: _emailController,
+                        ),
                       )
 
                     //!
@@ -166,31 +125,121 @@ class _OTPVerificationState extends ConsumerState<OTPVerification> {
                         ),
                         pinAnimationType: PinAnimationType.fade,
                         animationCurve: Curves.bounceInOut,
+                        onCompleted: (value) async {
+                          await ref
+                              .read(otpControllerProvider.notifier)
+                              .verifyOTP(
+                                otp: value,
+                              )
+                              .then((value) async {
+                            if (value) {
+                              await ref
+                                  .read(authControllerProvider.notifier)
+                                  .validateSignUp(
+                                    context: context,
+                                    isValidated: true,
+                                    fullName: createAccountDetails.fullName,
+                                    email: createAccountDetails.email,
+                                    password: createAccountDetails.password,
+                                  )
+                                  .whenComplete(() async {
+                                final user = ref.read(userIdProvider);
+                                if (user != null && user.isNotEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: "You have been logged in".txt12(
+                                        color: AppColours.white,
+                                      ),
+                                      backgroundColor: AppColours.buttonBlue,
+                                    ),
+                                  );
+
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 1200));
+
+                                  // ignore: use_build_context_synchronously
+                                  AppNavigator.instance.navigateToPage(
+                                    thePageRouteName: AppRoutes.homeScreen,
+                                    context: context,
+                                  );
+                                }
+                              });
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: "Invalid OTP".txt12(
+                                    color: AppColours.white,
+                                  ),
+                                  backgroundColor: AppColours.buttonBlue,
+                                ),
+                              );
+                            }
+                          });
+                        },
                       ).alignCenter(),
 
                 50.0.sizedBoxHeight,
 
                 RegularButton(
                   onTap: () async {
-                    if (value == false &&
-                        selectedCountryCode != null &&
-                        _formKey.currentState!.validate()) {
+                    if (value == false) {
+                      await ref
+                          .read(otpControllerProvider.notifier)
+                          .initConfig(
+                            userEmail: _emailController.value.text.trim(),
+                          )
+                          .whenComplete(
+                            () async => await ref
+                                .read(otpControllerProvider.notifier)
+                                .sendOTP()
+                                .then((value) async {
+                              if (value) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        "OTP Sent, check your email.".txt12(
+                                      color: AppColours.white,
+                                    ),
+                                    backgroundColor: AppColours.buttonBlue,
+                                  ),
+                                );
+                                showVerificationField.value = value;
+                              }
+                            }),
+                          );
+                    } else {
                       await ref
                           .read(authControllerProvider.notifier)
-                          .sendVerificationCode(
-                            phoneNumber:
-                                "$selectedCountryCode${_phoneNumber.value.text.substring(1)}",
+                          .validateSignUp(
                             context: context,
+                            isValidated: true,
+                            fullName: createAccountDetails.fullName,
+                            email: createAccountDetails.email,
+                            password: createAccountDetails.password,
                           )
-                          .then((value) {
-                        showVerificationField.value = value;
+                          .whenComplete(() {
+                        final user = ref.read(userIdProvider);
+                        if (user != null && user.isNotEmpty) {
+                          AppNavigator.instance.navigateToPage(
+                            thePageRouteName: AppRoutes.homeScreen,
+                            context: context,
+                          );
+                        }
                       });
                     }
                   },
-                  buttonText:
-                      value == false ? AppTexts.sendCode : AppTexts.verifyCode,
-                  isLoading: false,
-                ),
+                  buttonText: buttonLoading
+                      ? null
+                      : value == false
+                          ? AppTexts.sendCode
+                          : AppTexts.verifyCode,
+                  isLoading: buttonLoading,
+                  child: buttonLoading
+                      ? const AppLoader(
+                          isLogoutDialogue: false,
+                        )
+                      : null,
+                ).alignCenter(),
 
                 const Spacer(),
 
@@ -211,11 +260,14 @@ class _OTPVerificationState extends ConsumerState<OTPVerification> {
                         fontSize: 12,
                       ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () =>
-                            AppNavigator.instance.navigateToReplacementPage(
-                              thePageRouteName: AppRoutes.signUp,
-                              context: context,
-                            ),
+                        ..onTap = () async => await ref
+                                .read(otpControllerProvider.notifier)
+                                .sendOTP()
+                                .then((value) async {
+                              if (value) {
+                                showVerificationField.value = value;
+                              }
+                            }),
                     ),
                   ]),
                 ).alignCenter().withHapticFeedback(

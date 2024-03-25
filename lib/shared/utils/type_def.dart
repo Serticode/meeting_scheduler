@@ -16,6 +16,7 @@ typedef UserDisplayName = String;
 typedef UserFullName = String;
 typedef UserProfileImageType = String;
 typedef IsLoading = bool;
+typedef IsOTPSent = bool;
 typedef MeetingUploaded = bool;
 typedef MeetingDeleted = bool;
 
